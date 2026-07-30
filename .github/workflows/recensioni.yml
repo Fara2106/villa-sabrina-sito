@@ -1,12 +1,17 @@
 name: Aggiorna le recensioni
 
-# Controlla la scheda Posarelli una volta a settimana e, se ci sono novità,
-# aggiorna data/reviews.json e apre una issue per avvisare.
+# Ogni lunedì controlla la scheda Posarelli e aggiorna il sito da solo.
 #
-# Le nuove recensioni entrano SEMPRE con "approved": false e quindi non
-# compaiono da sole sul sito: l'ultima parola resta a mano, come deve essere.
-# Quello che si aggiorna da solo è il resto — il totale delle recensioni e la
-# media — perché quelli li dichiara Posarelli e non c'è niente da approvare.
+# Le recensioni NUOVE da 5 stelle vengono pubblicate senza chiedere niente:
+# oggi lo sono tutte e 61, e far approvare a mano una cosa che si approva
+# sempre non è controllo, è un promemoria che prima o poi si ignora.
+#
+# Tutto ciò che sta SOTTO le 5 stelle si ferma e apre un avviso. Questa è la
+# vetrina della casa, non un aggregatore: una recensione tiepida deve poterla
+# leggere una persona prima che finisca in pagina.
+#
+# Le decisioni già prese non si toccano mai: una recensione revocata a mano
+# resta revocata anche quando l'automazione ripassa.
 
 on:
   schedule:
@@ -26,8 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Se esiste il segreto PAT_RECENSIONI i commit risultano fatti da te e
-      # l'attivita sul repo conta di sicuro per il timer dei 60 giorni. Se non
-      # esiste, si usa il token predefinito e funziona comunque: il segreto e
+      # l'attività sul repo conta di sicuro per il timer dei 60 giorni. Se non
+      # esiste si usa il token predefinito e funziona comunque: il segreto è
       # un rinforzo, non un requisito.
       - uses: actions/checkout@v4
         with:
@@ -42,110 +47,89 @@ jobs:
       - run: npm ci --omit=dev
 
       - name: Guarda cosa cambierebbe
-        run: node scripts/fetch-reviews.mjs --dry-run | tee dry-run.txt
+        run: node scripts/fetch-reviews.mjs --auto-approve --dry-run | tee dry-run.txt
 
-      - name: Scarica e aggiorna il JSON
-        run: node scripts/fetch-reviews.mjs
+      - name: Aggiorna il JSON
+        run: node scripts/fetch-reviews.mjs --auto-approve
 
       - name: Riscrivi index.html
         run: node scripts/build-site.mjs
 
-      - name: C'è qualcosa di nuovo?
-        id: diff
+      - name: Cosa è successo?
+        id: esito
         run: |
           if git diff --quiet -- data/reviews.json index.html; then
             echo "cambiato=no" >> "$GITHUB_OUTPUT"
+            echo "da_guardare=0" >> "$GITHUB_OUTPUT"
             echo "Nessuna novità sulla scheda."
-          else
-            echo "cambiato=si" >> "$GITHUB_OUTPUT"
-            # quante recensioni sono entrate adesso, e quali
-            node -e '
-              const fs=require("fs");
-              const now=JSON.parse(fs.readFileSync("data/reviews.json","utf8"));
-              const prev=JSON.parse(require("child_process")
-                .execSync("git show HEAD:data/reviews.json").toString());
-              const old=new Set(prev.reviews.map(r=>r.id));
-              const nuove=now.reviews.filter(r=>!old.has(r.id));
-              fs.writeFileSync("nuove.json", JSON.stringify(nuove,null,1));
-              const righe=nuove.map(r=>
-                "- **"+r.author+"**"+(r.from?" · "+r.from:"")+
-                " · "+(r.lang||"??")+(r.date?" · "+r.date:"")+
-                "\n  `"+r.id+"`\n\n  > "+r.text.replace(/\n/g," ")+"\n"
-              ).join("\n");
-              fs.writeFileSync("nuove.md", righe || "_Nessuna recensione nuova: sono cambiati solo il totale o la media._\n");
-              console.log("nuove:", nuove.length);
-            '
+            exit 0
           fi
+          echo "cambiato=si" >> "$GITHUB_OUTPUT"
+          node -e '
+            const fs = require("fs");
+            const now  = JSON.parse(fs.readFileSync("data/reviews.json", "utf8"));
+            const prev = JSON.parse(require("child_process")
+              .execSync("git show HEAD:data/reviews.json").toString());
+            const old  = new Set(prev.reviews.map(r => r.id));
+            const nuove = now.reviews.filter(r => !old.has(r.id));
+            const pubblicate = nuove.filter(r => r.approved === true);
+            const ferme      = nuove.filter(r => r.approved !== true);
 
-      - name: Salva le modifiche
-        if: steps.diff.outputs.cambiato == 'si'
+            const riga = r =>
+              "- **" + r.author + "**" + (r.from ? " · " + r.from : "") +
+              " · " + r.rating + "/5 · " + (r.lang || "??") +
+              (r.date ? " · " + r.date : "") +
+              "\n  `" + r.id + "`\n\n  > " + r.text.replace(/\n/g, " ") + "\n";
+
+            fs.writeFileSync("ferme.md", ferme.map(riga).join("\n"));
+            fs.writeFileSync("pubblicate.md", pubblicate.map(riga).join("\n"));
+            fs.appendFileSync(process.env.GITHUB_OUTPUT,
+              "da_guardare=" + ferme.length + "\n" +
+              "pubblicate="  + pubblicate.length + "\n");
+            console.log("pubblicate da sole:", pubblicate.length, "| da guardare:", ferme.length);
+          '
+
+      - name: Salva e pubblica
+        if: steps.esito.outputs.cambiato == 'si'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/reviews.json index.html
-          git commit -m "Recensioni aggiornate dalla scheda Posarelli
+          git commit -m "Recensioni: ${{ steps.esito.outputs.pubblicate }} pubblicate, ${{ steps.esito.outputs.da_guardare }} da guardare
 
-          Aggiornamento automatico. Le nuove recensioni sono entrate con
-          approved:false e non sono ancora visibili sul sito."
+          Aggiornamento automatico dalla scheda Posarelli. Le recensioni da 5
+          stelle vanno online da sole; sotto le 5 stelle restano ferme e viene
+          aperto un avviso."
           git push
 
-      # GitHub spegne le azioni pianificate dopo 60 giorni senza attività sul
-      # repo. D'inverno le recensioni possono non arrivare per mesi, e senza
-      # commit l'automazione si spegnerebbe proprio quando serve meno badarci.
-      # Se sono passati più di 40 giorni dall'ultimo commit, ne facciamo uno di
-      # servizio: costa nulla e tiene sveglia la pianificazione.
-      - name: Battito, se il repo è fermo da troppo
-        if: steps.diff.outputs.cambiato == 'no'
-        run: |
-          ULTIMO=$(git log -1 --format=%ct)
-          ADESSO=$(date +%s)
-          GIORNI=$(( (ADESSO - ULTIMO) / 86400 ))
-          echo "ultimo commit: $GIORNI giorni fa"
-          if [ "$GIORNI" -ge 40 ]; then
-            mkdir -p data
-            {
-              echo "Ultimo controllo delle recensioni senza novità."
-              echo "Serve solo a tenere attiva la pianificazione: GitHub spegne"
-              echo "le azioni programmate dopo 60 giorni di inattività del repo."
-              echo
-              echo "$(date -u '+%Y-%m-%d %H:%M UTC')"
-            } > data/ULTIMO-CONTROLLO.txt
-            git config user.name  "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/ULTIMO-CONTROLLO.txt
-            git commit -m "Battito: nessuna novità nelle recensioni
-
-            Commit di servizio per non far spegnere la pianificazione."
-            git push
-          else
-            echo "Niente battito: il repo si è mosso da poco."
-          fi
-
-      - name: Avvisa con una issue
-        if: steps.diff.outputs.cambiato == 'si'
+      # Avvisa SOLO se c'è davvero qualcosa da decidere. Un avviso che arriva
+      # anche quando è tutto a posto smette di essere letto.
+      - name: Avvisa se c'è da decidere
+        if: steps.esito.outputs.da_guardare != '0' && steps.esito.outputs.da_guardare != ''
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            const nuove = fs.existsSync('nuove.md') ? fs.readFileSync('nuove.md', 'utf8') : '';
+            const ferme = fs.existsSync('ferme.md') ? fs.readFileSync('ferme.md', 'utf8') : '';
             const dry = fs.existsSync('dry-run.txt') ? fs.readFileSync('dry-run.txt', 'utf8') : '';
             const oggi = new Date().toISOString().slice(0, 10);
+            const n = '${{ steps.esito.outputs.da_guardare }}';
             const body = [
-              'La scheda Posarelli è cambiata e `data/reviews.json` è stato aggiornato.',
+              `Sono arrivate **${n} recensioni sotto le 5 stelle**. Non sono online:`,
+              'si fermano qui apposta, perché le legga una persona.',
               '',
-              '**Le nuove recensioni non sono ancora sul sito**: entrano sempre con',
-              '`approved: false`. Per pubblicarle:',
+              ferme,
+              '',
+              '### Se vuoi pubblicarle',
               '',
               '```bash',
               'git pull',
-              'npm run reviews:pending          # rivedile',
-              'npm run approve -- <id> <id>     # quelle che vuoi mostrare',
-              'npm run build && git push        # aggiorna il sito',
+              'npm run approve -- <id> <id>',
+              'npm run build && git push',
               '```',
               '',
-              '### Novità',
-              '',
-              nuove,
+              'Se invece preferisci lasciarle fuori, non serve fare niente:',
+              'restano nel file e non compaiono.',
               '',
               '<details><summary>Report completo</summary>',
               '',
@@ -158,7 +142,35 @@ jobs:
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `Recensioni da approvare — ${oggi}`,
+              title: `${n} recensioni da guardare — ${oggi}`,
               body,
               labels: ['recensioni'],
             });
+
+      # GitHub spegne le azioni pianificate dopo 60 giorni senza attività sul
+      # repo. D'inverno le recensioni possono non arrivare per mesi: senza un
+      # commit l'automazione si spegnerebbe proprio nel periodo in cui non la
+      # si guarda. Oltre i 40 giorni fermi, un commit di servizio.
+      - name: Battito, se il repo è fermo da troppo
+        if: steps.esito.outputs.cambiato == 'no'
+        run: |
+          ULTIMO=$(git log -1 --format=%ct)
+          GIORNI=$(( ( $(date +%s) - ULTIMO ) / 86400 ))
+          echo "ultimo commit: $GIORNI giorni fa"
+          if [ "$GIORNI" -ge 40 ]; then
+            mkdir -p data
+            {
+              echo "Ultimo controllo delle recensioni senza novità."
+              echo "Commit di servizio: GitHub spegne le azioni programmate dopo"
+              echo "60 giorni di inattività del repo."
+              echo
+              date -u '+%Y-%m-%d %H:%M UTC'
+            } > data/ULTIMO-CONTROLLO.txt
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/ULTIMO-CONTROLLO.txt
+            git commit -m "Battito: nessuna novità nelle recensioni"
+            git push
+          else
+            echo "Niente battito: il repo si è mosso da poco."
+          fi

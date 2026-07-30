@@ -8,6 +8,7 @@
   "scripts": {
     "reviews:dry": "node scripts/fetch-reviews.mjs --dry-run",
     "reviews": "node scripts/fetch-reviews.mjs",
+    "reviews:auto": "node scripts/fetch-reviews.mjs --auto-approve",
     "reviews:list": "node scripts/approve-reviews.mjs --list",
     "reviews:pending": "node scripts/approve-reviews.mjs --list --pending",
     "approve": "node scripts/approve-reviews.mjs",

@@ -33,6 +33,23 @@ const UA =
 
 const DRY_RUN = process.argv.includes('--dry-run');
 
+/*
+ * --auto-approve[=voto]  pubblica da sola ogni recensione NUOVA con voto pari
+ * o superiore alla soglia (5 se non specificata). Sotto soglia resta ferma e
+ * va guardata a mano.
+ *
+ * Perche una soglia e non "approva tutto": oggi le 61 recensioni sono tutte
+ * 5/5 e automatizzare non rischia niente. Ma questa e la vetrina della casa,
+ * non un aggregatore: il giorno che arriva una recensione tiepida deve
+ * fermarsi e far decidere una persona, non comparire da sola.
+ *
+ * Le decisioni gia prese non vengono mai toccate: se una recensione era stata
+ * revocata a mano, resta revocata anche con --auto-approve.
+ */
+const autoArg = process.argv.find((a) => a.startsWith('--auto-approve'));
+const AUTO_APPROVE = autoArg !== undefined;
+const AUTO_MIN = autoArg && autoArg.includes('=') ? Number(autoArg.split('=')[1]) : 5;
+
 /* ------------------------------------------------------------------ utils */
 
 const fail = (msg) => {
@@ -228,8 +245,12 @@ const scrapedIds = new Set(scraped.map((r) => r.id));
 
 const merged = scraped.map((r) => {
   const old = prevById.get(r.id);
-  // `approved` è l'unico campo editoriale: si conserva sempre.
-  return old ? { ...r, approved: old.approved === true } : r;
+  // `approved` e l'unico campo editoriale: per chi c'era gia si conserva
+  // sempre, anche se era stato revocato a mano.
+  if (old) return { ...r, approved: old.approved === true };
+  // solo le NUOVE possono essere approvate d'ufficio, e solo sopra soglia
+  const auto = AUTO_APPROVE && typeof r.rating === 'number' && r.rating >= AUTO_MIN;
+  return { ...r, approved: auto };
 });
 
 const added = merged.filter((r) => !prevById.has(r.id));
@@ -277,10 +298,20 @@ if (output.aggregate.count && merged.length !== output.aggregate.count) {
   );
 }
 
+const autoPubblicate = added.filter((r) => r.approved === true);
+const inAttesa = added.filter((r) => r.approved !== true);
+
+if (AUTO_APPROVE) {
+  console.log(`  auto-approvazione     attiva, soglia ${AUTO_MIN}/5`);
+  console.log(`  nuove pubblicate      ${autoPubblicate.length}`);
+  console.log(`  nuove da guardare     ${inAttesa.length}`);
+}
+
 if (added.length) {
-  console.log('\n  — nuove recensioni (entrano con approved:false) —');
+  console.log('\n  — nuove recensioni —');
   for (const r of added) {
-    console.log(`    ${r.id}  ${r.rating}/5  ${r.author} · ${r.from ?? '—'} · ${r.lang ?? '??'} · ${r.date ?? 'senza data'}`);
+    const stato = r.approved === true ? '[pubblicata]' : '[da guardare]';
+    console.log(`    ${stato} ${r.id}  ${r.rating}/5  ${r.author} · ${r.from ?? '—'} · ${r.lang ?? '??'} · ${r.date ?? 'senza data'}`);
     console.log(`               "${r.text.slice(0, 96)}${r.text.length > 96 ? '…' : ''}"`);
   }
 }

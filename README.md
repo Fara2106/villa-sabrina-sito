@@ -204,8 +204,28 @@ interessi a chi legge.
 
 ### Approvare le recensioni
 
-**Le nuove recensioni entrano nel JSON con `approved: false` e non compaiono
-sul sito finché non le approvi.** È l'unico passaggio manuale, ed è voluto.
+Di norma non devi fare niente: **l'automazione pubblica da sola le recensioni
+nuove da 5 stelle**, e ferma tutto ciò che sta sotto.
+
+La soglia non è pigrizia. Oggi tutte e 61 le recensioni sono 5/5: far
+approvare a mano una cosa che si approva sempre non è controllo, è un
+promemoria che dopo tre mesi si ignora. Ma questa è la vetrina della casa, non
+un aggregatore: il giorno che arriva una recensione tiepida deve fermarsi e
+farla leggere a una persona, invece di comparire da sola.
+
+```bash
+npm run reviews          # nessuna approvazione automatica (comportamento base)
+npm run reviews:auto     # pubblica le nuove da 5 stelle, ferma il resto
+node scripts/fetch-reviews.mjs --auto-approve=4   # soglia diversa
+```
+
+Per cambiare la soglia dell'automazione si modifica il flag in
+`.github/workflows/recensioni.yml`. Per tornare all'approvazione tutta manuale
+basta togliere `--auto-approve` da quel file.
+
+**Le decisioni già prese non vengono mai toccate**: se hai revocato una
+recensione a mano, resta revocata anche quando l'automazione ripassa. L'auto
+approvazione vale solo per le recensioni che non hai mai visto.
 
 ```bash
 npm run reviews:pending                       # quelle ancora da valutare
