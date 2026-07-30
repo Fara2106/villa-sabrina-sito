@@ -114,7 +114,8 @@ const ld = {
     'Vista panoramica',
   ].map((n) => ({ '@type': 'LocationFeatureSpecification', name: n, value: true })),
   photo: [
-    'assets/img/hero-colline-vigna-san-gimignano-2600.webp',
+    'assets/img/hero-poster-2600.webp',
+    'assets/img/casa-vigna-torri-dallalto-2000.webp',
     'assets/img/piscina-lettini-ombrellone-1920.webp',
     'assets/img/vista-colline-torri-san-gimignano-1920.webp',
   ],

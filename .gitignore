@@ -6,7 +6,9 @@ npm-debug.log*
 # provino di revisione della selezione foto, rigenerabile
 _selezione-proposta.jpg
 
-# Le foto originali sono pesanti (490 MB) e non servono in produzione:
-# restano in locale. Toglierle da qui solo se si vuole versionarle davvero.
+# Foto e video originali: circa 4,8 GB in tutto. Non servono in produzione e
+# non stanno su GitHub. Restano in locale; quello che va online è già
+# generato in assets/. Toglierli da qui solo per versionarli davvero.
 Foto Posarelli (professionali)/
 Foto fatte da me/
+Video fatti con il drone/

@@ -49,6 +49,33 @@ for (const width of [390, 1440]) {
   await page.evaluate(() => {
     document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
   });
+
+  /*
+   * L'hero ha un video dietro al testo: lo sfondo cambia per tutta la durata
+   * del filmato, quindi misurare il solo poster non basta. Con VS_WORST_FRAME
+   * si mette al posto del poster il fotogramma più chiaro del video — il caso
+   * peggiore — e si tara il velo su quello.
+   */
+  if (process.env.VS_WORST_FRAME) {
+    const { readFile } = await import('node:fs/promises');
+    const buf = await readFile(process.env.VS_WORST_FRAME);
+    const uri = `data:image/png;base64,${buf.toString('base64')}`;
+    await page.evaluate((u) => {
+      var img = document.querySelector('.hero picture img');
+      var src = document.querySelector('.hero picture source');
+      if (src) src.remove();
+      if (img) { img.srcset = ''; img.src = u; }
+      var v = document.querySelector('#hero-video');
+      if (v) v.remove();
+    }, uri);
+    await new Promise((r) => setTimeout(r, 1500));
+  } else {
+    await page.evaluate(() => {
+      var v = document.querySelector('#hero-video');
+      if (v) v.remove();      // altrimenti si misura un fotogramma a caso
+    });
+  }
+
   await new Promise((r) => setTimeout(r, 1200));
 
   for (const [label, sel] of TARGETS) {

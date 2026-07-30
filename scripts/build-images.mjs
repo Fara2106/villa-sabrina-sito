@@ -21,6 +21,11 @@ import sharp from 'sharp';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC_PRO = join(ROOT, 'Foto Posarelli (professionali)');
 const SRC_DRONE = join(ROOT, 'Foto fatte da me');
+/* Il primo fotogramma del video hero, estratto a 4K con ffmpeg e tenuto nel
+   repo perché il filmato originale (370 MB) non è versionato. Serve a generare
+   il poster: deve combaciare con il primo fotogramma del video, altrimenti si
+   vede lo scarto quando il video parte. */
+const SRC_VIDEO = join(ROOT, 'assets/video');
 const OUT_DIR = join(ROOT, 'assets/img');
 
 const FORCE = process.argv.includes('--force');
@@ -39,11 +44,21 @@ const JPEG_WIDTH = 1400;
  */
 const SELECTION = [
   {
-    src: [SRC_DRONE, 'dji_fly_20260622_152504_43_1782135976157_photo_optimized.jpg'],
-    out: 'hero-colline-vigna-san-gimignano',
-    role: 'Hero',
-    crop: 'hero', focusY: 0.45,
+    src: [SRC_VIDEO, '_poster-source.jpg'],
+    out: 'hero-poster',
+    role: 'Hero — poster del video',
     widths: [800, 1400, 2000, 2600],
+    alt: {
+      it: 'La proprietà dall’alto: il giardino terrazzato, la piscina e la casa fra i cipressi',
+      en: 'The property from above: the terraced garden, the pool and the house among cypresses',
+    },
+  },
+  {
+    src: [SRC_DRONE, 'dji_fly_20260622_152504_43_1782135976157_photo_optimized.jpg'],
+    out: 'casa-vigna-torri-dallalto',
+    role: 'Galleria — esterno',
+    crop: 'hero', focusY: 0.45,
+    widths: [800, 1400, 2000],
     alt: {
       it: 'La villa fra i cipressi con la vigna e la piscina, e le torri di San Gimignano all’orizzonte',
       en: 'The villa among cypresses with the vineyard and pool, and the towers of San Gimignano on the horizon',

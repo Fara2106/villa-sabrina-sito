@@ -22,7 +22,8 @@ interesse indicato da `focusX` nello script.
 
 | Nome | Ruolo | Dimensione intrinseca | Varianti | File originale | Origine |
 |---|---|---|---|---|---|
-| `hero-colline-vigna-san-gimignano` | Hero | 2600×1463 | WebP 800, 1400, 2000, 2600 + JPEG 1400 | `dji_fly_20260622_152504_43_1782135976157_photo_optimized.jpg` | drone |
+| `hero-poster` | Hero — poster del video | 2600×1463 | WebP 800, 1400, 2000, 2600 + JPEG 1400 | `_poster-source.jpg` | Posarelli |
+| `casa-vigna-torri-dallalto` | Galleria — esterno | 2000×1125 | WebP 800, 1400, 2000 + JPEG 1400 | `dji_fly_20260622_152504_43_1782135976157_photo_optimized.jpg` | drone |
 | `fascia-colline-campi` | Fascia panorama 1 | 1920×320 | WebP 800, 1400, 1920 + JPEG 1400 | `31-villa-sabrina-outdoor-posarellivillas-24-.jpg` | Posarelli |
 | `fascia-filari-vigna` | Fascia panorama 2 | 1920×320 | WebP 800, 1400, 1920 + JPEG 1400 | `12-villa-sabrina-outdoor-posarellivillas-18-.jpg` | Posarelli |
 | `casa-facciata-porticato` | Ritratto — la casa | 1021×1276 | WebP 800, 1021 + JPEG 1024 | `13-villa-sabrina-outdoor-posarellivillas-8-.jpg` | Posarelli |
@@ -45,7 +46,7 @@ interesse indicato da `focusX` nello script.
 
 ## Ritagli e correzioni applicate
 
-- `hero-colline-vigna-san-gimignano` — ritaglio **hero**
+- `casa-vigna-torri-dallalto` — ritaglio **hero**
 - `fascia-colline-campi` — ritaglio **band**
 - `fascia-filari-vigna` — ritaglio **band**
 - `casa-facciata-porticato` — ritaglio **portrait**
@@ -59,7 +60,10 @@ interesse indicato da `focusX` nello script.
 Gli `alt` vivono nel dizionario delle traduzioni dentro `index.html`
 (chiavi `alt.<nome-file>`). Qui sono riportati per riferimento.
 
-- **hero-colline-vigna-san-gimignano**
+- **hero-poster**
+  - IT: La proprietà dall’alto: il giardino terrazzato, la piscina e la casa fra i cipressi
+  - EN: The property from above: the terraced garden, the pool and the house among cypresses
+- **casa-vigna-torri-dallalto**
   - IT: La villa fra i cipressi con la vigna e la piscina, e le torri di San Gimignano all’orizzonte
   - EN: The villa among cypresses with the vineyard and pool, and the towers of San Gimignano on the horizon
 - **fascia-colline-campi**

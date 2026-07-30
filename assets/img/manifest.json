@@ -1,11 +1,11 @@
 [
   {
-    "name": "hero-colline-vigna-san-gimignano",
-    "role": "Hero",
-    "source": "dji_fly_20260622_152504_43_1782135976157_photo_optimized.jpg",
-    "sourceFolder": "Foto fatte da me",
-    "sourceSize": "4000×2250",
-    "crop": "hero",
+    "name": "hero-poster",
+    "role": "Hero — poster del video",
+    "source": "_poster-source.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "3840×2160",
+    "crop": "intero",
     "lift": null,
     "intrinsic": {
       "width": 2600,
@@ -14,28 +14,68 @@
     "aspect": 1.7778,
     "variants": [
       {
-        "file": "hero-colline-vigna-san-gimignano-800.webp",
+        "file": "hero-poster-800.webp",
         "width": 800,
         "height": 450
       },
       {
-        "file": "hero-colline-vigna-san-gimignano-1400.webp",
+        "file": "hero-poster-1400.webp",
         "width": 1400,
         "height": 788
       },
       {
-        "file": "hero-colline-vigna-san-gimignano-2000.webp",
+        "file": "hero-poster-2000.webp",
         "width": 2000,
         "height": 1125
       },
       {
-        "file": "hero-colline-vigna-san-gimignano-2600.webp",
+        "file": "hero-poster-2600.webp",
         "width": 2600,
         "height": 1463
       }
     ],
     "jpeg": {
-      "file": "hero-colline-vigna-san-gimignano-fallback.jpg",
+      "file": "hero-poster-fallback.jpg",
+      "width": 1400,
+      "height": 788
+    },
+    "alt": {
+      "it": "La proprietà dall’alto: il giardino terrazzato, la piscina e la casa fra i cipressi",
+      "en": "The property from above: the terraced garden, the pool and the house among cypresses"
+    }
+  },
+  {
+    "name": "casa-vigna-torri-dallalto",
+    "role": "Galleria — esterno",
+    "source": "dji_fly_20260622_152504_43_1782135976157_photo_optimized.jpg",
+    "sourceFolder": "Foto fatte da me",
+    "sourceSize": "4000×2250",
+    "crop": "hero",
+    "lift": null,
+    "intrinsic": {
+      "width": 2000,
+      "height": 1125
+    },
+    "aspect": 1.7778,
+    "variants": [
+      {
+        "file": "casa-vigna-torri-dallalto-800.webp",
+        "width": 800,
+        "height": 450
+      },
+      {
+        "file": "casa-vigna-torri-dallalto-1400.webp",
+        "width": 1400,
+        "height": 788
+      },
+      {
+        "file": "casa-vigna-torri-dallalto-2000.webp",
+        "width": 2000,
+        "height": 1125
+      }
+    ],
+    "jpeg": {
+      "file": "casa-vigna-torri-dallalto-fallback.jpg",
       "width": 1400,
       "height": 788
     },

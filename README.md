@@ -24,17 +24,58 @@ scripts/fetch-reviews.mjs   scarica e aggiorna reviews.json
 scripts/approve-reviews.mjs approva le recensioni da mostrare
 scripts/build-site.mjs      inietta recensioni e JSON-LD in index.html
 scripts/build-images.mjs    genera assets/img dalle foto originali
-scripts/check-*.mjs         verifiche (rendering, accessibilità)
+assets/video/               il filmato dell'hero e il suo poster
+scripts/find-smooth-clip.mjs trova i tratti di volo fluidi nei video
+scripts/check-*.mjs         verifiche (rendering, accessibilità, contrasti)
 Foto Posarelli (professionali)/   originali, mai modificati
 Foto fatte da me/                 originali da drone, mai modificati
+Video fatti con il drone/         25 filmati originali, mai modificati
 ```
 
-Le due cartelle di foto originali **non vengono mai toccate**: gli script le
-aprono in sola lettura.
+Le tre cartelle di originali **non vengono mai toccate**: gli script le aprono
+in sola lettura. In tutto sono circa 4,8 GB e non stanno su GitHub.
+
+## Il video dell'hero
+
+Dietro il titolo scorre un filmato da drone di 12 secondi, `assets/video/hero-drone.mp4`
+(984 KB). È un **di più, non contenuto**: non dice niente che non sia già nel
+poster e negli `alt`. Perciò si carica solo se non disturba nessuno — schermo
+largo, niente `prefers-reduced-motion`, niente `save-data`, niente rete lenta.
+Su telefono resta la fotografia, che è anche l'elemento LCP.
+
+Tre cose non ovvie, se un giorno lo rifai:
+
+- **il poster è il primo fotogramma del video**, generato dal file
+  `assets/video/_poster-source.jpg` estratto con ffmpeg e versionato apposta
+  (il filmato originale, 163 MB, non sta nel repo). Se poster e primo
+  fotogramma non coincidono, quando il video parte si vede lo scarto;
+- **il ciclo va avanti e indietro.** Il volo si avvicina alla piscina: a fine
+  clip, ripartendo, si vedrebbe uno stacco netto ogni 12 secondi. Il file
+  contiene i 6 secondi in avanti seguiti dagli stessi 6 al contrario, quindi
+  la giunta non esiste. Verificato: fra il primo e l'ultimo fotogramma ci sono
+  2,4 livelli di differenza su 255;
+- **il velo dell'hero è tarato sul fotogramma più chiaro del filmato**, non sul
+  poster. Lo sfondo si muove, quindi il testo deve reggere il momento peggiore:
+  `VS_WORST_FRAME=<file.png> npm run check:contrast`.
+
+Il ritaglio non è stato scelto a occhio. `scripts/find-smooth-clip.mjs` misura
+lo spostamento fra fotogrammi con la correlazione di fase e cerca la finestra
+con l'accelerazione più bassa, cioè dove il drone si muove in modo costante
+invece che a scatti:
+
+```bash
+node scripts/find-smooth-clip.mjs "Video fatti con il drone/"*.mp4 8
+```
+
+Punteggio basso = movimento regolare. Attenzione a un caso che sembra ottimo e
+non lo è: un drone **fermo** ha accelerazione zero e vince sempre, ma come
+video è inutile — tanto vale una fotografia. Per questo lo script penalizza
+anche chi sta troppo fermo, e per questo il clip #123, bellissimo dall'alto, è
+stato scartato: velocità 0,00, era un volo in stazionamento.
 
 ## Lingue
 
-Il sito parla **italiano, inglese, francese e spagnolo**. I dizionari stanno
+Il sito parla **italiano, inglese, francese, tedesco e spagnolo**. I dizionari stanno
 nell'oggetto `I18N` dentro `index.html`, uno per lingua; i testi alternativi
 delle foto stanno in `ALT`, con la stessa struttura.
 
@@ -48,9 +89,9 @@ https://fara2106.github.io/villa-sabrina-sito/?lang=fr
 ```
 
 **Da dove vengono i testi.** Posarelli pubblica la scheda in nove lingue.
-Italiano, inglese e francese sono presi dalle rispettive schede ufficiali
-(`.it`, `.com`, `.fr`). **Lo spagnolo non esiste sulla loro piattaforma**:
-quei testi sono la traduzione di quelli italiani — stessi dati, nessun dato
+Italiano, inglese, francese e tedesco sono presi dalle rispettive schede
+ufficiali (`.it`, `.com`, `.fr`, `.de`). **Lo spagnolo non esiste sulla loro
+piattaforma**: quei testi sono la traduzione di quelli italiani — stessi dati, nessun dato
 nuovo — e il pulsante "Precios y disponibilidad" porta alla scheda inglese,
 che è l'unica disponibile.
 
@@ -59,10 +100,9 @@ e l'aggiunta del codice in `LANGS`, `LOCALES` e `LISTING` (con l'URL della
 scheda Posarelli in quella lingua, se esiste). Poi un pulsante nel selettore
 in cima alla pagina e una riga `<link rel="alternate" hreflang>` nel `<head>`.
 
-Posarelli ha già le schede in **tedesco, olandese, danese, norvegese e
+Restano disponibili le schede Posarelli in **olandese, danese, norvegese e
 svedese**: se un giorno servono, l'URL c'è già e il lavoro è solo il dizionario.
-Le recensioni dicono che gli ospiti tedeschi sono i secondi per numero dopo
-inglesi e americani.
+Dopo il tedesco, l'olandese è la lingua con più ospiti nelle recensioni.
 
 ## Per iniziare
 
@@ -226,6 +266,9 @@ Lighthouse, Chrome headless, server locale:
 |---|---|---|---|---|
 | Desktop | **100** | **100** | **100** | **100** |
 | Mobile | **97** | **100** | **100** | **100** |
+
+Il video non peggiora i numeri: su desktop parte dopo il `load`, su mobile non
+viene nemmeno richiesto.
 
 LCP 0,7 s desktop e 2,6 s mobile; CLS 0,005 e 0,002; TBT 0 ms. I numeri
 mobile sono di tre corse consecutive che danno lo stesso risultato: una

@@ -10,6 +10,7 @@
 <link rel="alternate" hreflang="it" href="https://fara2106.github.io/villa-sabrina-sito/">
 <link rel="alternate" hreflang="en" href="https://fara2106.github.io/villa-sabrina-sito/?lang=en">
 <link rel="alternate" hreflang="fr" href="https://fara2106.github.io/villa-sabrina-sito/?lang=fr">
+<link rel="alternate" hreflang="de" href="https://fara2106.github.io/villa-sabrina-sito/?lang=de">
 <link rel="alternate" hreflang="es" href="https://fara2106.github.io/villa-sabrina-sito/?lang=es">
 <link rel="alternate" hreflang="x-default" href="https://fara2106.github.io/villa-sabrina-sito/">
 <meta name="theme-color" content="#141F1C">
@@ -18,19 +19,19 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Villa Sabrina — San Gimignano, Toscana">
 <meta property="og:description" content="Casa vacanze con piscina privata sulle colline del Chianti, a 5 km da San Gimignano.">
-<meta property="og:image" content="assets/img/hero-colline-vigna-san-gimignano-fallback.jpg">
+<meta property="og:image" content="assets/img/hero-poster-fallback.jpg">
 <meta property="og:locale" content="it_IT">
 <meta property="og:locale:alternate" content="en_GB">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" fetchpriority="high"
-      imagesrcset="assets/img/hero-colline-vigna-san-gimignano-800.webp 800w,
-                   assets/img/hero-colline-vigna-san-gimignano-1400.webp 1400w,
-                   assets/img/hero-colline-vigna-san-gimignano-2000.webp 2000w,
-                   assets/img/hero-colline-vigna-san-gimignano-2600.webp 2600w"
+      imagesrcset="assets/img/hero-poster-800.webp 800w,
+                   assets/img/hero-poster-1400.webp 1400w,
+                   assets/img/hero-poster-2000.webp 2000w,
+                   assets/img/hero-poster-2600.webp 2600w"
       imagesizes="100vw"
-      href="assets/img/hero-colline-vigna-san-gimignano-1400.webp">
+      href="assets/img/hero-poster-1400.webp">
 <!-- I font non bloccano il primo rendering: si applicano appena pronti. -->
 <link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
       href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Archivo:wght@300;400;500;600&display=swap">
@@ -147,6 +148,13 @@ i,em,.it{font-style:italic}
 /* --------------------------------------------------------------- hero */
 .hero{position:relative;min-height:min(900px,100svh);display:flex;align-items:flex-end;isolation:isolate}
 .hero picture,.hero>picture img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+/* Il video sta fra la foto (-2) e il velo (-1) e compare in dissolvenza solo
+   quando ha davvero abbastanza dati per non singhiozzare. */
+.hero-video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;
+  opacity:0;transition:opacity 1.2s ease;pointer-events:none;
+}
+.hero-video.is-playing{opacity:1}
 /* Il gradiente del mockup presupponeva una foto già scura. La nostra ha un
    campo dorato in pieno sole proprio dietro al titolo. Il velo è tarato sul
    colore più difficile che ci sta sopra — l'oro dell'occhiello, piccolo e
@@ -163,7 +171,7 @@ i,em,.it{font-style:italic}
 @media(max-width:700px){
   .hero::after{
     background:
-      linear-gradient(to bottom,rgba(20,31,28,.5) 0%,rgba(20,31,28,.12) 20%,rgba(20,31,28,.74) 40%,rgba(20,31,28,.92) 64%,rgba(20,31,28,.97) 100%);
+      linear-gradient(to bottom,rgba(20,31,28,.5) 0%,rgba(20,31,28,.14) 18%,rgba(20,31,28,.84) 34%,rgba(20,31,28,.94) 58%,rgba(20,31,28,.97) 100%);
   }
 }
 .hero-inner{width:100%;padding-block:120px 84px}
@@ -457,6 +465,8 @@ i,em,.it{font-style:italic}
         <i aria-hidden="true">/</i>
         <button type="button" data-lang="fr" aria-pressed="false" lang="fr" title="Français">FR</button>
         <i aria-hidden="true">/</i>
+        <button type="button" data-lang="de" aria-pressed="false" lang="de" title="Deutsch">DE</button>
+        <i aria-hidden="true">/</i>
         <button type="button" data-lang="es" aria-pressed="false" lang="es" title="Español">ES</button>
       </div>
       <a class="btn btn--sm" id="cta-nav" href="https://www.posarellivillas.it/italia/toscana/san-gimignano/95494" target="_blank" rel="noreferrer noopener">
@@ -476,18 +486,24 @@ i,em,.it{font-style:italic}
 
 <!-- ============================================================== HERO -->
 <section class="hero">
+  <!-- Il poster è il primo fotogramma del video, così quando il filmato parte
+       non si vede nessuno scarto. Il video è un di più: si carica solo su
+       schermo largo, a connessione decente e se l'utente non ha chiesto meno
+       movimento. Chi non lo riceve vede la fotografia, che è l'elemento LCP. -->
   <picture>
     <source type="image/webp"
-      srcset="assets/img/hero-colline-vigna-san-gimignano-800.webp 800w,
-              assets/img/hero-colline-vigna-san-gimignano-1400.webp 1400w,
-              assets/img/hero-colline-vigna-san-gimignano-2000.webp 2000w,
-              assets/img/hero-colline-vigna-san-gimignano-2600.webp 2600w"
+      srcset="assets/img/hero-poster-800.webp 800w,
+              assets/img/hero-poster-1400.webp 1400w,
+              assets/img/hero-poster-2000.webp 2000w,
+              assets/img/hero-poster-2600.webp 2600w"
       sizes="100vw">
-    <img src="assets/img/hero-colline-vigna-san-gimignano-fallback.jpg"
+    <img src="assets/img/hero-poster-fallback.jpg"
          width="2600" height="1462" fetchpriority="high" decoding="async"
-         data-i18n-alt="alt.hero"
-         alt="La villa fra i cipressi con la vigna e la piscina, e le torri di San Gimignano all’orizzonte">
+         data-i18n-alt="alt.hero-poster"
+         alt="La proprietà dall’alto: il giardino terrazzato, la piscina e la casa fra i cipressi">
   </picture>
+  <video id="hero-video" class="hero-video" muted playsinline loop preload="none"
+         aria-hidden="true" tabindex="-1"></video>
 
   <div class="wrap hero-inner">
     <p class="eyebrow" data-i18n="hero.loc">San Gimignano · Chianti · Toscana</p>
@@ -753,7 +769,7 @@ i,em,.it{font-style:italic}
 <!-- REVIEWS:DATA:END -->
 
 <!-- JSONLD:START -->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"LodgingBusiness","name":"Villa Sabrina","description":"Casa vacanze con piscina privata sulle colline del Chianti, a 5 km da San Gimignano. 160 m² su due piani, 3 camere da letto, fino a 7 ospiti, giardino recintato di uso esclusivo.","url":"https://www.posarellivillas.it/italia/toscana/san-gimignano/95494","address":{"@type":"PostalAddress","addressLocality":"San Gimignano","addressRegion":"Toscana","addressCountry":"IT"},"numberOfRooms":3,"maximumAttendeeCapacity":7,"petsAllowed":"Su richiesta","smokingAllowed":false,"amenityFeature":[{"@type":"LocationFeatureSpecification","name":"Piscina privata","value":true},{"@type":"LocationFeatureSpecification","name":"Giardino recintato","value":true},{"@type":"LocationFeatureSpecification","name":"Aria condizionata","value":true},{"@type":"LocationFeatureSpecification","name":"Wi-Fi gratuito","value":true},{"@type":"LocationFeatureSpecification","name":"Barbecue","value":true},{"@type":"LocationFeatureSpecification","name":"Parcheggio interno","value":true},{"@type":"LocationFeatureSpecification","name":"Lavatrice","value":true},{"@type":"LocationFeatureSpecification","name":"Lavastoviglie","value":true},{"@type":"LocationFeatureSpecification","name":"Vista panoramica","value":true}],"photo":["assets/img/hero-colline-vigna-san-gimignano-2600.webp","assets/img/piscina-lettini-ombrellone-1920.webp","assets/img/vista-colline-torri-san-gimignano-1920.webp"],"aggregateRating":{"@type":"AggregateRating","ratingValue":5,"reviewCount":61,"bestRating":5,"worstRating":1},"review":[{"@type":"Review","author":{"@type":"Person","name":"Lisa D."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"Our stay at this beautiful villa in Tuscany was absolutely unforgettable. From the moment we arrived, Sabrina made us feel incredibly welcome. She had prepared a basket of…","datePublished":"2026-06-02","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Stephanie C."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"Villa Sabrina is a dream. The landscape and views are amazing. The villa is clean and fully appointed with all items needed. The beds are comfortable and the bathrooms are very…","datePublished":"2026-05-26","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Susan H."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"This was our second visit and again, Villa Sabrina lived beyond our expectations. The spacious and well equipped villa comfortably catered for my family of five adults. The pool…","datePublished":"2025-09-21","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Angie B."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"This beautiful Villa is in a location within a 10 minute drive to San Gimignano. Sabrina is an extremely helpful and responsive host, from check in to check out. During our stay…","datePublished":"2025-09-30","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Desiree G."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"We stayed at this beautiful villa in Tuscany with two families and young kids (ages 1–5), and it was perfect. The house is stunning, super well-equipped, and had everything we…","datePublished":"2025-06-09","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Christina M."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"Unser Urlaub in der Villa Sabrina war einfach wunderschön! Da wir aufgrund der langen Anreise deutlich vor der angegebenen Check In Zeit da waren, habe ich mit Sabrina direkt…","datePublished":"2025-06-11","inLanguage":"de"},{"@type":"Review","author":{"@type":"Person","name":"Mitch L."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"We couldn’t have asked for a better place to stay for nine nights. Very conveniently located to San Gimignano and Sienna. Grocery store was very close as well. The apartment…","datePublished":"2025-04-04","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Patricia B."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"Très belle propriété avec un très beau parc et une magnifique piscine, très bien située, à proximité immédiate de San Gimignano et proche de Sienne et de Florence. Nous y avons…","datePublished":"2024-08-26","inLanguage":"fr"},{"@type":"Review","author":{"@type":"Person","name":"Jonathon H."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"A wonderful and comfortable villa in a beautiful and convenient location. The pool area is superb with comfortable lingers and chairs. The outdoor seating area easily sat six…","datePublished":"2023-09-20","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Andrea Giovanni P."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"La villa è stata pari alle aspettative.tutto molto curato e pulito.la piscina sempre in perfetto stato.la dotazione in cucina,nei bagni e nelle camere completa ed adeguata.è…","datePublished":"2023-08-20","inLanguage":"it"},{"@type":"Review","author":{"@type":"Person","name":"Fiona H."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"We have just come back from a fabulous week spent at Villa Sabrina. As soon as we arrived, we were welcomed by Sabrina, who had left a wonderful welcome pack for us. We jump…","datePublished":"2023-07-25","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Ninke L."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"Villa Sabrina is een geweldig huis, zowel binnen als buiten. Heel verzorgd, goed onderhouden en van alle gemakken voorzien. Het uitzicht is adembenemend mooi. De tuin is prachtig…","datePublished":"2023-07-27","inLanguage":"nl"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LodgingBusiness","name":"Villa Sabrina","description":"Casa vacanze con piscina privata sulle colline del Chianti, a 5 km da San Gimignano. 160 m² su due piani, 3 camere da letto, fino a 7 ospiti, giardino recintato di uso esclusivo.","url":"https://www.posarellivillas.it/italia/toscana/san-gimignano/95494","address":{"@type":"PostalAddress","addressLocality":"San Gimignano","addressRegion":"Toscana","addressCountry":"IT"},"numberOfRooms":3,"maximumAttendeeCapacity":7,"petsAllowed":"Su richiesta","smokingAllowed":false,"amenityFeature":[{"@type":"LocationFeatureSpecification","name":"Piscina privata","value":true},{"@type":"LocationFeatureSpecification","name":"Giardino recintato","value":true},{"@type":"LocationFeatureSpecification","name":"Aria condizionata","value":true},{"@type":"LocationFeatureSpecification","name":"Wi-Fi gratuito","value":true},{"@type":"LocationFeatureSpecification","name":"Barbecue","value":true},{"@type":"LocationFeatureSpecification","name":"Parcheggio interno","value":true},{"@type":"LocationFeatureSpecification","name":"Lavatrice","value":true},{"@type":"LocationFeatureSpecification","name":"Lavastoviglie","value":true},{"@type":"LocationFeatureSpecification","name":"Vista panoramica","value":true}],"photo":["assets/img/hero-poster-2600.webp","assets/img/casa-vigna-torri-dallalto-2000.webp","assets/img/piscina-lettini-ombrellone-1920.webp","assets/img/vista-colline-torri-san-gimignano-1920.webp"],"aggregateRating":{"@type":"AggregateRating","ratingValue":5,"reviewCount":61,"bestRating":5,"worstRating":1},"review":[{"@type":"Review","author":{"@type":"Person","name":"Lisa D."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"Our stay at this beautiful villa in Tuscany was absolutely unforgettable. From the moment we arrived, Sabrina made us feel incredibly welcome. She had prepared a basket of…","datePublished":"2026-06-02","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Stephanie C."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"Villa Sabrina is a dream. The landscape and views are amazing. The villa is clean and fully appointed with all items needed. The beds are comfortable and the bathrooms are very…","datePublished":"2026-05-26","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Susan H."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"This was our second visit and again, Villa Sabrina lived beyond our expectations. The spacious and well equipped villa comfortably catered for my family of five adults. The pool…","datePublished":"2025-09-21","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Angie B."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"This beautiful Villa is in a location within a 10 minute drive to San Gimignano. Sabrina is an extremely helpful and responsive host, from check in to check out. During our stay…","datePublished":"2025-09-30","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Desiree G."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"We stayed at this beautiful villa in Tuscany with two families and young kids (ages 1–5), and it was perfect. The house is stunning, super well-equipped, and had everything we…","datePublished":"2025-06-09","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Christina M."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"Unser Urlaub in der Villa Sabrina war einfach wunderschön! Da wir aufgrund der langen Anreise deutlich vor der angegebenen Check In Zeit da waren, habe ich mit Sabrina direkt…","datePublished":"2025-06-11","inLanguage":"de"},{"@type":"Review","author":{"@type":"Person","name":"Mitch L."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"We couldn’t have asked for a better place to stay for nine nights. Very conveniently located to San Gimignano and Sienna. Grocery store was very close as well. The apartment…","datePublished":"2025-04-04","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Patricia B."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"Très belle propriété avec un très beau parc et une magnifique piscine, très bien située, à proximité immédiate de San Gimignano et proche de Sienne et de Florence. Nous y avons…","datePublished":"2024-08-26","inLanguage":"fr"},{"@type":"Review","author":{"@type":"Person","name":"Jonathon H."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"A wonderful and comfortable villa in a beautiful and convenient location. The pool area is superb with comfortable lingers and chairs. The outdoor seating area easily sat six…","datePublished":"2023-09-20","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Andrea Giovanni P."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"La villa è stata pari alle aspettative.tutto molto curato e pulito.la piscina sempre in perfetto stato.la dotazione in cucina,nei bagni e nelle camere completa ed adeguata.è…","datePublished":"2023-08-20","inLanguage":"it"},{"@type":"Review","author":{"@type":"Person","name":"Fiona H."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"We have just come back from a fabulous week spent at Villa Sabrina. As soon as we arrived, we were welcomed by Sabrina, who had left a wonderful welcome pack for us. We jump…","datePublished":"2023-07-25","inLanguage":"en"},{"@type":"Review","author":{"@type":"Person","name":"Ninke L."},"reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"reviewBody":"Villa Sabrina is een geweldig huis, zowel binnen als buiten. Heel verzorgd, goed onderhouden en van alle gemakken voorzien. Het uitzicht is adembenemend mooi. De tuin is prachtig…","datePublished":"2023-07-27","inLanguage":"nl"}]}</script>
 <!-- JSONLD:END -->
 
 <script>
@@ -779,10 +795,11 @@ i,em,.it{font-style:italic}
     it: 'https://www.posarellivillas.it/italia/toscana/san-gimignano/95494',
     en: 'https://www.posarellivillas.com/italy/tuscany/san-gimignano/95494',
     fr: 'https://www.posarellivillas.fr/italie/toscane/san-gimignano/95494',
+    de: 'https://www.posarellivillas.de/italien/toskana/san-gimignano/95494',
     es: 'https://www.posarellivillas.com/italy/tuscany/san-gimignano/95494'
   };
-  var LOCALES = { it: 'it-IT', en: 'en-GB', fr: 'fr-FR', es: 'es-ES' };
-  var LANGS = ['it', 'en', 'fr', 'es'];
+  var LOCALES = { it: 'it-IT', en: 'en-GB', fr: 'fr-FR', de: 'de-DE', es: 'es-ES' };
+  var LANGS = ['it', 'en', 'fr', 'de', 'es'];
   var REVIEWS_ANCHOR = '#target_testimonials';
 
   /* ------------------------------------------------------------ i18n */
@@ -1203,13 +1220,118 @@ i,em,.it{font-style:italic}
         { name: 'Pisa', desc: '', km: '85' },
         { name: 'Lucca', desc: '', km: '90' }
       ]
+    },
+
+    /* Tedesco: i testi vengono dalla scheda ufficiale posarellivillas.de */
+    de: {
+      'skip': 'Zum Inhalt springen',
+      'nav.house': 'Das Haus', 'nav.spaces': 'Die Räume', 'nav.amenities': 'Leistungen',
+      'nav.around': 'Umgebung', 'nav.gallery': 'Galerie', 'nav.reviews': 'Bewertungen',
+      'nav.open': 'Menü öffnen', 'nav.close': 'Menü schließen',
+
+      'hero.loc': 'San Gimignano · Chianti · Toskana',
+      'hero.tag': 'Ein Landhaus mit privatem Pool, mit Blick auf die Hügel des Chianti',
+      'hero.m1': '7 Gäste', 'hero.m2': '3 Schlafzimmer', 'hero.m3': '5 km von San Gimignano',
+      'hero.scroll': 'Scrollen',
+      'cta.availability': 'Preise & Verfügbarkeit',
+      'cta.seeHouse': 'Das Haus ansehen',
+
+      'facts.guests': 'Gäste', 'facts.bedrooms': 'Schlafzimmer', 'facts.sqm': 'Quadratmeter',
+
+      'house.eyebrow': 'Das Haus',
+      'house.title': 'Terrakotta, Ziegel und Holz, fünf Kilometer von den Türmen',
+      'house.p1': 'Villa Sabrina ist Teil eines Landsitzes, kürzlich renoviert und von den Hügeln des Chianti umgeben. Sie erstreckt sich über zwei Etagen und 160 Quadratmeter.',
+      'house.p2': 'Die Innenräume sind hell und im typisch toskanischen Landstil eingerichtet, mit sichtbarem Terrakotta, Ziegel und Holz. Alle drei Schlafzimmer haben eine Klimaanlage.',
+      'house.p3': 'Die Besitzer wohnen im anderen Teil des Hauses mit separatem Eingang und stehen den Gästen zur Verfügung. Der Zugang führt über eine nicht geteerte Straße in gutem Zustand.',
+
+      'band.one': 'Blick auf die Hügel des Chianti',
+      'band.two': 'Die Rebzeilen rund um das Haus',
+
+      'spaces.eyebrow': 'Die Räume',
+      'spaces.title': 'Fünf Räume, drinnen und draußen',
+      'spaces.lede': 'Der Garten ist komplett eingezäunt und den Gästen vorbehalten, und die ausgestattete Loggia ist der zusätzliche Raum: dort wird im Freien gegessen.',
+
+      'amen.eyebrow': 'Leistungen',
+      'amen.title': 'Was es <i>gibt</i>',
+
+      'where.eyebrow': 'Umgebung', 'where.title': 'Was von hier aus erreichbar ist',
+
+      'gallery.eyebrow': 'Galerie', 'gallery.title': 'Das Haus, der Garten, der Blick',
+      'gallery.hint': 'Für die Großansicht auf ein Foto klicken',
+
+      'rev.eyebrow': 'Bewertungen',
+      'rev.average': 'Durchschnitt aus {count} geprüften Bewertungen, veröffentlicht von Posarelli Villas',
+      'rev.more': 'Mehr anzeigen',
+      'rev.readFull': 'Ganze Bewertung lesen',
+      'rev.ctaTitle': 'Sie waren in der Villa Sabrina? Hinterlassen Sie eine Bewertung bei Posarelli Villas.',
+      'rev.ctaButton': 'Bewertung schreiben',
+      'rev.ctaNote': 'Bewertungen werden nach dem Aufenthalt über die Plattform der Agentur abgegeben: wer nicht über Posarelli Villas gebucht hat, findet das Formular nicht. Auf dieser Seite gibt es keines.',
+      'rev.empty': 'Die Bewertungen werden gerade aktualisiert. Bis dahin finden Sie alle auf der offiziellen Seite.',
+
+      'info.eyebrow': 'Praktische Hinweise', 'info.title': 'Vor der Anreise',
+      'info.checkin': 'Anreise und Abreise', 'info.checkinText': 'Anreise zwischen 17:00 und 20:00 Uhr, Abreise zwischen 08:00 und 10:00 Uhr.',
+      'info.poolTitle': 'Schwimmbad', 'info.poolText': 'Geöffnet vom 15. April bis 15. Oktober. Eingezäunt, ausschließlich für die Gäste.',
+      'info.included': 'Inbegriffen',
+      'info.inc1': 'Bett- und Handtuchwäsche, Erstausstattung', 'info.inc2': 'Pooltücher',
+      'info.inc3': 'WLAN und Klimaanlage', 'info.inc4': 'Kinderbett, auf Anfrage und kostenlos',
+      'info.rules': 'Hausordnung',
+      'info.rule1': 'Haustiere auf Anfrage', 'info.rule2': 'Rauchen im Haus nicht gestattet',
+      'info.rule3': 'Haushaltshilfe auf Anfrage',
+      'info.access': 'Anfahrt', 'info.accessText': 'Der Zugang führt über eine nicht geteerte Straße in gutem Zustand. Parkplatz auf dem Grundstück.',
+      'info.owners': 'Die Besitzer', 'info.ownersText': 'Sie wohnen im anderen Teil des Hauses mit eigenem Eingang und stehen bei Bedarf zur Verfügung.',
+      'info.prices': '<strong>Preise und Verfügbarkeit.</strong> Die Preise ändern sich je nach Saison und Aufenthaltsdauer, einige Posten werden vor Ort bezahlt. Maßgeblich für Angebot und Kalender ist die offizielle Seite von Posarelli Villas, die die Buchungen verwaltet.',
+      'info.pricesLink': 'Preise und Verfügbarkeit ansehen',
+
+      'closing.eyebrow': 'Verfügbarkeit',
+      'closing.title': 'Die freien Termine stehen auf der <i>offiziellen</i> Seite',
+      'closing.text': 'Kalender, Preise und Anfragen laufen über Posarelli Villas, die das Haus vermarkten.',
+
+      'foot.loc': 'San Gimignano (SI) · Toskana',
+      'foot.book': 'Buchungen', 'foot.legal': 'Informationen',
+      'foot.about': 'Villa Sabrina wird von Posarelli Villas vermarktet. Diese Seite erzählt vom Haus und wickelt weder Buchungen noch Zahlungen ab.',
+      'foot.updated': 'Bewertungen aktualisiert am',
+
+      'lb.title': 'Fotogalerie', 'lb.close': 'Schließen',
+      'lb.prev': 'Vorheriges Foto', 'lb.next': 'Nächstes Foto',
+      'lb.photo': 'Foto', 'lb.of': 'von',
+
+      'spaces.items': [
+        { img: 'soggiorno-camino', label: 'Wohnbereich',
+          title: 'Das Erdgeschoss, alles in einem',
+          body: 'Großer Wohnbereich mit Satelliten-TV, einem nicht benutzbaren Kamin, Essbereich und Kochbereich in einem einzigen Raum. Dazu eine Einzelausziehcouch und, auf derselben Etage, ein Doppelzimmer mit Klimaanlage.' },
+        { img: 'camera-letto-baldacchino', label: 'Schlafzimmer',
+          title: 'Drei Schlafzimmer, alle klimatisiert',
+          body: 'Im ersten Stock das Doppelzimmer mit Baldachinbett und ein Zweibettzimmer, dessen Betten auf Anfrage zusammengestellt werden. Das dritte Doppelzimmer liegt im Erdgeschoss. Insgesamt bietet das Haus Platz für bis zu 7 Personen.' },
+        { img: 'cucina-credenze-blu', label: 'Küche',
+          title: 'Ein Kochbereich, in dem man wirklich kocht',
+          body: 'Ofen, Herd, Spülmaschine, Mikrowelle, Tiefkühlfach, Brottoaster, Kaffeemaschine und ein Weinkühlschrank. Der Essbereich liegt im selben Raum.' },
+        { img: 'piscina-lettini-ombrellone', label: 'Schwimmbad',
+          title: 'Zehn mal fünf Meter, nur für die Gäste',
+          body: 'Privater Pool ausschließlich für die Gäste, eingezäunt, mit einer Tiefe von 0,80 bis 1,65 Metern. Geöffnet vom 15. April bis 15. Oktober, mit Liegen und Sonnenschirmen auf der Wiese.' },
+        { img: 'giardino-porticato-prato', label: 'Garten und Loggia',
+          title: 'Eine ausgestattete Loggia zum Garten',
+          body: 'Der Garten ist groß, gepflegt und komplett eingezäunt, den Gästen vorbehalten. Die Loggia geht auf die Wiese hinaus und eignet sich für Mahlzeiten im Freien. Es gibt einen Grill, Außenbeleuchtung und einen Parkplatz auf dem Grundstück.' }
+      ],
+
+      'amenities': ['Privates Schwimmbad','Umzäunter Pool','Eingezäunter Garten','Terrasse','Patio','Balkon','Loggia','Grill','Speisen im Freien','Gartenmöbel','Panoramablick','Außenbeleuchtung','Parkplatz auf dem Grundstück','Kostenloses WLAN','Klimaanlage','Heizung','Ausgestattete Küche','Ofen','Herd','Kühlschrank','Tiefkühler','Mikrowelle','Spülmaschine','Kaffeemaschine','Brottoaster','Waschmaschine','Dusche','Satelliten-TV','Mückennetze','Kinderbett','Haustiere auf Anfrage','Nichtraucher','Feuerlöscher'],
+
+      'around': [
+        { name: 'San Gimignano', desc: 'Geschäfte jeder Art', km: '5' },
+        { name: 'Poggibonsi', desc: '', km: '8' },
+        { name: 'Volterra', desc: 'Innerhalb einer Autostunde', km: '35' },
+        { name: 'Siena', desc: 'Innerhalb einer Autostunde', km: '45' },
+        { name: 'Florenz', desc: 'Innerhalb einer Autostunde', km: '50' },
+        { name: 'Pisa', desc: '', km: '85' },
+        { name: 'Lucca', desc: '', km: '90' }
+      ]
     }
   };
 
   /* Testi alternativi delle immagini, nelle due lingue. */
   var ALT = {
     it: {
-      'hero': 'La villa fra i cipressi con la vigna e la piscina, e le torri di San Gimignano all’orizzonte',
+      'hero-poster': 'La proprietà dall’alto: il giardino terrazzato, la piscina e la casa fra i cipressi',
+      'casa-vigna-torri-dallalto': 'La villa fra i cipressi con la vigna e la piscina, e le torri di San Gimignano all’orizzonte',
       'casa-facciata-porticato': 'La facciata della casa in pietra e intonaco con il porticato e il prato davanti',
       'soggiorno-camino': 'Il soggiorno con il camino in muratura, le pareti gialle e le tende blu',
       'camera-letto-baldacchino': 'La camera matrimoniale con letto a baldacchino e veli bianchi, pareti verdi e pavimento in cotto',
@@ -1228,7 +1350,8 @@ i,em,.it{font-style:italic}
       'cucina-dettaglio-piano-blu': 'Dettaglio della cucina: il piano di lavoro blu, il muro in pietra e la cappa in acciaio'
     },
     en: {
-      'hero': 'The villa among cypresses with the vineyard and pool, and the towers of San Gimignano on the horizon',
+      'hero-poster': 'The property from above: the terraced garden, the pool and the house among cypresses',
+      'casa-vigna-torri-dallalto': 'The villa among cypresses with the vineyard and pool, and the towers of San Gimignano on the horizon',
       'casa-facciata-porticato': 'The stone and plaster façade of the house with its portico and the lawn in front',
       'soggiorno-camino': 'The living room with its masonry fireplace, yellow walls and blue curtains',
       'camera-letto-baldacchino': 'The double bedroom with a four-poster bed and white drapes, green walls and terracotta floor',
@@ -1247,7 +1370,8 @@ i,em,.it{font-style:italic}
       'cucina-dettaglio-piano-blu': 'Kitchen detail: the blue worktop, the stone wall and the steel extractor hood'
     },
     fr: {
-      'hero': 'La maison parmi les cyprès avec la vigne et la piscine, et les tours de San Gimignano à l’horizon',
+      'hero-poster': 'La propriété vue d’en haut : le jardin en terrasses, la piscine et la maison parmi les cyprès',
+      'casa-vigna-torri-dallalto': 'La maison parmi les cyprès avec la vigne et la piscine, et les tours de San Gimignano à l’horizon',
       'casa-facciata-porticato': 'La façade en pierre et enduit de la maison, avec la terrasse couverte et la pelouse devant',
       'soggiorno-camino': 'Le séjour avec la cheminée en maçonnerie, les murs jaunes et les rideaux bleus',
       'camera-letto-baldacchino': 'La chambre double avec lit à baldaquin et voiles blancs, murs verts et sol en terre cuite',
@@ -1266,7 +1390,8 @@ i,em,.it{font-style:italic}
       'cucina-dettaglio-piano-blu': 'Détail de la cuisine : le plan de travail bleu, le mur en pierre et la hotte en acier'
     },
     es: {
-      'hero': 'La casa entre los cipreses con la viña y la piscina, y las torres de San Gimignano en el horizonte',
+      'hero-poster': 'La propiedad desde arriba: el jardín aterrazado, la piscina y la casa entre los cipreses',
+      'casa-vigna-torri-dallalto': 'La casa entre los cipreses con la viña y la piscina, y las torres de San Gimignano en el horizonte',
       'casa-facciata-porticato': 'La fachada de piedra y revoco de la casa, con el porche y el césped delante',
       'soggiorno-camino': 'La sala de estar con la chimenea de obra, las paredes amarillas y las cortinas azules',
       'camera-letto-baldacchino': 'La habitación doble con cama con dosel y velos blancos, paredes verdes y suelo de barro cocido',
@@ -1283,11 +1408,32 @@ i,em,.it{font-style:italic}
       'camera-finestra-colline': 'La segunda habitación con cama con dosel y la ventana abierta a las colinas',
       'scala-ferro-battuto': 'La escalera interior con la barandilla de hierro forjado',
       'cucina-dettaglio-piano-blu': 'Detalle de la cocina: la encimera azul, el muro de piedra y la campana de acero'
+    },
+    de: {
+      'hero-poster': 'Das Anwesen von oben: der terrassierte Garten, der Pool und das Haus zwischen den Zypressen',
+      'casa-vigna-torri-dallalto': 'Das Haus zwischen den Zypressen mit Weinberg und Pool, und den Türmen von San Gimignano am Horizont',
+      'casa-facciata-porticato': 'Die Fassade aus Stein und Putz mit der Loggia und der Wiese davor',
+      'soggiorno-camino': 'Der Wohnbereich mit gemauertem Kamin, gelben Wänden und blauen Vorhängen',
+      'camera-letto-baldacchino': 'Das Doppelzimmer mit Baldachinbett und weißen Schleiern, grüne Wände und Terrakottaboden',
+      'cucina-credenze-blu': 'Der Kochbereich mit blauen Schrankfronten und dem gedeckten Esstisch aus Holz',
+      'piscina-lettini-ombrellone': 'Der Pool mit Liegen, Sesseln und großem Sonnenschirm, dahinter die Hügel',
+      'giardino-porticato-prato': 'Die ausgestattete Loggia mit Blick auf die Gartenwiese',
+      'proprieta-dallalto-piscina': 'Das Anwesen von oben: das Haus, der blühende Terrassengarten und der Pool',
+      'piscina-cipressi-divano': 'Der Pool vom schattigen Sofa aus gesehen, mit Hecke und Zypressen',
+      'loggia-tavola-apparecchiata': 'Der gedeckte Tisch unter der steinernen Loggia, bereit für ein Abendessen im Freien',
+      'vista-colline-torri-san-gimignano': 'Der Blick vom Anwesen: die Rebzeilen, das Tal und die Türme von San Gimignano auf dem Kamm',
+      'scalinata-fiorita': 'Die Steintreppe, die zwischen blühenden Sträuchern durch den Garten führt',
+      'piscina-teli-lettino': 'Blaue Pooltücher zusammengerollt auf den Liegen am Beckenrand',
+      'bagno-ardesia-lavabo': 'Das renovierte Bad mit Aufsatzwaschbecken auf Holzablage und rundem hinterleuchtetem Spiegel',
+      'camera-finestra-colline': 'Das zweite Schlafzimmer mit Baldachinbett und dem Fenster zu den Hügeln',
+      'scala-ferro-battuto': 'Die Innentreppe mit schmiedeeisernem Geländer',
+      'cucina-dettaglio-piano-blu': 'Küchendetail: die blaue Arbeitsplatte, die Steinwand und die Dunstabzugshaube aus Stahl'
     }
   };
 
   /* Galleria: 6 esterni, 4 interni. `tall` = ritaglio 4:5. */
   var GALLERY = [
+    { name: 'casa-vigna-torri-dallalto', widths: [800, 1400, 2000], full: 2000 },
     { name: 'proprieta-dallalto-piscina', widths: [800, 1400, 2000], full: 2000 },
     { name: 'piscina-cipressi-divano', widths: [800, 1400, 1920], full: 1920 },
     { name: 'scalinata-fiorita', widths: [800, 1021], full: 1021, tall: true },
@@ -1665,6 +1811,51 @@ i,em,.it{font-style:italic}
     });
   }
 
+  /* ---------------------------------------------------------- video hero */
+  /*
+   * Il filmato è un ornamento, non contenuto: non porta nessuna informazione
+   * che non sia già nel poster e negli alt. Quindi si carica solo se non
+   * disturba nessuno e non costa traffico a chi non se lo aspetta.
+   */
+  function startHeroVideo() {
+    var v = $('#hero-video');
+    if (!v) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(max-width: 899px)').matches) return;      // su mobile resta la foto
+    if (window.matchMedia('(hover: none)').matches) return;
+
+    var c = navigator.connection;
+    if (c && (c.saveData || /^(slow-)?2g$/.test(c.effectiveType || ''))) return;
+
+    var src = document.createElement('source');
+    src.src = 'assets/video/hero-drone.mp4';
+    src.type = 'video/mp4';
+    v.appendChild(src);
+    v.preload = 'auto';
+    v.load();
+
+    // si mostra solo quando può scorrere senza scatti
+    v.addEventListener('canplaythrough', function () {
+      var p = v.play();
+      if (p && p.catch) p.catch(function () { /* l'autoplay può essere negato: resta la foto */ });
+      v.classList.add('is-playing');
+    }, { once: true });
+
+    v.addEventListener('error', function () { v.classList.remove('is-playing'); }, { once: true });
+
+    // fermarlo quando l'hero non si vede risparmia batteria e CPU
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!v.classList.contains('is-playing')) return;
+          if (en.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+          else v.pause();
+        });
+      }, { threshold: 0.05 }).observe($('.hero'));
+    }
+  }
+
   /* -------------------------------------------------------------- init */
   function init() {
     buildGallery();
@@ -1735,6 +1926,10 @@ i,em,.it{font-style:italic}
       if (e.target === e.currentTarget) closeLB();
     });
     document.addEventListener('keydown', lbKeys);
+
+    // dopo il load, così non compete con il poster per la banda
+    if (document.readyState === 'complete') setTimeout(startHeroVideo, 400);
+    else window.addEventListener('load', function () { setTimeout(startHeroVideo, 400); });
 
     $('#reviews-more').addEventListener('click', function () {
       var before = shown;
