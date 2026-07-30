@@ -18,6 +18,7 @@
     "serve": "npx --yes http-server -p 8788 -s --cors",
     "check:render": "node scripts/check-render.mjs",
     "check:a11y": "node scripts/check-a11y.mjs",
+    "check:perf": "node scripts/check-perf.mjs",
     "check:contrast": "node scripts/check-contrast-on-images.mjs",
     "check:lighthouse": "npx --yes lighthouse http://127.0.0.1:8788/index.html --quiet --chrome-flags=\"--headless=new\" --preset=desktop --view"
   },

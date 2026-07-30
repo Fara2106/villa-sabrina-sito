@@ -15,21 +15,25 @@
     "variants": [
       {
         "file": "hero-poster-800.webp",
+        "avif": "hero-poster-800.avif",
         "width": 800,
         "height": 450
       },
       {
         "file": "hero-poster-1400.webp",
+        "avif": "hero-poster-1400.avif",
         "width": 1400,
         "height": 788
       },
       {
         "file": "hero-poster-2000.webp",
+        "avif": "hero-poster-2000.avif",
         "width": 2000,
         "height": 1125
       },
       {
         "file": "hero-poster-2600.webp",
+        "avif": "hero-poster-2600.avif",
         "width": 2600,
         "height": 1463
       }
@@ -60,16 +64,19 @@
     "variants": [
       {
         "file": "casa-vigna-torri-dallalto-800.webp",
+        "avif": "casa-vigna-torri-dallalto-800.avif",
         "width": 800,
         "height": 450
       },
       {
         "file": "casa-vigna-torri-dallalto-1400.webp",
+        "avif": "casa-vigna-torri-dallalto-1400.avif",
         "width": 1400,
         "height": 788
       },
       {
         "file": "casa-vigna-torri-dallalto-2000.webp",
+        "avif": "casa-vigna-torri-dallalto-2000.avif",
         "width": 2000,
         "height": 1125
       }
@@ -100,16 +107,19 @@
     "variants": [
       {
         "file": "fascia-colline-campi-800.webp",
+        "avif": "fascia-colline-campi-800.avif",
         "width": 800,
         "height": 133
       },
       {
         "file": "fascia-colline-campi-1400.webp",
+        "avif": "fascia-colline-campi-1400.avif",
         "width": 1400,
         "height": 233
       },
       {
         "file": "fascia-colline-campi-1920.webp",
+        "avif": "fascia-colline-campi-1920.avif",
         "width": 1920,
         "height": 320
       }
@@ -140,16 +150,19 @@
     "variants": [
       {
         "file": "fascia-filari-vigna-800.webp",
+        "avif": "fascia-filari-vigna-800.avif",
         "width": 800,
         "height": 133
       },
       {
         "file": "fascia-filari-vigna-1400.webp",
+        "avif": "fascia-filari-vigna-1400.avif",
         "width": 1400,
         "height": 233
       },
       {
         "file": "fascia-filari-vigna-1920.webp",
+        "avif": "fascia-filari-vigna-1920.avif",
         "width": 1920,
         "height": 320
       }
@@ -180,11 +193,13 @@
     "variants": [
       {
         "file": "casa-facciata-porticato-800.webp",
+        "avif": "casa-facciata-porticato-800.avif",
         "width": 800,
         "height": 1000
       },
       {
         "file": "casa-facciata-porticato-1021.webp",
+        "avif": "casa-facciata-porticato-1021.avif",
         "width": 1021,
         "height": 1276
       }
@@ -215,16 +230,19 @@
     "variants": [
       {
         "file": "soggiorno-camino-800.webp",
+        "avif": "soggiorno-camino-800.avif",
         "width": 800,
         "height": 533
       },
       {
         "file": "soggiorno-camino-1400.webp",
+        "avif": "soggiorno-camino-1400.avif",
         "width": 1400,
         "height": 933
       },
       {
         "file": "soggiorno-camino-1920.webp",
+        "avif": "soggiorno-camino-1920.avif",
         "width": 1920,
         "height": 1280
       }
@@ -255,16 +273,19 @@
     "variants": [
       {
         "file": "camera-letto-baldacchino-800.webp",
+        "avif": "camera-letto-baldacchino-800.avif",
         "width": 800,
         "height": 533
       },
       {
         "file": "camera-letto-baldacchino-1400.webp",
+        "avif": "camera-letto-baldacchino-1400.avif",
         "width": 1400,
         "height": 933
       },
       {
         "file": "camera-letto-baldacchino-1920.webp",
+        "avif": "camera-letto-baldacchino-1920.avif",
         "width": 1920,
         "height": 1280
       }
@@ -295,16 +316,19 @@
     "variants": [
       {
         "file": "cucina-credenze-blu-800.webp",
+        "avif": "cucina-credenze-blu-800.avif",
         "width": 800,
         "height": 533
       },
       {
         "file": "cucina-credenze-blu-1400.webp",
+        "avif": "cucina-credenze-blu-1400.avif",
         "width": 1400,
         "height": 933
       },
       {
         "file": "cucina-credenze-blu-1920.webp",
+        "avif": "cucina-credenze-blu-1920.avif",
         "width": 1920,
         "height": 1280
       }
@@ -335,16 +359,19 @@
     "variants": [
       {
         "file": "piscina-lettini-ombrellone-800.webp",
+        "avif": "piscina-lettini-ombrellone-800.avif",
         "width": 800,
         "height": 533
       },
       {
         "file": "piscina-lettini-ombrellone-1400.webp",
+        "avif": "piscina-lettini-ombrellone-1400.avif",
         "width": 1400,
         "height": 933
       },
       {
         "file": "piscina-lettini-ombrellone-1920.webp",
+        "avif": "piscina-lettini-ombrellone-1920.avif",
         "width": 1920,
         "height": 1280
       }
@@ -375,16 +402,19 @@
     "variants": [
       {
         "file": "giardino-porticato-prato-800.webp",
+        "avif": "giardino-porticato-prato-800.avif",
         "width": 800,
         "height": 533
       },
       {
         "file": "giardino-porticato-prato-1400.webp",
+        "avif": "giardino-porticato-prato-1400.avif",
         "width": 1400,
         "height": 933
       },
       {
         "file": "giardino-porticato-prato-1920.webp",
+        "avif": "giardino-porticato-prato-1920.avif",
         "width": 1920,
         "height": 1280
       }
@@ -415,16 +445,19 @@
     "variants": [
       {
         "file": "proprieta-dallalto-piscina-800.webp",
+        "avif": "proprieta-dallalto-piscina-800.avif",
         "width": 800,
         "height": 450
       },
       {
         "file": "proprieta-dallalto-piscina-1400.webp",
+        "avif": "proprieta-dallalto-piscina-1400.avif",
         "width": 1400,
         "height": 788
       },
       {
         "file": "proprieta-dallalto-piscina-2000.webp",
+        "avif": "proprieta-dallalto-piscina-2000.avif",
         "width": 2000,
         "height": 1125
       }
@@ -455,16 +488,19 @@
     "variants": [
       {
         "file": "piscina-cipressi-divano-800.webp",
+        "avif": "piscina-cipressi-divano-800.avif",
         "width": 800,
         "height": 533
       },
       {
         "file": "piscina-cipressi-divano-1400.webp",
+        "avif": "piscina-cipressi-divano-1400.avif",
         "width": 1400,
         "height": 933
       },
       {
         "file": "piscina-cipressi-divano-1920.webp",
+        "avif": "piscina-cipressi-divano-1920.avif",
         "width": 1920,
         "height": 1280
       }
@@ -495,16 +531,19 @@
     "variants": [
       {
         "file": "loggia-tavola-apparecchiata-800.webp",
+        "avif": "loggia-tavola-apparecchiata-800.avif",
         "width": 800,
         "height": 533
       },
       {
         "file": "loggia-tavola-apparecchiata-1400.webp",
+        "avif": "loggia-tavola-apparecchiata-1400.avif",
         "width": 1400,
         "height": 933
       },
       {
         "file": "loggia-tavola-apparecchiata-1920.webp",
+        "avif": "loggia-tavola-apparecchiata-1920.avif",
         "width": 1920,
         "height": 1280
       }
@@ -535,16 +574,19 @@
     "variants": [
       {
         "file": "vista-colline-torri-san-gimignano-800.webp",
+        "avif": "vista-colline-torri-san-gimignano-800.avif",
         "width": 800,
         "height": 533
       },
       {
         "file": "vista-colline-torri-san-gimignano-1400.webp",
+        "avif": "vista-colline-torri-san-gimignano-1400.avif",
         "width": 1400,
         "height": 933
       },
       {
         "file": "vista-colline-torri-san-gimignano-1920.webp",
+        "avif": "vista-colline-torri-san-gimignano-1920.avif",
         "width": 1920,
         "height": 1280
       }
@@ -575,11 +617,13 @@
     "variants": [
       {
         "file": "scalinata-fiorita-800.webp",
+        "avif": "scalinata-fiorita-800.avif",
         "width": 800,
         "height": 1000
       },
       {
         "file": "scalinata-fiorita-1021.webp",
+        "avif": "scalinata-fiorita-1021.avif",
         "width": 1021,
         "height": 1276
       }
@@ -610,11 +654,13 @@
     "variants": [
       {
         "file": "piscina-teli-lettino-800.webp",
+        "avif": "piscina-teli-lettino-800.avif",
         "width": 800,
         "height": 1000
       },
       {
         "file": "piscina-teli-lettino-1021.webp",
+        "avif": "piscina-teli-lettino-1021.avif",
         "width": 1021,
         "height": 1276
       }
@@ -645,16 +691,19 @@
     "variants": [
       {
         "file": "bagno-ardesia-lavabo-800.webp",
+        "avif": "bagno-ardesia-lavabo-800.avif",
         "width": 800,
         "height": 533
       },
       {
         "file": "bagno-ardesia-lavabo-1400.webp",
+        "avif": "bagno-ardesia-lavabo-1400.avif",
         "width": 1400,
         "height": 933
       },
       {
         "file": "bagno-ardesia-lavabo-1920.webp",
+        "avif": "bagno-ardesia-lavabo-1920.avif",
         "width": 1920,
         "height": 1280
       }
@@ -685,16 +734,19 @@
     "variants": [
       {
         "file": "camera-finestra-colline-800.webp",
+        "avif": "camera-finestra-colline-800.avif",
         "width": 800,
         "height": 533
       },
       {
         "file": "camera-finestra-colline-1400.webp",
+        "avif": "camera-finestra-colline-1400.avif",
         "width": 1400,
         "height": 933
       },
       {
         "file": "camera-finestra-colline-1920.webp",
+        "avif": "camera-finestra-colline-1920.avif",
         "width": 1920,
         "height": 1280
       }
@@ -725,11 +777,13 @@
     "variants": [
       {
         "file": "scala-ferro-battuto-800.webp",
+        "avif": "scala-ferro-battuto-800.avif",
         "width": 800,
         "height": 1000
       },
       {
         "file": "scala-ferro-battuto-1021.webp",
+        "avif": "scala-ferro-battuto-1021.avif",
         "width": 1021,
         "height": 1276
       }
@@ -760,16 +814,19 @@
     "variants": [
       {
         "file": "cucina-dettaglio-piano-blu-800.webp",
+        "avif": "cucina-dettaglio-piano-blu-800.avif",
         "width": 800,
         "height": 533
       },
       {
         "file": "cucina-dettaglio-piano-blu-1400.webp",
+        "avif": "cucina-dettaglio-piano-blu-1400.avif",
         "width": 1400,
         "height": 933
       },
       {
         "file": "cucina-dettaglio-piano-blu-1920.webp",
+        "avif": "cucina-dettaglio-piano-blu-1920.avif",
         "width": 1920,
         "height": 1280
       }
@@ -800,16 +857,19 @@
     "variants": [
       {
         "file": "chiusura-tavola-arco-vista-800.webp",
+        "avif": "chiusura-tavola-arco-vista-800.avif",
         "width": 800,
         "height": 533
       },
       {
         "file": "chiusura-tavola-arco-vista-1400.webp",
+        "avif": "chiusura-tavola-arco-vista-1400.avif",
         "width": 1400,
         "height": 933
       },
       {
         "file": "chiusura-tavola-arco-vista-1920.webp",
+        "avif": "chiusura-tavola-arco-vista-1920.avif",
         "width": 1920,
         "height": 1280
       }

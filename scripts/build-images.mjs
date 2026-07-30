@@ -8,9 +8,10 @@
  * Non tocca, non sposta e non cancella nessun file originale: apre in lettura
  * le due cartelle di scatti e scrive solo dentro assets/img/.
  *
- * Per ogni foto: WebP q82 alle larghezze richieste + un JPEG progressivo a
- * 1400px come fallback. Le larghezze superiori alla sorgente vengono saltate:
- * le foto professionali sono 1920px e ingrandirle peggiorerebbe solo il file.
+ * Per ogni foto: AVIF q62 e WebP q82 alle larghezze richieste + un JPEG
+ * progressivo a 1400px come ultimo ripiego. Le larghezze superiori alla
+ * sorgente vengono saltate: le foto professionali sono 1920px e ingrandirle
+ * peggiorerebbe solo il file.
  */
 
 import { mkdir, writeFile, readdir, access } from 'node:fs/promises';
@@ -30,6 +31,12 @@ const OUT_DIR = join(ROOT, 'assets/img');
 
 const FORCE = process.argv.includes('--force');
 const WEBP_QUALITY = 82;
+/* AVIF a 62 pesa un terzo in meno del WebP a 82 con lo stesso scarto misurato
+   dall'originale (4,3 contro 3,4 su 255 per canale) e a schermo, sul cielo
+   dell'hero — il punto dove il banding si vedrebbe per primo — i due file sono
+   indistinguibili a grandezza naturale. Il WebP resta come ripiego, la scelta
+   la fa il browser dentro a <picture>. */
+const AVIF_QUALITY = 62;
 const JPEG_WIDTH = 1400;
 
 /* ------------------------------------------------------------- selezione */
@@ -338,7 +345,20 @@ for (const item of SELECTION) {
         .toFile(dest);
       written++;
     }
-    variants.push({ file, width: w, height: Math.round((w / srcW) * srcH) });
+
+    const avifFile = `${item.out}-${w}.avif`;
+    const avifDest = join(OUT_DIR, avifFile);
+    if (!FORCE && (await exists(avifDest))) {
+      skipped++;
+    } else {
+      await pipelineFor()
+        .resize({ width: w, withoutEnlargement: true })
+        .avif({ quality: AVIF_QUALITY, effort: 4 })
+        .toFile(avifDest);
+      written++;
+    }
+
+    variants.push({ file, avif: avifFile, width: w, height: Math.round((w / srcW) * srcH) });
   }
 
   // Fallback JPEG progressivo. Il nome NON contiene la larghezza: per i
@@ -383,7 +403,7 @@ await writeFile(join(OUT_DIR, 'manifest.json'), `${JSON.stringify(manifest, null
 const rows = manifest
   .map((m) => {
     const sizes = m.variants.map((v) => v.width).join(', ');
-    return `| \`${m.name}\` | ${m.role} | ${m.intrinsic.width}×${m.intrinsic.height} | WebP ${sizes} + JPEG ${m.jpeg.width} | \`${m.source}\` | ${m.sourceFolder === 'Foto fatte da me' ? 'drone' : 'Posarelli'} |`;
+    return `| \`${m.name}\` | ${m.role} | ${m.intrinsic.width}×${m.intrinsic.height} | AVIF+WebP ${sizes} + JPEG ${m.jpeg.width} | \`${m.source}\` | ${m.sourceFolder === 'Foto fatte da me' ? 'drone' : 'Posarelli'} |`;
   })
   .join('\n');
 
@@ -433,6 +453,6 @@ ${manifest.map((m) => `- **${m.name}**\n  - IT: ${m.alt.it}\n  - EN: ${m.alt.en}
 
 await writeFile(join(OUT_DIR, 'MANIFEST.md'), md, 'utf8');
 
-const files = (await readdir(OUT_DIR)).filter((f) => /\.(webp|jpg)$/.test(f));
+const files = (await readdir(OUT_DIR)).filter((f) => /\.(avif|webp|jpg)$/.test(f));
 console.log(`\n✓ ${manifest.length} foto · ${files.length} file in assets/img/ (${written} scritti, ${skipped} già presenti)`);
 console.log(`  MANIFEST.md e manifest.json aggiornati\n`);

@@ -22,27 +22,27 @@ interesse indicato da `focusX` nello script.
 
 | Nome | Ruolo | Dimensione intrinseca | Varianti | File originale | Origine |
 |---|---|---|---|---|---|
-| `hero-poster` | Hero — poster del video | 2600×1463 | WebP 800, 1400, 2000, 2600 + JPEG 1400 | `_poster-source.jpg` | Posarelli |
-| `casa-vigna-torri-dallalto` | Galleria — esterno | 2000×1125 | WebP 800, 1400, 2000 + JPEG 1400 | `dji_fly_20260622_152504_43_1782135976157_photo_optimized.jpg` | drone |
-| `fascia-colline-campi` | Fascia panorama 1 | 1920×320 | WebP 800, 1400, 1920 + JPEG 1400 | `31-villa-sabrina-outdoor-posarellivillas-24-.jpg` | Posarelli |
-| `fascia-filari-vigna` | Fascia panorama 2 | 1920×320 | WebP 800, 1400, 1920 + JPEG 1400 | `12-villa-sabrina-outdoor-posarellivillas-18-.jpg` | Posarelli |
-| `casa-facciata-porticato` | Ritratto — la casa | 1021×1276 | WebP 800, 1021 + JPEG 1024 | `13-villa-sabrina-outdoor-posarellivillas-8-.jpg` | Posarelli |
-| `soggiorno-camino` | Spazi — soggiorno | 1920×1280 | WebP 800, 1400, 1920 + JPEG 1400 | `04-villa-sabrina-posarellivillas-5-.jpg` | Posarelli |
-| `camera-letto-baldacchino` | Spazi — camera | 1920×1280 | WebP 800, 1400, 1920 + JPEG 1400 | `35-villa-sabrina-posarellivillas-32-.jpg` | Posarelli |
-| `cucina-credenze-blu` | Spazi — cucina | 1920×1280 | WebP 800, 1400, 1920 + JPEG 1400 | `19-villa-sabrina-posarellivillas-17-.jpg` | Posarelli |
-| `piscina-lettini-ombrellone` | Spazi — piscina | 1920×1280 | WebP 800, 1400, 1920 + JPEG 1400 | `01-villa-sabrina-outdoor-posarellivillas-34-.jpg` | Posarelli |
-| `giardino-porticato-prato` | Spazi — giardino | 1920×1280 | WebP 800, 1400, 1920 + JPEG 1400 | `23-villa-sabrina-outdoor-posarellivillas-12-.jpg` | Posarelli |
-| `proprieta-dallalto-piscina` | Galleria — esterno | 2000×1125 | WebP 800, 1400, 2000 + JPEG 1400 | `dji_fly_20260622_161326_69_1782137753852_aeb.jpg` | drone |
-| `piscina-cipressi-divano` | Galleria — esterno | 1920×1280 | WebP 800, 1400, 1920 + JPEG 1400 | `17-villa-sabrina-outdoor-posarellivillas-30-.jpg` | Posarelli |
-| `loggia-tavola-apparecchiata` | Galleria — esterno | 1920×1280 | WebP 800, 1400, 1920 + JPEG 1400 | `46-villa-sabrina-outdoor-posarellivillas-43-.jpg` | Posarelli |
-| `vista-colline-torri-san-gimignano` | Galleria — vista | 1920×1280 | WebP 800, 1400, 1920 + JPEG 1400 | `27-villa-sabrina-outdoor-posarellivillas-19-.jpg` | Posarelli |
-| `scalinata-fiorita` | Galleria — dettaglio | 1021×1276 | WebP 800, 1021 + JPEG 1024 | `63-villa-sabrina-outdoor-posarellivillas-40-.jpg` | Posarelli |
-| `piscina-teli-lettino` | Galleria — dettaglio | 1021×1276 | WebP 800, 1021 + JPEG 1024 | `41-villa-sabrina-outdoor-posarellivillas-38-.jpg` | Posarelli |
-| `bagno-ardesia-lavabo` | Galleria — interno | 1920×1280 | WebP 800, 1400, 1920 + JPEG 1400 | `49-villa-sabrina-posarellivillas-18-.jpg` | Posarelli |
-| `camera-finestra-colline` | Galleria — interno | 1920×1280 | WebP 800, 1400, 1920 + JPEG 1400 | `44-villa-sabrina-posarellivillas-27-.jpg` | Posarelli |
-| `scala-ferro-battuto` | Galleria — dettaglio | 1021×1276 | WebP 800, 1021 + JPEG 1024 | `34-villa-sabrina-posarellivillas-9-.jpg` | Posarelli |
-| `cucina-dettaglio-piano-blu` | Galleria — interno | 1920×1280 | WebP 800, 1400, 1920 + JPEG 1400 | `20-villa-sabrina-posarellivillas-33-.jpg` | Posarelli |
-| `chiusura-tavola-arco-vista` | Chiusura | 1920×1280 | WebP 800, 1400, 1920 + JPEG 1400 | `53-villa-sabrina-outdoor-posarellivillas-48-.jpg` | Posarelli |
+| `hero-poster` | Hero — poster del video | 2600×1463 | AVIF+WebP 800, 1400, 2000, 2600 + JPEG 1400 | `_poster-source.jpg` | Posarelli |
+| `casa-vigna-torri-dallalto` | Galleria — esterno | 2000×1125 | AVIF+WebP 800, 1400, 2000 + JPEG 1400 | `dji_fly_20260622_152504_43_1782135976157_photo_optimized.jpg` | drone |
+| `fascia-colline-campi` | Fascia panorama 1 | 1920×320 | AVIF+WebP 800, 1400, 1920 + JPEG 1400 | `31-villa-sabrina-outdoor-posarellivillas-24-.jpg` | Posarelli |
+| `fascia-filari-vigna` | Fascia panorama 2 | 1920×320 | AVIF+WebP 800, 1400, 1920 + JPEG 1400 | `12-villa-sabrina-outdoor-posarellivillas-18-.jpg` | Posarelli |
+| `casa-facciata-porticato` | Ritratto — la casa | 1021×1276 | AVIF+WebP 800, 1021 + JPEG 1024 | `13-villa-sabrina-outdoor-posarellivillas-8-.jpg` | Posarelli |
+| `soggiorno-camino` | Spazi — soggiorno | 1920×1280 | AVIF+WebP 800, 1400, 1920 + JPEG 1400 | `04-villa-sabrina-posarellivillas-5-.jpg` | Posarelli |
+| `camera-letto-baldacchino` | Spazi — camera | 1920×1280 | AVIF+WebP 800, 1400, 1920 + JPEG 1400 | `35-villa-sabrina-posarellivillas-32-.jpg` | Posarelli |
+| `cucina-credenze-blu` | Spazi — cucina | 1920×1280 | AVIF+WebP 800, 1400, 1920 + JPEG 1400 | `19-villa-sabrina-posarellivillas-17-.jpg` | Posarelli |
+| `piscina-lettini-ombrellone` | Spazi — piscina | 1920×1280 | AVIF+WebP 800, 1400, 1920 + JPEG 1400 | `01-villa-sabrina-outdoor-posarellivillas-34-.jpg` | Posarelli |
+| `giardino-porticato-prato` | Spazi — giardino | 1920×1280 | AVIF+WebP 800, 1400, 1920 + JPEG 1400 | `23-villa-sabrina-outdoor-posarellivillas-12-.jpg` | Posarelli |
+| `proprieta-dallalto-piscina` | Galleria — esterno | 2000×1125 | AVIF+WebP 800, 1400, 2000 + JPEG 1400 | `dji_fly_20260622_161326_69_1782137753852_aeb.jpg` | drone |
+| `piscina-cipressi-divano` | Galleria — esterno | 1920×1280 | AVIF+WebP 800, 1400, 1920 + JPEG 1400 | `17-villa-sabrina-outdoor-posarellivillas-30-.jpg` | Posarelli |
+| `loggia-tavola-apparecchiata` | Galleria — esterno | 1920×1280 | AVIF+WebP 800, 1400, 1920 + JPEG 1400 | `46-villa-sabrina-outdoor-posarellivillas-43-.jpg` | Posarelli |
+| `vista-colline-torri-san-gimignano` | Galleria — vista | 1920×1280 | AVIF+WebP 800, 1400, 1920 + JPEG 1400 | `27-villa-sabrina-outdoor-posarellivillas-19-.jpg` | Posarelli |
+| `scalinata-fiorita` | Galleria — dettaglio | 1021×1276 | AVIF+WebP 800, 1021 + JPEG 1024 | `63-villa-sabrina-outdoor-posarellivillas-40-.jpg` | Posarelli |
+| `piscina-teli-lettino` | Galleria — dettaglio | 1021×1276 | AVIF+WebP 800, 1021 + JPEG 1024 | `41-villa-sabrina-outdoor-posarellivillas-38-.jpg` | Posarelli |
+| `bagno-ardesia-lavabo` | Galleria — interno | 1920×1280 | AVIF+WebP 800, 1400, 1920 + JPEG 1400 | `49-villa-sabrina-posarellivillas-18-.jpg` | Posarelli |
+| `camera-finestra-colline` | Galleria — interno | 1920×1280 | AVIF+WebP 800, 1400, 1920 + JPEG 1400 | `44-villa-sabrina-posarellivillas-27-.jpg` | Posarelli |
+| `scala-ferro-battuto` | Galleria — dettaglio | 1021×1276 | AVIF+WebP 800, 1021 + JPEG 1024 | `34-villa-sabrina-posarellivillas-9-.jpg` | Posarelli |
+| `cucina-dettaglio-piano-blu` | Galleria — interno | 1920×1280 | AVIF+WebP 800, 1400, 1920 + JPEG 1400 | `20-villa-sabrina-posarellivillas-33-.jpg` | Posarelli |
+| `chiusura-tavola-arco-vista` | Chiusura | 1920×1280 | AVIF+WebP 800, 1400, 1920 + JPEG 1400 | `53-villa-sabrina-outdoor-posarellivillas-48-.jpg` | Posarelli |
 
 ## Ritagli e correzioni applicate
 

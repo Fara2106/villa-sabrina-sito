@@ -17,7 +17,7 @@ CSS e il JavaScript sono dentro il file.
 
 ```
 index.html                  la pagina, unica
-assets/img/                 immagini generate (WebP + fallback JPEG)
+assets/img/                 immagini generate (AVIF + WebP + fallback JPEG)
 assets/img/MANIFEST.md      quale foto è quale, e da dove viene
 data/reviews.json           le recensioni specchiate dalla scheda
 scripts/fetch-reviews.mjs   scarica e aggiorna reviews.json
@@ -127,8 +127,14 @@ Lo script legge l'array `SELECTION` in `scripts/build-images.mjs`: lì stanno la
 foto sorgente, il ruolo, l'eventuale ritaglio e i testi alternativi in italiano
 e inglese. Per cambiare una foto si modifica quella riga e si rilancia.
 
-Per ogni foto produce WebP qualità 82 alle larghezze indicate più un JPEG
-progressivo di fallback, chiamato sempre `<nome>-fallback.jpg`.
+Per ogni foto produce **AVIF qualità 62 e WebP qualità 82** alle larghezze
+indicate, più un JPEG progressivo di fallback chiamato sempre
+`<nome>-fallback.jpg`. Sceglie il browser, dentro a `<picture>`.
+
+L'AVIF pesa il 26% in meno del WebP sull'intera cartella (13,7 MB → 10,2 MB)
+con lo stesso scarto misurato dall'originale: 4,3 contro 3,4 su 255 per canale.
+La qualità 62 è stata scelta confrontando a grandezza naturale il cielo
+dell'hero, che è il punto dove un'eventuale scalettatura si vedrebbe per prima.
 
 Due cose da sapere prima di cambiare le larghezze:
 
@@ -289,8 +295,18 @@ npm run serve            # in un terminale
 npm run check:render     # 360/768/1280/1920: overflow, 404, screenshot
 npm run check:a11y       # contrasti su fondo pieno, tastiera, reduced-motion
 npm run check:contrast   # contrasto del testo che sta SOPRA le foto
+npm run check:perf       # LCP, CLS e byte su un telefono in 4G
 npm run check:lighthouse # apre il report
 ```
+
+`check:perf` esiste per un errore vero: far comparire in dissolvenza il titolo
+dell'hero aveva portato l'LCP da 2,6 a 4,3 secondi senza cambiare di un pixel
+l'aspetto della pagina, e nessun altro controllo se ne era accorto. Il punto è
+**quale** elemento è LCP: qui è l'`<h1>`, non la fotografia — 21.775 px², più
+di qualunque altra cosa nella prima schermata. Tutto ciò che ne ritarda il primo
+disegno si paga per intero, quindi il titolo entra con una sola `translate` e
+mai con l'opacità. Lo script esce con codice 1 se l'LCP supera 1200 ms.
+
 
 I due controlli sui contrasti servono a cose diverse, e il secondo è quello
 che conta di più qui.
