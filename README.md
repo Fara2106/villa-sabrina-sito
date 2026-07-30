@@ -163,6 +163,36 @@ la funzione `parseReviews()`.
 Il fetch è uno per lingua, con `User-Agent` identificabile. Non c'è nessun
 loop di richieste.
 
+### Aggiornamento automatico
+
+C'è un'azione GitHub, `.github/workflows/recensioni.yml`, che ogni **lunedì
+mattina** controlla la scheda Posarelli. Si può lanciare anche a mano dal tab
+*Actions* del repo.
+
+Se trova qualcosa di nuovo:
+
+1. aggiorna `data/reviews.json` e `index.html`, e fa commit;
+2. **apre una issue** con l'elenco delle recensioni nuove, il testo di ciascuna
+   e il comando per approvarle. Così arriva una mail e non serve ricordarsene.
+
+Quello che si aggiorna **da solo** è il totale e la media — li dichiara
+Posarelli, non c'è niente da decidere. Quello che **non** si aggiorna da solo è
+quali recensioni si vedono: entrano sempre con `approved: false`. L'automazione
+avvisa, non pubblica.
+
+Per pubblicarle, dopo la mail:
+
+```bash
+git pull
+npm run reviews:pending
+npm run approve -- <id> <id>
+npm run build && git push
+```
+
+Se un giorno Posarelli cambia il markup della pagina, lo script esce con
+errore, l'azione fallisce e arriva comunque una notifica: meglio un'azione
+rossa che un JSON svuotato in silenzio.
+
 ### Approvare le recensioni
 
 **Le nuove recensioni entrano nel JSON con `approved: false` e non compaiono

@@ -116,7 +116,7 @@ i,em,.it{font-style:italic}
 .nav{display:flex;gap:clamp(18px,2.4vw,34px)}
 .nav a{
   font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text);
-  transition:color .2s;
+  transition:color .2s;white-space:nowrap;
 }
 .nav a:hover{color:var(--gold)}
 .bar-end{display:flex;align-items:center;gap:24px}
@@ -277,20 +277,54 @@ i,em,.it{font-style:italic}
 /* ----------------------------------------------------------- galleria */
 .gal-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:24px;margin-bottom:clamp(40px,6vw,72px)}
 .gal-hint{color:var(--sage);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase}
-/* colonne invece che griglia: le foto hanno proporzioni diverse (3:2 e 4:5)
-   e una griglia a righe uguali lascerebbe buchi o costringerebbe a ritagliare */
-.grid{columns:1;column-gap:20px}
-@media(min-width:620px){.grid{columns:2}}
-@media(min-width:1100px){.grid{columns:3}}
+/* Galleria a cascata: una foto per riga, la didascalia di fianco, i lati che
+   si alternano. Ogni riga compare scorrendo, così la pagina si legge come una
+   sequenza invece che come un catalogo. */
+.grid{display:flex;flex-direction:column;gap:clamp(56px,9vw,120px)}
 .tile{
-  position:relative;display:block;width:100%;margin:0 0 20px;padding:0;
-  border:1px solid var(--line-2);background:none;cursor:zoom-in;overflow:hidden;
-  break-inside:avoid;-webkit-column-break-inside:avoid;
+  display:grid;grid-template-columns:1fr;gap:18px;width:100%;
+  margin:0;padding:0;border:0;background:none;cursor:zoom-in;text-align:left;
+  font-family:var(--sans);
+}
+.tile-media{
+  position:relative;overflow:hidden;border:1px solid var(--line-2);
   transition:border-color .3s ease;
 }
-.tile img{width:100%;height:auto;display:block;transition:transform .7s cubic-bezier(.2,.7,.3,1)}
-.tile:hover,.tile:focus-visible{border-color:var(--gold)}
-.tile:hover img,.tile:focus-visible img{transform:scale(1.04)}
+.tile img{width:100%;height:auto;display:block;transition:transform .9s cubic-bezier(.2,.7,.3,1)}
+.tile:hover .tile-media,.tile:focus-visible .tile-media{border-color:var(--gold)}
+.tile:hover img,.tile:focus-visible img{transform:scale(1.03)}
+
+.tile figcaption{display:block;position:relative}
+.tile .num{
+  display:block;font-size:.66rem;letter-spacing:.22em;color:var(--gold);
+  margin-bottom:14px;font-variant-numeric:tabular-nums;
+}
+.tile .say{
+  display:block;color:var(--text);font-size:clamp(1.05rem,1.7vw,1.35rem);
+  line-height:1.55;font-family:var(--serif);font-style:italic;
+}
+.tile .tell{
+  display:block;margin-top:18px;color:var(--sage);
+  font-size:.95rem;line-height:1.75;max-width:42ch;
+}
+.tile .rule{
+  display:block;width:0;height:1px;background:var(--gold);margin-top:22px;
+  transition:width .8s cubic-bezier(.2,.7,.3,1);
+}
+.tile.in .rule{width:64px}
+.tile:hover .rule,.tile:focus-visible .rule{width:110px}
+
+@media(min-width:900px){
+  .tile{grid-template-columns:repeat(12,1fr);gap:clamp(32px,4vw,64px);align-items:center}
+  .tile-media{grid-column:1 / span 7;grid-row:1}
+  .tile figcaption{grid-column:9 / span 4;grid-row:1}
+  /* a righe alterne la foto passa a destra */
+  .tile:nth-child(even) .tile-media{grid-column:6 / span 7}
+  .tile:nth-child(even) figcaption{grid-column:1 / span 4}
+  /* i ritratti 4:5 sono già alti: se restassero larghi schiaccerebbero tutto */
+  .tile.is-tall .tile-media{grid-column:2 / span 5}
+  .tile.is-tall:nth-child(even) .tile-media{grid-column:6 / span 5}
+}
 
 /* --------------------------------------------------------- recensioni */
 .score-row{
@@ -403,7 +437,7 @@ i,em,.it{font-style:italic}
 .reveal.in{opacity:1;transform:none}
 
 /* ------------------------------------------------------------ mobile */
-@media(max-width:1180px){
+@media(max-width:1300px){
   .burger{display:block}
   .nav{
     position:fixed;inset:0 0 0 auto;width:min(88vw,390px);
@@ -839,6 +873,30 @@ i,em,.it{font-style:italic}
 
       'gallery.eyebrow': 'Galleria', 'gallery.title': 'La casa, il giardino, la vista',
       'gallery.hint': 'Clicca una foto per ingrandirla',
+      'gallery.captions': {
+        'casa-vigna-torri-dallalto': ['Da quassù si vedono le torri di San Gimignano, cinque chilometri più in là.',
+          'La casa sta su un poggio fra i cipressi e i filari, e sotto di lei la piscina prende il sole per tutto il giorno. In un’ora di auto si arriva a Firenze, a Siena, a Volterra e in tutto il Chianti Classico: la sera però si torna quassù, e la differenza fra visitare la Toscana e starci sta tutta lì.'],
+        'proprieta-dallalto-piscina': ['Il giardino scende a terrazze fino alla piscina.',
+          'È grande, curato e completamente recintato: per tutta la durata del soggiorno è riservato a voi. Ci sono il barbecue, l’illuminazione esterna e il parcheggio dentro la proprietà. I proprietari abitano nella porzione accanto, con ingresso separato — e nelle recensioni sono la cosa che gli ospiti nominano più spesso: più della piscina, più della vista.'],
+        'piscina-cipressi-divano': ['Un divano all’ombra, la siepe alle spalle e dieci metri d’acqua davanti.',
+          'La piscina misura 10 × 5 metri e va da 80 centimetri a un metro e 65: si sta in piedi quasi ovunque, il che con i bambini piccoli cambia le giornate. È recintata, di uso esclusivo, e resta aperta dal 15 aprile al 15 ottobre. I teli sono compresi, quindi in valigia ci sta dell’altro.'],
+        'scalinata-fiorita': ['La scala di pietra che sale nel giardino, fra gli arbusti in fiore.',
+          'Il giardino è disegnato su più livelli e si gira tutto a piedi, da una quota all’altra. Sono i dettagli che si notano il terzo giorno, quando si smette di fare i turisti e si comincia semplicemente ad abitare la casa.'],
+        'loggia-tavola-apparecchiata': ['La tavola sotto la loggia: qui si cena finché la luce regge.',
+          'Il porticato è attrezzato e guarda il prato: d’estate diventa la stanza più usata della casa. Si pranza, si cena, si sta seduti a non fare niente. Il barbecue è a due passi e San Gimignano, con i negozi per la spesa, a cinque chilometri.'],
+        'bagno-ardesia-lavabo': ['Uno dei due bagni, rifatto da poco.',
+          'La casa è stata ristrutturata di recente e qui si vede più che altrove: lavabo d’appoggio su mensola di legno, specchio tondo retroilluminato, doccia. Il secondo bagno, anch’esso con doccia, è al piano terra insieme alla lavatrice.'],
+        'piscina-teli-lettino': ['I teli per la piscina sono già lì che aspettano: sono compresi.',
+          'Come la biancheria da letto e da bagno, il Wi-Fi, l’aria condizionata e la culla per chi viaggia con un bambino piccolo. Sono le cose che non si notano quando ci sono, e che si notano moltissimo quando mancano.'],
+        'vista-colline-torri-san-gimignano': ['La valle, i filari, e San Gimignano appoggiata sul crinale.',
+          'Torna in una recensione su quattro, e non è mai due volte uguale: netta la mattina, sbiancata a mezzogiorno, dorata verso le otto di sera. Per vederla non serve andare da nessuna parte — è già lì, dal giardino, mentre si apparecchia.'],
+        'camera-finestra-colline': ['Ci si sveglia con le colline alla finestra.',
+          'Tutte e tre le camere hanno l’aria condizionata, che a luglio in Toscana non è un dettaglio. Al primo piano ci sono la matrimoniale con il letto a baldacchino e una camera con due letti singoli, che si uniscono su richiesta; la terza matrimoniale è al piano terra. In tutto la casa dorme sette persone.'],
+        'scala-ferro-battuto': ['Il ferro battuto della scala che porta alle camere di sopra.',
+          'Centosessanta metri quadri su due piani, con il cotto, il mattone e il legno lasciati a vista. È una porzione di villa di campagna ristrutturata senza cancellare quello che era: una casa, non un albergo.'],
+        'cucina-dettaglio-piano-blu': ['Il piano blu, la pietra a vista, e tutto quello che serve per cucinare sul serio.',
+          'Forno, piano cottura, lavastoviglie, microonde, freezer, tostapane, macchina da caffè americano e una cantinetta per il vino. La zona pranzo è nello stesso ambiente, così chi cucina non resta mai da solo — che poi è il motivo per cui si affitta una casa invece di due stanze d’albergo.']
+      },
 
       'rev.eyebrow': 'Recensioni',
       'rev.average': 'media su {count} recensioni verificate, pubblicate da Posarelli Villas',
@@ -944,6 +1002,30 @@ i,em,.it{font-style:italic}
 
       'gallery.eyebrow': 'Gallery', 'gallery.title': 'The house, the garden, the view',
       'gallery.hint': 'Click a photo to enlarge it',
+      'gallery.captions': {
+        'casa-vigna-torri-dallalto': ['From up here you can see the towers of San Gimignano, five kilometres away.',
+          'The house sits on a rise among the cypresses and the vine rows, with the pool below it in the sun all day. Florence, Siena, Volterra and the whole Chianti Classico are within an hour’s drive — but in the evening you come back up here, and that is the whole difference between visiting Tuscany and staying in it.'],
+        'proprieta-dallalto-piscina': ['The garden drops in terraces down to the pool.',
+          'It is large, well kept and entirely fenced: for the length of your stay it is yours. There is the barbecue, outdoor lighting and parking within the grounds. The owners live in the adjoining part with a separate entrance — and in the reviews they are the thing guests mention most often: more than the pool, more than the view.'],
+        'piscina-cipressi-divano': ['A sofa in the shade, the hedge behind you and ten metres of water in front.',
+          'The pool is 10 × 5 metres and runs from 80 centimetres to 1.65: you can stand up almost anywhere, which with small children changes the whole day. It is fenced, for guests only, and open from 15 April to 15 October. Towels are included, so your case can hold something else.'],
+        'scalinata-fiorita': ['The stone staircase climbing through the garden, between flowering shrubs.',
+          'The garden is laid out on several levels and you walk all of it, from one height to the next. These are the details you notice on the third day, when you stop being a tourist and simply start living in the house.'],
+        'loggia-tavola-apparecchiata': ['The table under the loggia: dinner here lasts as long as the light does.',
+          'The portico is furnished and looks onto the lawn: in summer it becomes the most used room in the house. You have lunch, you have dinner, you sit and do nothing. The barbecue is a few steps away and San Gimignano, with shops for the groceries, is five kilometres off.'],
+        'bagno-ardesia-lavabo': ['One of the two bathrooms, recently redone.',
+          'The house was restored not long ago and it shows here more than anywhere: a countertop basin on a wooden shelf, a round backlit mirror, a shower. The second bathroom, also with a shower, is on the ground floor together with the washing machine.'],
+        'piscina-teli-lettino': ['The pool towels are already waiting for you: they are included.',
+          'So are the bed and bath linen, the Wi-Fi, the air conditioning and a cot for anyone travelling with a small child. They are the things you never notice when they are there, and notice enormously when they are not.'],
+        'vista-colline-torri-san-gimignano': ['The valley, the vine rows, and San Gimignano resting on the ridge.',
+          'It comes up in one review out of four, and it is never twice the same: sharp in the morning, bleached at midday, golden around eight in the evening. You do not have to go anywhere to see it — it is already there, from the garden, while you lay the table.'],
+        'camera-finestra-colline': ['You wake up with the hills at the window.',
+          'All three bedrooms are air conditioned, which in a Tuscan July is not a detail. Upstairs there is the double with the four-poster bed and a twin room whose beds join on request; the third double is on the ground floor. In all, the house sleeps seven.'],
+        'scala-ferro-battuto': ['The wrought iron of the staircase up to the bedrooms.',
+          'One hundred and sixty square metres over two floors, with terracotta, brick and wood left exposed. It is part of a country villa, restored without erasing what it was: a house, not a hotel.'],
+        'cucina-dettaglio-piano-blu': ['The blue worktop, the bare stone, and everything you need to really cook.',
+          'Oven, hob, dishwasher, microwave, freezer, toaster, filter coffee machine and a wine fridge. The dining area is in the same room, so whoever is cooking is never left alone — which is more or less why you rent a house instead of two hotel rooms.']
+      },
 
       'rev.eyebrow': 'Reviews',
       'rev.average': 'average across {count} verified reviews published by Posarelli Villas',
@@ -1048,6 +1130,30 @@ i,em,.it{font-style:italic}
 
       'gallery.eyebrow': 'Galerie', 'gallery.title': 'La maison, le jardin, la vue',
       'gallery.hint': 'Cliquez une photo pour l’agrandir',
+      'gallery.captions': {
+        'casa-vigna-torri-dallalto': ['D’ici on aperçoit les tours de San Gimignano, à cinq kilomètres.',
+          'La maison est posée sur une hauteur, entre les cyprès et les rangs de vigne, et la piscine en contrebas reste au soleil toute la journée. Florence, Sienne, Volterra et tout le Chianti Classico sont à moins d’une heure de route — mais le soir on remonte ici, et c’est toute la différence entre visiter la Toscane et y séjourner.'],
+        'proprieta-dallalto-piscina': ['Le jardin descend en terrasses jusqu’à la piscine.',
+          'Il est grand, bien entretenu et entièrement clôturé : le temps du séjour, il est à vous. Il y a le barbecue, l’éclairage extérieur et le parking dans la propriété. Les propriétaires habitent la partie voisine avec un accès indépendant — et dans les avis, ce sont eux que les hôtes citent le plus souvent : plus que la piscine, plus que la vue.'],
+        'piscina-cipressi-divano': ['Un canapé à l’ombre, la haie derrière et dix mètres d’eau devant.',
+          'La piscine fait 10 × 5 mètres et va de 80 centimètres à 1,65 : on a pied presque partout, ce qui avec de jeunes enfants change les journées. Elle est clôturée, réservée aux hôtes, et ouverte du 15 avril au 15 octobre. Les serviettes sont comprises, la valise peut donc contenir autre chose.'],
+        'scalinata-fiorita': ['L’escalier de pierre qui monte dans le jardin, entre les arbustes en fleurs.',
+          'Le jardin est dessiné sur plusieurs niveaux et se parcourt entièrement à pied, d’une hauteur à l’autre. Ce sont les détails qu’on remarque le troisième jour, quand on cesse d’être touriste et qu’on commence simplement à habiter la maison.'],
+        'loggia-tavola-apparecchiata': ['La table sous la loggia : ici on dîne tant que la lumière tient.',
+          'La terrasse couverte est équipée et donne sur la pelouse : l’été, elle devient la pièce la plus utilisée de la maison. On y déjeune, on y dîne, on y reste sans rien faire. Le barbecue est à deux pas et San Gimignano, avec ses magasins, à cinq kilomètres.'],
+        'bagno-ardesia-lavabo': ['L’une des deux salles de bains, refaite récemment.',
+          'La maison a été restructurée il y a peu et cela se voit ici plus qu’ailleurs : vasque à poser sur tablette en bois, miroir rond rétroéclairé, douche. La seconde salle de bains, également avec douche, est au rez-de-chaussée avec le lave-linge.'],
+        'piscina-teli-lettino': ['Les serviettes de piscine vous attendent déjà : elles sont comprises.',
+          'Comme le linge de lit et de toilette, le Wi-Fi, la climatisation et le lit bébé pour qui voyage avec un tout-petit. Ce sont les choses qu’on ne remarque jamais quand elles sont là, et énormément quand elles manquent.'],
+        'vista-colline-torri-san-gimignano': ['La vallée, les rangs de vigne, et San Gimignano posée sur la crête.',
+          'Elle revient dans un avis sur quatre, et n’est jamais deux fois la même : nette le matin, délavée à midi, dorée vers huit heures du soir. Pour la voir il n’y a nulle part où aller — elle est déjà là, depuis le jardin, pendant qu’on met la table.'],
+        'camera-finestra-colline': ['On se réveille avec les collines à la fenêtre.',
+          'Les trois chambres sont climatisées, ce qui en juillet toscan n’est pas un détail. À l’étage, la chambre double avec lit à baldaquin et une chambre à deux lits simples qui se joignent sur demande ; la troisième chambre double est au rez-de-chaussée. En tout, la maison couche sept personnes.'],
+        'scala-ferro-battuto': ['Le fer forgé de l’escalier qui mène aux chambres.',
+          'Cent soixante mètres carrés sur deux niveaux, avec la terre cuite, la brique et le bois laissés apparents. C’est une partie de maison de campagne restructurée sans effacer ce qu’elle était : une maison, pas un hôtel.'],
+        'cucina-dettaglio-piano-blu': ['Le plan de travail bleu, la pierre apparente, et tout ce qu’il faut pour cuisiner vraiment.',
+          'Four, plaque de cuisson, lave-vaisselle, micro-ondes, congélateur, grille-pain, machine à café et une cave à vin réfrigérée. La salle à manger est dans la même pièce, si bien que celui qui cuisine n’est jamais seul — ce qui est à peu près la raison pour laquelle on loue une maison plutôt que deux chambres d’hôtel.']
+      },
 
       'rev.eyebrow': 'Avis',
       'rev.average': 'moyenne sur {count} avis vérifiés, publiés par Posarelli Villas',
@@ -1154,6 +1260,30 @@ i,em,.it{font-style:italic}
 
       'gallery.eyebrow': 'Galería', 'gallery.title': 'La casa, el jardín, las vistas',
       'gallery.hint': 'Haz clic en una foto para ampliarla',
+      'gallery.captions': {
+        'casa-vigna-torri-dallalto': ['Desde aquí arriba se ven las torres de San Gimignano, a cinco kilómetros.',
+          'La casa está en un alto entre los cipreses y las hileras de viña, y la piscina, más abajo, tiene sol todo el día. Florencia, Siena, Volterra y todo el Chianti Classico quedan a menos de una hora en coche — pero por la tarde se vuelve aquí, y en eso consiste la diferencia entre visitar la Toscana y estar en ella.'],
+        'proprieta-dallalto-piscina': ['El jardín baja en terrazas hasta la piscina.',
+          'Es grande, cuidado y está completamente vallado: durante la estancia es vuestro. Hay barbacoa, iluminación exterior y aparcamiento dentro de la propiedad. Los propietarios viven en la parte contigua con entrada independiente — y en las opiniones son lo que más mencionan los huéspedes: más que la piscina, más que las vistas.'],
+        'piscina-cipressi-divano': ['Un sofá a la sombra, el seto detrás y diez metros de agua delante.',
+          'La piscina mide 10 × 5 metros y va de 80 centímetros a 1,65: se hace pie casi en todas partes, lo que con niños pequeños cambia el día entero. Está vallada, es de uso exclusivo y abre del 15 de abril al 15 de octubre. Las toallas van incluidas, así que en la maleta cabe otra cosa.'],
+        'scalinata-fiorita': ['La escalinata de piedra que sube por el jardín, entre los arbustos en flor.',
+          'El jardín está trazado en varios niveles y se recorre entero a pie, de una cota a otra. Son los detalles que se notan al tercer día, cuando uno deja de hacer de turista y simplemente empieza a habitar la casa.'],
+        'loggia-tavola-apparecchiata': ['La mesa bajo la logia: aquí se cena mientras aguante la luz.',
+          'El porche está equipado y da al césped: en verano se convierte en la estancia más usada de la casa. Se come, se cena, se está sentado sin hacer nada. La barbacoa está a dos pasos y San Gimignano, con tiendas para la compra, a cinco kilómetros.'],
+        'bagno-ardesia-lavabo': ['Uno de los dos baños, reformado hace poco.',
+          'La casa se reformó hace poco y aquí se nota más que en ningún otro sitio: lavabo sobre encimera de madera, espejo redondo retroiluminado, ducha. El segundo baño, también con ducha, está en la planta baja junto con la lavadora.'],
+        'piscina-teli-lettino': ['Las toallas de piscina ya están esperando: van incluidas.',
+          'Como la ropa de cama y de baño, el Wi-Fi, el aire acondicionado y la cuna para quien viaja con un niño pequeño. Son las cosas que nunca se notan cuando están, y muchísimo cuando faltan.'],
+        'vista-colline-torri-san-gimignano': ['El valle, las hileras de viña, y San Gimignano apoyada en la cresta.',
+          'Aparece en una de cada cuatro opiniones, y nunca es dos veces igual: nítida por la mañana, blanqueada al mediodía, dorada hacia las ocho de la tarde. Para verla no hay que ir a ninguna parte — ya está ahí, desde el jardín, mientras se pone la mesa.'],
+        'camera-finestra-colline': ['Uno se despierta con las colinas en la ventana.',
+          'Las tres habitaciones tienen aire acondicionado, que en un julio toscano no es un detalle. En la primera planta están la doble con cama con dosel y una habitación con dos camas individuales que se unen bajo petición; la tercera doble está en la planta baja. En total la casa duerme a siete personas.'],
+        'scala-ferro-battuto': ['El hierro forjado de la escalera que sube a las habitaciones.',
+          'Ciento sesenta metros cuadrados en dos plantas, con el barro cocido, el ladrillo y la madera a la vista. Es una parte de una casa de campo reformada sin borrar lo que era: una casa, no un hotel.'],
+        'cucina-dettaglio-piano-blu': ['La encimera azul, la piedra vista, y todo lo necesario para cocinar de verdad.',
+          'Horno, placa, lavavajillas, microondas, congelador, tostadora, cafetera y una vinoteca refrigerada. El comedor está en el mismo ambiente, así que quien cocina nunca se queda solo — que es más o menos la razón por la que se alquila una casa en vez de dos habitaciones de hotel.']
+      },
 
       'rev.eyebrow': 'Opiniones',
       'rev.average': 'media sobre {count} opiniones verificadas, publicadas por Posarelli Villas',
@@ -1258,6 +1388,30 @@ i,em,.it{font-style:italic}
 
       'gallery.eyebrow': 'Galerie', 'gallery.title': 'Das Haus, der Garten, der Blick',
       'gallery.hint': 'Für die Großansicht auf ein Foto klicken',
+      'gallery.captions': {
+        'casa-vigna-torri-dallalto': ['Von hier oben sieht man die Türme von San Gimignano, fünf Kilometer entfernt.',
+          'Das Haus liegt auf einer Anhöhe zwischen Zypressen und Rebzeilen, der Pool darunter hat den ganzen Tag Sonne. Florenz, Siena, Volterra und der ganze Chianti Classico sind in einer Autostunde erreichbar — abends aber kommt man hierher zurück, und genau darin liegt der Unterschied zwischen die Toskana besuchen und in ihr wohnen.'],
+        'proprieta-dallalto-piscina': ['Der Garten fällt in Terrassen zum Pool hin ab.',
+          'Er ist groß, gepflegt und komplett eingezäunt: für die Dauer des Aufenthalts gehört er Ihnen. Es gibt den Grill, die Außenbeleuchtung und den Parkplatz auf dem Grundstück. Die Besitzer wohnen im Nachbartrakt mit eigenem Eingang — und in den Bewertungen werden sie am häufigsten genannt: öfter als der Pool, öfter als die Aussicht.'],
+        'piscina-cipressi-divano': ['Ein Sofa im Schatten, die Hecke im Rücken und zehn Meter Wasser davor.',
+          'Der Pool misst 10 × 5 Meter und reicht von 80 Zentimetern bis 1,65: fast überall steht man, was mit kleinen Kindern den ganzen Tag verändert. Er ist eingezäunt, nur für die Gäste, und vom 15. April bis 15. Oktober geöffnet. Die Tücher sind inbegriffen, im Koffer bleibt also Platz für anderes.'],
+        'scalinata-fiorita': ['Die Steintreppe, die zwischen blühenden Sträuchern durch den Garten führt.',
+          'Der Garten ist auf mehreren Ebenen angelegt und wird ganz zu Fuß erschlossen, von einer Höhe zur nächsten. Es sind die Details, die einem am dritten Tag auffallen, wenn man aufhört, Tourist zu sein, und einfach anfängt, das Haus zu bewohnen.'],
+        'loggia-tavola-apparecchiata': ['Der Tisch unter der Loggia: hier isst man, solange das Licht reicht.',
+          'Die Loggia ist ausgestattet und geht auf die Wiese hinaus: im Sommer wird sie zum meistgenutzten Raum des Hauses. Man isst zu Mittag, man isst zu Abend, man sitzt und tut nichts. Der Grill ist zwei Schritte entfernt und San Gimignano, mit Geschäften für den Einkauf, fünf Kilometer.'],
+        'bagno-ardesia-lavabo': ['Eines der beiden Bäder, vor Kurzem erneuert.',
+          'Das Haus wurde vor nicht langer Zeit renoviert, und hier sieht man es deutlicher als anderswo: Aufsatzwaschbecken auf Holzablage, runder hinterleuchteter Spiegel, Dusche. Das zweite Bad, ebenfalls mit Dusche, liegt im Erdgeschoss zusammen mit der Waschmaschine.'],
+        'piscina-teli-lettino': ['Die Pooltücher liegen schon bereit: sie sind inbegriffen.',
+          'Ebenso Bett- und Handtuchwäsche, WLAN, Klimaanlage und ein Kinderbett für alle, die mit einem Kleinkind reisen. Es sind die Dinge, die man nie bemerkt, wenn sie da sind, und sehr wohl, wenn sie fehlen.'],
+        'vista-colline-torri-san-gimignano': ['Das Tal, die Rebzeilen und San Gimignano auf dem Kamm.',
+          'Sie kommt in jeder vierten Bewertung vor und ist nie zweimal dieselbe: klar am Morgen, ausgebleicht am Mittag, golden gegen acht Uhr abends. Um sie zu sehen, muss man nirgendwohin — sie ist schon da, vom Garten aus, während man den Tisch deckt.'],
+        'camera-finestra-colline': ['Man wacht mit den Hügeln vor dem Fenster auf.',
+          'Alle drei Schlafzimmer sind klimatisiert, was in einem toskanischen Juli kein Detail ist. Im ersten Stock das Doppelzimmer mit Baldachinbett und ein Zweibettzimmer, dessen Betten auf Anfrage zusammengestellt werden; das dritte Doppelzimmer liegt im Erdgeschoss. Insgesamt schläft das Haus sieben Personen.'],
+        'scala-ferro-battuto': ['Das schmiedeeiserne Geländer der Treppe hinauf zu den Schlafzimmern.',
+          'Hundertsechzig Quadratmeter auf zwei Etagen, mit sichtbarem Terrakotta, Ziegel und Holz. Es ist ein Teil eines Landhauses, renoviert, ohne zu tilgen, was es war: ein Haus, kein Hotel.'],
+        'cucina-dettaglio-piano-blu': ['Die blaue Arbeitsplatte, der sichtbare Stein, und alles, was man zum richtigen Kochen braucht.',
+          'Ofen, Herd, Spülmaschine, Mikrowelle, Tiefkühlfach, Brottoaster, Kaffeemaschine und ein Weinkühlschrank. Der Essbereich liegt im selben Raum, wer kocht, bleibt also nie allein — was ungefähr der Grund ist, warum man ein Haus mietet statt zwei Hotelzimmer.']
+      },
 
       'rev.eyebrow': 'Bewertungen',
       'rev.average': 'Durchschnitt aus {count} geprüften Bewertungen, veröffentlicht von Posarelli Villas',
@@ -1549,13 +1703,42 @@ i,em,.it{font-style:italic}
     var host = $('#gallery');
     if (!host) return;
     host.innerHTML = '';
+    var caps = I18N[lang]['gallery.captions'] || {};
     GALLERY.forEach(function (g, i) {
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'tile reveal';
       btn.setAttribute('data-index', String(i));
-      btn.appendChild(picture(g.name, g.widths,
-        '(min-width:1100px) 33vw, (min-width:620px) 50vw, 100vw', g.tall));
+
+      if (g.tall) btn.className += ' is-tall';
+
+      var media = document.createElement('span');
+      media.className = 'tile-media';
+      media.appendChild(picture(g.name, g.widths,
+        g.tall ? '(min-width:900px) 40vw, 100vw' : '(min-width:900px) 56vw, 100vw', g.tall));
+      btn.appendChild(media);
+
+      var fc = document.createElement('figcaption');
+      var num = document.createElement('span');
+      num.className = 'num';
+      num.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(GALLERY.length).padStart(2, '0');
+      fc.appendChild(num);
+      var cap = caps[g.name];
+      var say = document.createElement('span');
+      say.className = 'say';
+      say.textContent = (cap && cap[0]) || (ALT[lang] && ALT[lang][g.name]) || '';
+      fc.appendChild(say);
+      if (cap && cap[1]) {
+        var tell = document.createElement('span');
+        tell.className = 'tell';
+        tell.textContent = cap[1];
+        fc.appendChild(tell);
+      }
+      var rule = document.createElement('span');
+      rule.className = 'rule';
+      fc.appendChild(rule);
+      btn.appendChild(fc);
+
       host.appendChild(btn);
     });
   }
@@ -1593,8 +1776,12 @@ i,em,.it{font-style:italic}
     var it = LB_ITEMS[lbIndex];
     var img = $('#lb-img');
     img.src = 'assets/img/' + it.name + '-' + it.full + '.webp';
+    // l'alt resta la descrizione neutra per chi non vede l'immagine;
+    // sotto si legge la didascalia, che è un'altra cosa e serve a un altro scopo
     img.alt = (ALT[lang] && ALT[lang][it.name]) || '';
-    $('#lb-caption').textContent = img.alt;
+    var caps = I18N[lang]['gallery.captions'] || {};
+    var cap = caps[it.name];
+    $('#lb-caption').textContent = (cap && cap[0]) || img.alt;
     $('#lb-count').textContent = t('lb.photo') + ' ' + (lbIndex + 1) + ' ' + t('lb.of') + ' ' + LB_ITEMS.length;
   }
   function lbKeys(e) {
@@ -1740,6 +1927,7 @@ i,em,.it{font-style:italic}
 
     buildSpaces();
     buildAround();
+    buildGallery();   // le didascalie cambiano con la lingua
 
     var amen = $('#amenities');
     if (amen) {

@@ -1,0 +1,126 @@
+name: Aggiorna le recensioni
+
+# Controlla la scheda Posarelli una volta a settimana e, se ci sono novità,
+# aggiorna data/reviews.json e apre una issue per avvisare.
+#
+# Le nuove recensioni entrano SEMPRE con "approved": false e quindi non
+# compaiono da sole sul sito: l'ultima parola resta a mano, come deve essere.
+# Quello che si aggiorna da solo è il resto — il totale delle recensioni e la
+# media — perché quelli li dichiara Posarelli e non c'è niente da approvare.
+
+on:
+  schedule:
+    - cron: '17 6 * * 1'      # ogni lunedì alle 06:17 UTC
+  workflow_dispatch:           # e quando vuoi, dal tab Actions
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: recensioni
+  cancel-in-progress: false
+
+jobs:
+  aggiorna:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      # servono solo node-html-parser e sharp: lighthouse e puppeteer no
+      - run: npm ci --omit=dev
+
+      - name: Guarda cosa cambierebbe
+        run: node scripts/fetch-reviews.mjs --dry-run | tee dry-run.txt
+
+      - name: Scarica e aggiorna il JSON
+        run: node scripts/fetch-reviews.mjs
+
+      - name: Riscrivi index.html
+        run: node scripts/build-site.mjs
+
+      - name: C'è qualcosa di nuovo?
+        id: diff
+        run: |
+          if git diff --quiet -- data/reviews.json index.html; then
+            echo "cambiato=no" >> "$GITHUB_OUTPUT"
+            echo "Nessuna novità sulla scheda."
+          else
+            echo "cambiato=si" >> "$GITHUB_OUTPUT"
+            # quante recensioni sono entrate adesso, e quali
+            node -e '
+              const fs=require("fs");
+              const now=JSON.parse(fs.readFileSync("data/reviews.json","utf8"));
+              const prev=JSON.parse(require("child_process")
+                .execSync("git show HEAD:data/reviews.json").toString());
+              const old=new Set(prev.reviews.map(r=>r.id));
+              const nuove=now.reviews.filter(r=>!old.has(r.id));
+              fs.writeFileSync("nuove.json", JSON.stringify(nuove,null,1));
+              const righe=nuove.map(r=>
+                "- **"+r.author+"**"+(r.from?" · "+r.from:"")+
+                " · "+(r.lang||"??")+(r.date?" · "+r.date:"")+
+                "\n  `"+r.id+"`\n\n  > "+r.text.replace(/\n/g," ")+"\n"
+              ).join("\n");
+              fs.writeFileSync("nuove.md", righe || "_Nessuna recensione nuova: sono cambiati solo il totale o la media._\n");
+              console.log("nuove:", nuove.length);
+            '
+          fi
+
+      - name: Salva le modifiche
+        if: steps.diff.outputs.cambiato == 'si'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/reviews.json index.html
+          git commit -m "Recensioni aggiornate dalla scheda Posarelli
+
+          Aggiornamento automatico. Le nuove recensioni sono entrate con
+          approved:false e non sono ancora visibili sul sito."
+          git push
+
+      - name: Avvisa con una issue
+        if: steps.diff.outputs.cambiato == 'si'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const nuove = fs.existsSync('nuove.md') ? fs.readFileSync('nuove.md', 'utf8') : '';
+            const dry = fs.existsSync('dry-run.txt') ? fs.readFileSync('dry-run.txt', 'utf8') : '';
+            const oggi = new Date().toISOString().slice(0, 10);
+            const body = [
+              'La scheda Posarelli è cambiata e `data/reviews.json` è stato aggiornato.',
+              '',
+              '**Le nuove recensioni non sono ancora sul sito**: entrano sempre con',
+              '`approved: false`. Per pubblicarle:',
+              '',
+              '```bash',
+              'git pull',
+              'npm run reviews:pending          # rivedile',
+              'npm run approve -- <id> <id>     # quelle che vuoi mostrare',
+              'npm run build && git push        # aggiorna il sito',
+              '```',
+              '',
+              '### Novità',
+              '',
+              nuove,
+              '',
+              '<details><summary>Report completo</summary>',
+              '',
+              '```',
+              dry.trim(),
+              '```',
+              '',
+              '</details>',
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Recensioni da approvare — ${oggi}`,
+              body,
+              labels: ['recensioni'],
+            });
