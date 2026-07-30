@@ -1,0 +1,30 @@
+{
+  "name": "villa-sabrina-sito",
+  "version": "1.0.0",
+  "description": "Sito vetrina di Villa Sabrina, casa vacanze a San Gimignano commercializzata da Posarelli Villas. Statico, bilingue IT/EN, senza backend.",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "reviews:dry": "node scripts/fetch-reviews.mjs --dry-run",
+    "reviews": "node scripts/fetch-reviews.mjs",
+    "reviews:list": "node scripts/approve-reviews.mjs --list",
+    "reviews:pending": "node scripts/approve-reviews.mjs --list --pending",
+    "approve": "node scripts/approve-reviews.mjs",
+    "images": "node scripts/build-images.mjs",
+    "images:force": "node scripts/build-images.mjs --force",
+    "build": "node scripts/build-site.mjs",
+    "serve": "npx --yes http-server -p 8788 -s --cors",
+    "check:render": "node scripts/check-render.mjs",
+    "check:a11y": "node scripts/check-a11y.mjs",
+    "check:lighthouse": "npx --yes lighthouse http://127.0.0.1:8788/index.html --quiet --chrome-flags=\"--headless=new\" --preset=desktop --view"
+  },
+  "dependencies": {
+    "node-html-parser": "^9.0.1",
+    "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "lighthouse": "^13.4.1",
+    "puppeteer-core": "^25.4.0"
+  }
+}

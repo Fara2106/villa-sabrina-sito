@@ -1,0 +1,12 @@
+node_modules/
+.DS_Store
+*.log
+npm-debug.log*
+
+# provino di revisione della selezione foto, rigenerabile
+_selezione-proposta.jpg
+
+# Le foto originali sono pesanti (490 MB) e non servono in produzione:
+# restano in locale. Toglierle da qui solo se si vuole versionarle davvero.
+Foto Posarelli (professionali)/
+Foto fatte da me/

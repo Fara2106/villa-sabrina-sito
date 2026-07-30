@@ -1,0 +1,787 @@
+[
+  {
+    "name": "hero-colline-vigna-san-gimignano",
+    "role": "Hero",
+    "source": "dji_fly_20260622_152504_43_1782135976157_photo_optimized.jpg",
+    "sourceFolder": "Foto fatte da me",
+    "sourceSize": "4000×2250",
+    "crop": "hero",
+    "lift": null,
+    "intrinsic": {
+      "width": 2600,
+      "height": 1463
+    },
+    "aspect": 1.7778,
+    "variants": [
+      {
+        "file": "hero-colline-vigna-san-gimignano-800.webp",
+        "width": 800,
+        "height": 450
+      },
+      {
+        "file": "hero-colline-vigna-san-gimignano-1400.webp",
+        "width": 1400,
+        "height": 788
+      },
+      {
+        "file": "hero-colline-vigna-san-gimignano-2000.webp",
+        "width": 2000,
+        "height": 1125
+      },
+      {
+        "file": "hero-colline-vigna-san-gimignano-2600.webp",
+        "width": 2600,
+        "height": 1463
+      }
+    ],
+    "jpeg": {
+      "file": "hero-colline-vigna-san-gimignano-fallback.jpg",
+      "width": 1400,
+      "height": 788
+    },
+    "alt": {
+      "it": "La villa fra i cipressi con la vigna e la piscina, e le torri di San Gimignano all’orizzonte",
+      "en": "The villa among cypresses with the vineyard and pool, and the towers of San Gimignano on the horizon"
+    }
+  },
+  {
+    "name": "fascia-colline-campi",
+    "role": "Fascia panorama 1",
+    "source": "31-villa-sabrina-outdoor-posarellivillas-24-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "band",
+    "lift": null,
+    "intrinsic": {
+      "width": 1920,
+      "height": 320
+    },
+    "aspect": 6,
+    "variants": [
+      {
+        "file": "fascia-colline-campi-800.webp",
+        "width": 800,
+        "height": 133
+      },
+      {
+        "file": "fascia-colline-campi-1400.webp",
+        "width": 1400,
+        "height": 233
+      },
+      {
+        "file": "fascia-colline-campi-1920.webp",
+        "width": 1920,
+        "height": 320
+      }
+    ],
+    "jpeg": {
+      "file": "fascia-colline-campi-fallback.jpg",
+      "width": 1400,
+      "height": 233
+    },
+    "alt": {
+      "it": "Le colline coltivate della campagna intorno a San Gimignano",
+      "en": "The cultivated hills of the countryside around San Gimignano"
+    }
+  },
+  {
+    "name": "fascia-filari-vigna",
+    "role": "Fascia panorama 2",
+    "source": "12-villa-sabrina-outdoor-posarellivillas-18-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "band",
+    "lift": null,
+    "intrinsic": {
+      "width": 1920,
+      "height": 320
+    },
+    "aspect": 6,
+    "variants": [
+      {
+        "file": "fascia-filari-vigna-800.webp",
+        "width": 800,
+        "height": 133
+      },
+      {
+        "file": "fascia-filari-vigna-1400.webp",
+        "width": 1400,
+        "height": 233
+      },
+      {
+        "file": "fascia-filari-vigna-1920.webp",
+        "width": 1920,
+        "height": 320
+      }
+    ],
+    "jpeg": {
+      "file": "fascia-filari-vigna-fallback.jpg",
+      "width": 1400,
+      "height": 233
+    },
+    "alt": {
+      "it": "Filari di vigna e cipressi visti dall’alto",
+      "en": "Rows of vines and cypress trees seen from above"
+    }
+  },
+  {
+    "name": "casa-facciata-porticato",
+    "role": "Ritratto — la casa",
+    "source": "13-villa-sabrina-outdoor-posarellivillas-8-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "portrait",
+    "lift": null,
+    "intrinsic": {
+      "width": 1021,
+      "height": 1276
+    },
+    "aspect": 0.8,
+    "variants": [
+      {
+        "file": "casa-facciata-porticato-800.webp",
+        "width": 800,
+        "height": 1000
+      },
+      {
+        "file": "casa-facciata-porticato-1021.webp",
+        "width": 1021,
+        "height": 1276
+      }
+    ],
+    "jpeg": {
+      "file": "casa-facciata-porticato-fallback.jpg",
+      "width": 1024,
+      "height": 1280
+    },
+    "alt": {
+      "it": "La facciata della casa in pietra e intonaco con il porticato e il prato davanti",
+      "en": "The stone and plaster façade of the house with its portico and the lawn in front"
+    }
+  },
+  {
+    "name": "soggiorno-camino",
+    "role": "Spazi — soggiorno",
+    "source": "04-villa-sabrina-posarellivillas-5-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "intero",
+    "lift": null,
+    "intrinsic": {
+      "width": 1920,
+      "height": 1280
+    },
+    "aspect": 1.5,
+    "variants": [
+      {
+        "file": "soggiorno-camino-800.webp",
+        "width": 800,
+        "height": 533
+      },
+      {
+        "file": "soggiorno-camino-1400.webp",
+        "width": 1400,
+        "height": 933
+      },
+      {
+        "file": "soggiorno-camino-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "jpeg": {
+      "file": "soggiorno-camino-fallback.jpg",
+      "width": 1400,
+      "height": 933
+    },
+    "alt": {
+      "it": "Il soggiorno con il camino in muratura, le pareti gialle e le tende blu",
+      "en": "The living room with its masonry fireplace, yellow walls and blue curtains"
+    }
+  },
+  {
+    "name": "camera-letto-baldacchino",
+    "role": "Spazi — camera",
+    "source": "35-villa-sabrina-posarellivillas-32-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "intero",
+    "lift": null,
+    "intrinsic": {
+      "width": 1920,
+      "height": 1280
+    },
+    "aspect": 1.5,
+    "variants": [
+      {
+        "file": "camera-letto-baldacchino-800.webp",
+        "width": 800,
+        "height": 533
+      },
+      {
+        "file": "camera-letto-baldacchino-1400.webp",
+        "width": 1400,
+        "height": 933
+      },
+      {
+        "file": "camera-letto-baldacchino-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "jpeg": {
+      "file": "camera-letto-baldacchino-fallback.jpg",
+      "width": 1400,
+      "height": 933
+    },
+    "alt": {
+      "it": "La camera matrimoniale con letto a baldacchino e veli bianchi, pareti verdi e pavimento in cotto",
+      "en": "The double bedroom with a four-poster bed and white drapes, green walls and terracotta floor"
+    }
+  },
+  {
+    "name": "cucina-credenze-blu",
+    "role": "Spazi — cucina",
+    "source": "19-villa-sabrina-posarellivillas-17-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "intero",
+    "lift": null,
+    "intrinsic": {
+      "width": 1920,
+      "height": 1280
+    },
+    "aspect": 1.5,
+    "variants": [
+      {
+        "file": "cucina-credenze-blu-800.webp",
+        "width": 800,
+        "height": 533
+      },
+      {
+        "file": "cucina-credenze-blu-1400.webp",
+        "width": 1400,
+        "height": 933
+      },
+      {
+        "file": "cucina-credenze-blu-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "jpeg": {
+      "file": "cucina-credenze-blu-fallback.jpg",
+      "width": 1400,
+      "height": 933
+    },
+    "alt": {
+      "it": "L’angolo cottura con le ante blu e il tavolo da pranzo in legno apparecchiato",
+      "en": "The kitchen corner with blue cabinet doors and the laid wooden dining table"
+    }
+  },
+  {
+    "name": "piscina-lettini-ombrellone",
+    "role": "Spazi — piscina",
+    "source": "01-villa-sabrina-outdoor-posarellivillas-34-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "intero",
+    "lift": null,
+    "intrinsic": {
+      "width": 1920,
+      "height": 1280
+    },
+    "aspect": 1.5,
+    "variants": [
+      {
+        "file": "piscina-lettini-ombrellone-800.webp",
+        "width": 800,
+        "height": 533
+      },
+      {
+        "file": "piscina-lettini-ombrellone-1400.webp",
+        "width": 1400,
+        "height": 933
+      },
+      {
+        "file": "piscina-lettini-ombrellone-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "jpeg": {
+      "file": "piscina-lettini-ombrellone-fallback.jpg",
+      "width": 1400,
+      "height": 933
+    },
+    "alt": {
+      "it": "La piscina con i lettini, le poltrone e il grande ombrellone, con le colline sullo sfondo",
+      "en": "The swimming pool with sun loungers, armchairs and a large parasol, hills in the background"
+    }
+  },
+  {
+    "name": "giardino-porticato-prato",
+    "role": "Spazi — giardino",
+    "source": "23-villa-sabrina-outdoor-posarellivillas-12-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "intero",
+    "lift": null,
+    "intrinsic": {
+      "width": 1920,
+      "height": 1280
+    },
+    "aspect": 1.5,
+    "variants": [
+      {
+        "file": "giardino-porticato-prato-800.webp",
+        "width": 800,
+        "height": 533
+      },
+      {
+        "file": "giardino-porticato-prato-1400.webp",
+        "width": 1400,
+        "height": 933
+      },
+      {
+        "file": "giardino-porticato-prato-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "jpeg": {
+      "file": "giardino-porticato-prato-fallback.jpg",
+      "width": 1400,
+      "height": 933
+    },
+    "alt": {
+      "it": "Il porticato attrezzato che si affaccia sul prato del giardino",
+      "en": "The furnished portico looking onto the garden lawn"
+    }
+  },
+  {
+    "name": "proprieta-dallalto-piscina",
+    "role": "Galleria — esterno",
+    "source": "dji_fly_20260622_161326_69_1782137753852_aeb.jpg",
+    "sourceFolder": "Foto fatte da me",
+    "sourceSize": "4000×2250",
+    "crop": "intero",
+    "lift": 1.34,
+    "intrinsic": {
+      "width": 2000,
+      "height": 1125
+    },
+    "aspect": 1.7778,
+    "variants": [
+      {
+        "file": "proprieta-dallalto-piscina-800.webp",
+        "width": 800,
+        "height": 450
+      },
+      {
+        "file": "proprieta-dallalto-piscina-1400.webp",
+        "width": 1400,
+        "height": 788
+      },
+      {
+        "file": "proprieta-dallalto-piscina-2000.webp",
+        "width": 2000,
+        "height": 1125
+      }
+    ],
+    "jpeg": {
+      "file": "proprieta-dallalto-piscina-fallback.jpg",
+      "width": 1400,
+      "height": 788
+    },
+    "alt": {
+      "it": "La proprietà vista dall’alto: la casa, il giardino terrazzato fiorito e la piscina",
+      "en": "The property seen from above: the house, the terraced flowering garden and the pool"
+    }
+  },
+  {
+    "name": "piscina-cipressi-divano",
+    "role": "Galleria — esterno",
+    "source": "17-villa-sabrina-outdoor-posarellivillas-30-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "intero",
+    "lift": null,
+    "intrinsic": {
+      "width": 1920,
+      "height": 1280
+    },
+    "aspect": 1.5,
+    "variants": [
+      {
+        "file": "piscina-cipressi-divano-800.webp",
+        "width": 800,
+        "height": 533
+      },
+      {
+        "file": "piscina-cipressi-divano-1400.webp",
+        "width": 1400,
+        "height": 933
+      },
+      {
+        "file": "piscina-cipressi-divano-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "jpeg": {
+      "file": "piscina-cipressi-divano-fallback.jpg",
+      "width": 1400,
+      "height": 933
+    },
+    "alt": {
+      "it": "La piscina vista dal divano all’ombra, con la siepe e i cipressi",
+      "en": "The pool seen from the shaded sofa, with the hedge and cypress trees"
+    }
+  },
+  {
+    "name": "loggia-tavola-apparecchiata",
+    "role": "Galleria — esterno",
+    "source": "46-villa-sabrina-outdoor-posarellivillas-43-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "intero",
+    "lift": null,
+    "intrinsic": {
+      "width": 1920,
+      "height": 1280
+    },
+    "aspect": 1.5,
+    "variants": [
+      {
+        "file": "loggia-tavola-apparecchiata-800.webp",
+        "width": 800,
+        "height": 533
+      },
+      {
+        "file": "loggia-tavola-apparecchiata-1400.webp",
+        "width": 1400,
+        "height": 933
+      },
+      {
+        "file": "loggia-tavola-apparecchiata-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "jpeg": {
+      "file": "loggia-tavola-apparecchiata-fallback.jpg",
+      "width": 1400,
+      "height": 933
+    },
+    "alt": {
+      "it": "La tavola apparecchiata sotto la loggia in pietra, pronta per una cena all’aperto",
+      "en": "The table laid under the stone loggia, ready for dinner outdoors"
+    }
+  },
+  {
+    "name": "vista-colline-torri-san-gimignano",
+    "role": "Galleria — vista",
+    "source": "27-villa-sabrina-outdoor-posarellivillas-19-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "intero",
+    "lift": null,
+    "intrinsic": {
+      "width": 1920,
+      "height": 1280
+    },
+    "aspect": 1.5,
+    "variants": [
+      {
+        "file": "vista-colline-torri-san-gimignano-800.webp",
+        "width": 800,
+        "height": 533
+      },
+      {
+        "file": "vista-colline-torri-san-gimignano-1400.webp",
+        "width": 1400,
+        "height": 933
+      },
+      {
+        "file": "vista-colline-torri-san-gimignano-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "jpeg": {
+      "file": "vista-colline-torri-san-gimignano-fallback.jpg",
+      "width": 1400,
+      "height": 933
+    },
+    "alt": {
+      "it": "La vista dalla proprietà: i filari, la valle e le torri di San Gimignano sul crinale",
+      "en": "The view from the property: the vine rows, the valley and the towers of San Gimignano on the ridge"
+    }
+  },
+  {
+    "name": "scalinata-fiorita",
+    "role": "Galleria — dettaglio",
+    "source": "63-villa-sabrina-outdoor-posarellivillas-40-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "portrait",
+    "lift": null,
+    "intrinsic": {
+      "width": 1021,
+      "height": 1276
+    },
+    "aspect": 0.8,
+    "variants": [
+      {
+        "file": "scalinata-fiorita-800.webp",
+        "width": 800,
+        "height": 1000
+      },
+      {
+        "file": "scalinata-fiorita-1021.webp",
+        "width": 1021,
+        "height": 1276
+      }
+    ],
+    "jpeg": {
+      "file": "scalinata-fiorita-fallback.jpg",
+      "width": 1024,
+      "height": 1280
+    },
+    "alt": {
+      "it": "La scalinata in pietra che sale nel giardino fra gli arbusti fioriti",
+      "en": "The stone staircase climbing through the garden between flowering shrubs"
+    }
+  },
+  {
+    "name": "piscina-teli-lettino",
+    "role": "Galleria — dettaglio",
+    "source": "41-villa-sabrina-outdoor-posarellivillas-38-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "portrait",
+    "lift": null,
+    "intrinsic": {
+      "width": 1021,
+      "height": 1276
+    },
+    "aspect": 0.8,
+    "variants": [
+      {
+        "file": "piscina-teli-lettino-800.webp",
+        "width": 800,
+        "height": 1000
+      },
+      {
+        "file": "piscina-teli-lettino-1021.webp",
+        "width": 1021,
+        "height": 1276
+      }
+    ],
+    "jpeg": {
+      "file": "piscina-teli-lettino-fallback.jpg",
+      "width": 1024,
+      "height": 1280
+    },
+    "alt": {
+      "it": "Teli da bagno blu arrotolati sui lettini a bordo piscina",
+      "en": "Rolled blue pool towels on the sun loungers at the poolside"
+    }
+  },
+  {
+    "name": "bagno-ardesia-lavabo",
+    "role": "Galleria — interno",
+    "source": "49-villa-sabrina-posarellivillas-18-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "intero",
+    "lift": null,
+    "intrinsic": {
+      "width": 1920,
+      "height": 1280
+    },
+    "aspect": 1.5,
+    "variants": [
+      {
+        "file": "bagno-ardesia-lavabo-800.webp",
+        "width": 800,
+        "height": 533
+      },
+      {
+        "file": "bagno-ardesia-lavabo-1400.webp",
+        "width": 1400,
+        "height": 933
+      },
+      {
+        "file": "bagno-ardesia-lavabo-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "jpeg": {
+      "file": "bagno-ardesia-lavabo-fallback.jpg",
+      "width": 1400,
+      "height": 933
+    },
+    "alt": {
+      "it": "Il bagno rifatto, con lavabo d’appoggio su mensola in legno e specchio tondo retroilluminato",
+      "en": "The renovated bathroom, with a countertop basin on a wooden shelf and a round backlit mirror"
+    }
+  },
+  {
+    "name": "camera-finestra-colline",
+    "role": "Galleria — interno",
+    "source": "44-villa-sabrina-posarellivillas-27-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "intero",
+    "lift": null,
+    "intrinsic": {
+      "width": 1920,
+      "height": 1280
+    },
+    "aspect": 1.5,
+    "variants": [
+      {
+        "file": "camera-finestra-colline-800.webp",
+        "width": 800,
+        "height": 533
+      },
+      {
+        "file": "camera-finestra-colline-1400.webp",
+        "width": 1400,
+        "height": 933
+      },
+      {
+        "file": "camera-finestra-colline-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "jpeg": {
+      "file": "camera-finestra-colline-fallback.jpg",
+      "width": 1400,
+      "height": 933
+    },
+    "alt": {
+      "it": "La seconda camera con letto a baldacchino e la finestra aperta sulle colline",
+      "en": "The second bedroom with a four-poster bed and the window open onto the hills"
+    }
+  },
+  {
+    "name": "scala-ferro-battuto",
+    "role": "Galleria — dettaglio",
+    "source": "34-villa-sabrina-posarellivillas-9-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "portrait",
+    "lift": null,
+    "intrinsic": {
+      "width": 1021,
+      "height": 1276
+    },
+    "aspect": 0.8,
+    "variants": [
+      {
+        "file": "scala-ferro-battuto-800.webp",
+        "width": 800,
+        "height": 1000
+      },
+      {
+        "file": "scala-ferro-battuto-1021.webp",
+        "width": 1021,
+        "height": 1276
+      }
+    ],
+    "jpeg": {
+      "file": "scala-ferro-battuto-fallback.jpg",
+      "width": 1024,
+      "height": 1280
+    },
+    "alt": {
+      "it": "La scala interna con la ringhiera in ferro battuto",
+      "en": "The internal staircase with its wrought-iron railing"
+    }
+  },
+  {
+    "name": "cucina-dettaglio-piano-blu",
+    "role": "Galleria — interno",
+    "source": "20-villa-sabrina-posarellivillas-33-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "intero",
+    "lift": null,
+    "intrinsic": {
+      "width": 1920,
+      "height": 1280
+    },
+    "aspect": 1.5,
+    "variants": [
+      {
+        "file": "cucina-dettaglio-piano-blu-800.webp",
+        "width": 800,
+        "height": 533
+      },
+      {
+        "file": "cucina-dettaglio-piano-blu-1400.webp",
+        "width": 1400,
+        "height": 933
+      },
+      {
+        "file": "cucina-dettaglio-piano-blu-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "jpeg": {
+      "file": "cucina-dettaglio-piano-blu-fallback.jpg",
+      "width": 1400,
+      "height": 933
+    },
+    "alt": {
+      "it": "Dettaglio della cucina: il piano di lavoro blu, il muro in pietra e la cappa in acciaio",
+      "en": "Kitchen detail: the blue worktop, the stone wall and the steel extractor hood"
+    }
+  },
+  {
+    "name": "chiusura-tavola-arco-vista",
+    "role": "Chiusura",
+    "source": "53-villa-sabrina-outdoor-posarellivillas-48-.jpg",
+    "sourceFolder": "Foto Posarelli (professionali)",
+    "sourceSize": "1920×1280",
+    "crop": "intero",
+    "lift": null,
+    "intrinsic": {
+      "width": 1920,
+      "height": 1280
+    },
+    "aspect": 1.5,
+    "variants": [
+      {
+        "file": "chiusura-tavola-arco-vista-800.webp",
+        "width": 800,
+        "height": 533
+      },
+      {
+        "file": "chiusura-tavola-arco-vista-1400.webp",
+        "width": 1400,
+        "height": 933
+      },
+      {
+        "file": "chiusura-tavola-arco-vista-1920.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ],
+    "jpeg": {
+      "file": "chiusura-tavola-arco-vista-fallback.jpg",
+      "width": 1400,
+      "height": 933
+    },
+    "alt": {
+      "it": "La tavola apparecchiata inquadrata dall’arco in pietra, con le colline oltre",
+      "en": "The laid table framed by the stone arch, with the hills beyond"
+    }
+  }
+]
