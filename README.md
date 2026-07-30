@@ -13,8 +13,7 @@ disponibilità e prenotazione.
 ## Com'è fatto
 
 Una pagina statica, `index.html`, senza framework e senza backend. Tutto il
-CSS e il JavaScript sono dentro il file. Bilingue IT/EN con un dizionario in
-pagina, la lingua iniziale segue il browser e poi la scelta viene ricordata.
+CSS e il JavaScript sono dentro il file.
 
 ```
 index.html                  la pagina, unica
@@ -32,6 +31,38 @@ Foto fatte da me/                 originali da drone, mai modificati
 
 Le due cartelle di foto originali **non vengono mai toccate**: gli script le
 aprono in sola lettura.
+
+## Lingue
+
+Il sito parla **italiano, inglese, francese e spagnolo**. I dizionari stanno
+nell'oggetto `I18N` dentro `index.html`, uno per lingua; i testi alternativi
+delle foto stanno in `ALT`, con la stessa struttura.
+
+La lingua si sceglie in quest'ordine: `?lang=` nell'indirizzo, poi la scelta
+già ricordata nel browser, poi la lingua del browser; se nessuna corrisponde,
+inglese. La scelta finisce nell'indirizzo, quindi un link si può condividere
+già nella lingua giusta:
+
+```
+https://fara2106.github.io/villa-sabrina-sito/?lang=fr
+```
+
+**Da dove vengono i testi.** Posarelli pubblica la scheda in nove lingue.
+Italiano, inglese e francese sono presi dalle rispettive schede ufficiali
+(`.it`, `.com`, `.fr`). **Lo spagnolo non esiste sulla loro piattaforma**:
+quei testi sono la traduzione di quelli italiani — stessi dati, nessun dato
+nuovo — e il pulsante "Precios y disponibilidad" porta alla scheda inglese,
+che è l'unica disponibile.
+
+Per aggiungere una lingua servono tre cose: un blocco in `I18N`, uno in `ALT`,
+e l'aggiunta del codice in `LANGS`, `LOCALES` e `LISTING` (con l'URL della
+scheda Posarelli in quella lingua, se esiste). Poi un pulsante nel selettore
+in cima alla pagina e una riga `<link rel="alternate" hreflang>` nel `<head>`.
+
+Posarelli ha già le schede in **tedesco, olandese, danese, norvegese e
+svedese**: se un giorno servono, l'URL c'è già e il lavoro è solo il dizionario.
+Le recensioni dicono che gli ospiti tedeschi sono i secondi per numero dopo
+inglesi e americani.
 
 ## Per iniziare
 
@@ -170,14 +201,18 @@ Lighthouse, Chrome headless, server locale:
 
 | | Performance | Accessibility | Best practices | SEO |
 |---|---|---|---|---|
-| Desktop | **99** | **100** | **100** | **100** |
-| Mobile | **99** | **100** | **100** | **100** |
+| Desktop | **100** | **100** | **100** | **100** |
+| Mobile | **97** | **100** | **100** | **100** |
 
-LCP 0,8 s desktop e 2,2 s mobile; CLS 0,003 e 0,001; TBT 0 ms.
+LCP 0,7 s desktop e 2,6 s mobile; CLS 0,005 e 0,002; TBT 0 ms. I numeri
+mobile sono di tre corse consecutive che danno lo stesso risultato: una
+singola corsa su una macchina occupata può scendere anche a 77, ed è rumore
+della simulazione, non della pagina. Se misuri e ti esce un numero strano,
+rimisura a macchina scarica prima di andare a cercare la causa.
 
 Contrasti: tutti i testi passano AA, la maggior parte AAA. Il più stretto è
-5,75:1 (provenienza, data e etichetta lingua nelle recensioni), contro un
-minimo richiesto di 4,5:1.
+5,41:1 (il salvia `#93A18C` sul fondo alternato `#1D2B27`), contro un minimo
+richiesto di 4,5:1.
 
 ## Dati e vincoli
 

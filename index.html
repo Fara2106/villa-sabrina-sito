@@ -7,6 +7,11 @@
 <meta name="description" content="Villa Sabrina è una casa vacanze con piscina privata sulle colline del Chianti, a 5 km da San Gimignano. 7 ospiti, 3 camere, giardino recintato e vista panoramica. Disponibilità e prenotazioni su Posarelli Villas.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.posarellivillas.it/italia/toscana/san-gimignano/95494">
+<link rel="alternate" hreflang="it" href="https://fara2106.github.io/villa-sabrina-sito/">
+<link rel="alternate" hreflang="en" href="https://fara2106.github.io/villa-sabrina-sito/?lang=en">
+<link rel="alternate" hreflang="fr" href="https://fara2106.github.io/villa-sabrina-sito/?lang=fr">
+<link rel="alternate" hreflang="es" href="https://fara2106.github.io/villa-sabrina-sito/?lang=es">
+<link rel="alternate" hreflang="x-default" href="https://fara2106.github.io/villa-sabrina-sito/">
 <meta name="theme-color" content="#141F1C">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23141F1C'/%3E%3Cpath d='M16 4c2.6 3.4 3.9 7.4 3.9 11.6 0 4-1.2 7.9-3.9 11.4-2.7-3.5-3.9-7.4-3.9-11.4C12.1 11.4 13.4 7.4 16 4z' fill='%23D6B45C'/%3E%3Crect x='15.1' y='24' width='1.8' height='5' fill='%23A98C40'/%3E%3C/svg%3E">
 
@@ -393,6 +398,15 @@ i,em,.it{font-style:italic}
 @media(max-width:520px){
   .site-header{height:64px}
   .brand{font-size:1.15rem}
+  /* quattro lingue devono stare accanto a marchio e hamburger */
+  .bar-end{gap:12px}
+  .lang{gap:5px;font-size:.62rem}
+  .lang button{font-size:.62rem;letter-spacing:.08em}
+}
+@media(max-width:380px){
+  .brand{font-size:1rem}
+  .lang{gap:4px}
+  .lang i{display:none}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -419,10 +433,14 @@ i,em,.it{font-style:italic}
     </nav>
 
     <div class="bar-end">
-      <div class="lang" role="group" aria-label="Lingua / Language">
-        <button type="button" data-lang="it" aria-pressed="true" lang="it">IT</button>
+      <div class="lang" role="group" aria-label="Lingua · Language · Langue · Idioma">
+        <button type="button" data-lang="it" aria-pressed="true" lang="it" title="Italiano">IT</button>
         <i aria-hidden="true">/</i>
-        <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+        <button type="button" data-lang="en" aria-pressed="false" lang="en" title="English">EN</button>
+        <i aria-hidden="true">/</i>
+        <button type="button" data-lang="fr" aria-pressed="false" lang="fr" title="Français">FR</button>
+        <i aria-hidden="true">/</i>
+        <button type="button" data-lang="es" aria-pressed="false" lang="es" title="Español">ES</button>
       </div>
       <a class="btn btn--sm" id="cta-nav" href="https://www.posarellivillas.it/italia/toscana/san-gimignano/95494" target="_blank" rel="noreferrer noopener">
         <span data-i18n="cta.availability">Prezzi e disponibilità</span><span class="arw" aria-hidden="true">↗</span>
@@ -737,10 +755,17 @@ i,em,.it{font-style:italic}
   var EXCERPT_LENGTH = 180;
   var REVIEWS_PAGE = 6;
 
+  /* Posarelli pubblica la scheda in nove lingue. Qui usiamo quelle che il
+     sito parla; per lo spagnolo una scheda non esiste, quindi il pulsante
+     manda alla versione inglese — ed è ciò che dice l'etichetta in spagnolo. */
   var LISTING = {
     it: 'https://www.posarellivillas.it/italia/toscana/san-gimignano/95494',
-    en: 'https://www.posarellivillas.com/italy/tuscany/san-gimignano/95494'
+    en: 'https://www.posarellivillas.com/italy/tuscany/san-gimignano/95494',
+    fr: 'https://www.posarellivillas.fr/italie/toscane/san-gimignano/95494',
+    es: 'https://www.posarellivillas.com/italy/tuscany/san-gimignano/95494'
   };
+  var LOCALES = { it: 'it-IT', en: 'en-GB', fr: 'fr-FR', es: 'es-ES' };
+  var LANGS = ['it', 'en', 'fr', 'es'];
   var REVIEWS_ANCHOR = '#target_testimonials';
 
   /* ------------------------------------------------------------ i18n */
@@ -951,6 +976,216 @@ i,em,.it{font-style:italic}
         { name: 'Pisa', desc: '', km: '85' },
         { name: 'Lucca', desc: '', km: '90' }
       ]
+    },
+
+    /* Francese: i testi vengono dalla scheda ufficiale posarellivillas.fr */
+    fr: {
+      'skip': 'Aller au contenu',
+      'nav.house': 'La maison', 'nav.spaces': 'Les espaces', 'nav.amenities': 'Services',
+      'nav.around': 'Alentours', 'nav.gallery': 'Galerie', 'nav.reviews': 'Avis',
+      'nav.open': 'Ouvrir le menu', 'nav.close': 'Fermer le menu',
+
+      'hero.loc': 'San Gimignano · Chianti · Toscane',
+      'hero.tag': 'Une maison de campagne avec piscine privée, face aux collines du Chianti',
+      'hero.m1': '7 personnes', 'hero.m2': '3 chambres', 'hero.m3': '5 km de San Gimignano',
+      'hero.scroll': 'Défiler',
+      'cta.availability': 'Prix et disponibilité',
+      'cta.seeHouse': 'Voir la maison',
+
+      'facts.guests': 'Personnes', 'facts.bedrooms': 'Chambres', 'facts.sqm': 'Mètres carrés',
+
+      'house.eyebrow': 'La maison',
+      'house.title': 'Terre cuite, brique et bois, à cinq kilomètres des tours',
+      'house.p1': 'Villa Sabrina occupe une partie d’une maison de campagne, récemment restructurée et entourée par les collines du Chianti. Elle se développe sur deux niveaux, pour 160 mètres carrés.',
+      'house.p2': 'Les intérieurs sont lumineux et meublés dans le style rustique toscan, avec la terre cuite, la brique et le bois laissés apparents. Les trois chambres sont toutes climatisées.',
+      'house.p3': 'Les propriétaires habitent la partie voisine, avec un accès indépendant, et sont à disposition en cas de besoin. On accède à la propriété par une route non goudronnée en bon état.',
+
+      'band.one': 'Vue sur les collines du Chianti',
+      'band.two': 'Les rangs de vigne autour de la maison',
+
+      'spaces.eyebrow': 'Les espaces',
+      'spaces.title': 'Cinq pièces, dedans et dehors',
+      'spaces.lede': 'Le jardin est entièrement clôturé et réservé aux hôtes, et la terrasse couverte est la pièce en plus : c’est là qu’on déjeune et qu’on dîne dehors.',
+
+      'amen.eyebrow': 'Services',
+      'amen.title': 'Ce qu’il y <i>a</i>',
+
+      'where.eyebrow': 'Alentours', 'where.title': 'Ce qu’on rejoint d’ici',
+
+      'gallery.eyebrow': 'Galerie', 'gallery.title': 'La maison, le jardin, la vue',
+      'gallery.hint': 'Cliquez une photo pour l’agrandir',
+
+      'rev.eyebrow': 'Avis',
+      'rev.average': 'moyenne sur {count} avis vérifiés, publiés par Posarelli Villas',
+      'rev.more': 'Voir plus',
+      'rev.readFull': 'Lire l’avis en entier',
+      'rev.ctaTitle': 'Vous avez séjourné à Villa Sabrina ? Laissez un avis sur Posarelli Villas.',
+      'rev.ctaButton': 'Laisser un avis',
+      'rev.ctaNote': 'Les avis se laissent depuis la plateforme de l’agence, après le séjour : si vous n’avez pas réservé via Posarelli Villas, vous ne trouverez pas le formulaire. Il n’y en a aucun sur ce site.',
+      'rev.empty': 'Les avis sont en cours de mise à jour. Entre-temps, vous les trouvez tous sur la fiche officielle.',
+
+      'info.eyebrow': 'Informations pratiques', 'info.title': 'Avant de partir',
+      'info.checkin': 'Arrivée et départ', 'info.checkinText': 'Arrivée entre 17h00 et 20h00, départ entre 08h00 et 10h00.',
+      'info.poolTitle': 'Piscine', 'info.poolText': 'Ouverte du 15 avril au 15 octobre. Clôturée, à l’usage exclusif des hôtes.',
+      'info.included': 'Inclus',
+      'info.inc1': 'Linge de lit et de toilette, jeu initial', 'info.inc2': 'Serviettes de piscine',
+      'info.inc3': 'Wi-Fi et climatisation', 'info.inc4': 'Lit bébé, sur demande et sans frais',
+      'info.rules': 'Règles de la maison',
+      'info.rule1': 'Animaux acceptés sur demande', 'info.rule2': 'Non-fumeur à l’intérieur',
+      'info.rule3': 'Service de ménage sur demande',
+      'info.access': 'Comment arriver', 'info.accessText': 'On accède par une route non goudronnée en bon état. Parking dans la propriété.',
+      'info.owners': 'Les propriétaires', 'info.ownersText': 'Ils habitent la partie voisine, avec un accès indépendant, et sont à disposition en cas de besoin.',
+      'info.prices': '<strong>Prix et disponibilité.</strong> Les tarifs changent selon la saison et la durée du séjour, et certains postes se règlent sur place. Pour le devis à jour et le calendrier, la fiche officielle de Posarelli Villas, qui gère les réservations, fait foi.',
+      'info.pricesLink': 'Voir les prix et la disponibilité',
+
+      'closing.eyebrow': 'Disponibilité',
+      'closing.title': 'Les dates libres sont sur la fiche <i>officielle</i>',
+      'closing.text': 'Calendrier, tarifs et demandes passent par Posarelli Villas, qui commercialise la maison.',
+
+      'foot.loc': 'San Gimignano (SI) · Toscane',
+      'foot.book': 'Réservations', 'foot.legal': 'Informations',
+      'foot.about': 'Villa Sabrina est commercialisée par Posarelli Villas. Ce site raconte la maison et ne gère ni réservations ni paiements.',
+      'foot.updated': 'Avis mis à jour le',
+
+      'lb.title': 'Galerie photo', 'lb.close': 'Fermer',
+      'lb.prev': 'Photo précédente', 'lb.next': 'Photo suivante',
+      'lb.photo': 'Photo', 'lb.of': 'sur',
+
+      'spaces.items': [
+        { img: 'soggiorno-camino', label: 'Séjour',
+          title: 'Le rez-de-chaussée, d’un seul tenant',
+          body: 'Grand séjour et salle à manger avec TV satellite, cheminée (pas utilisable) et coin-cuisson dans une seule pièce. Il y a aussi un canapé-lit à une place et, au même niveau, une chambre double climatisée.' },
+        { img: 'camera-letto-baldacchino', label: 'Chambres',
+          title: 'Trois chambres, toutes climatisées',
+          body: 'Au premier étage, la chambre double avec lit à baldaquin et une chambre à deux lits simples, qui peuvent être joints sur demande. La troisième chambre, double, est au rez-de-chaussée. La maison accueille jusqu’à 7 personnes.' },
+        { img: 'cucina-credenze-blu', label: 'Cuisine',
+          title: 'Un coin-cuisson vraiment équipé',
+          body: 'Four, plaque de cuisson, lave-vaisselle, micro-ondes, congélateur, grille-pain, machine à café et une cave à vin réfrigérée. La salle à manger est dans la même pièce.' },
+        { img: 'piscina-lettini-ombrellone', label: 'Piscine',
+          title: 'Dix mètres sur cinq, réservée',
+          body: 'Piscine privée à l’usage exclusif des hôtes, clôturée, d’une profondeur de 0,80 à 1,65 mètre. Elle est ouverte du 15 avril au 15 octobre, avec transats et parasols sur la pelouse.' },
+        { img: 'giardino-porticato-prato', label: 'Jardin et terrasse couverte',
+          title: 'Une terrasse couverte sur le jardin',
+          body: 'Le jardin est grand, bien entretenu et entièrement clôturé, réservé aux hôtes. La terrasse couverte donne sur la pelouse et se prête aux repas en plein air. Il y a le barbecue, l’éclairage extérieur et le parking dans la propriété.' }
+      ],
+
+      'amenities': ['Piscine privée','Piscine clôturée','Jardin clôturé','Terrasse','Patio','Balcon','Terrasse couverte','Barbecue','Repas en plein air','Meubles de jardin','Vue panoramique','Éclairage extérieur','Parking dans la propriété','Wi-Fi gratuit','Climatisation','Chauffage','Cuisine équipée','Four','Plaque de cuisson','Réfrigérateur','Congélateur','Micro-ondes','Lave-vaisselle','Machine à café','Grille-pain','Lave-linge','Douche','TV satellite','Moustiquaires','Lit pour bébé','Animaux sur demande','Non-fumeur','Extincteur'],
+
+      'around': [
+        { name: 'San Gimignano', desc: 'Magasins variés', km: '5' },
+        { name: 'Poggibonsi', desc: '', km: '8' },
+        { name: 'Volterra', desc: 'À moins d’une heure de route', km: '35' },
+        { name: 'Sienne', desc: 'À moins d’une heure de route', km: '45' },
+        { name: 'Florence', desc: 'À moins d’une heure de route', km: '50' },
+        { name: 'Pise', desc: '', km: '85' },
+        { name: 'Lucques', desc: '', km: '90' }
+      ]
+    },
+
+    /* Spagnolo: Posarelli non pubblica la scheda in spagnolo, quindi questi
+       testi sono la traduzione di quelli italiani — stessi dati, nessun dato
+       nuovo — e i link portano alla scheda in inglese. */
+    es: {
+      'skip': 'Saltar al contenido',
+      'nav.house': 'La casa', 'nav.spaces': 'Los espacios', 'nav.amenities': 'Servicios',
+      'nav.around': 'Alrededores', 'nav.gallery': 'Galería', 'nav.reviews': 'Opiniones',
+      'nav.open': 'Abrir el menú', 'nav.close': 'Cerrar el menú',
+
+      'hero.loc': 'San Gimignano · Chianti · Toscana',
+      'hero.tag': 'Una casa de campo con piscina privada, frente a las colinas del Chianti',
+      'hero.m1': '7 huéspedes', 'hero.m2': '3 habitaciones', 'hero.m3': '5 km de San Gimignano',
+      'hero.scroll': 'Desliza',
+      'cta.availability': 'Precios y disponibilidad',
+      'cta.seeHouse': 'Ver la casa',
+
+      'facts.guests': 'Huéspedes', 'facts.bedrooms': 'Habitaciones', 'facts.sqm': 'Metros cuadrados',
+
+      'house.eyebrow': 'La casa',
+      'house.title': 'Barro cocido, ladrillo y madera, a cinco kilómetros de las torres',
+      'house.p1': 'Villa Sabrina es una parte de una casa de campo, reformada hace poco y rodeada por las colinas del Chianti. Se desarrolla en dos plantas, con 160 metros cuadrados.',
+      'house.p2': 'Los interiores son luminosos y están amueblados en el estilo rústico toscano, con el barro cocido, el ladrillo y la madera a la vista. Las tres habitaciones tienen aire acondicionado.',
+      'house.p3': 'Los propietarios viven en la parte contigua, con entrada independiente, y están disponibles si hace falta. Se accede por un camino sin asfaltar en buen estado.',
+
+      'band.one': 'Vista de las colinas del Chianti',
+      'band.two': 'Las hileras de viña alrededor de la casa',
+
+      'spaces.eyebrow': 'Los espacios',
+      'spaces.title': 'Cinco estancias, dentro y fuera',
+      'spaces.lede': 'El jardín está completamente vallado y reservado a los huéspedes, y el porche equipado es la estancia de más: allí se come y se cena al aire libre.',
+
+      'amen.eyebrow': 'Servicios',
+      'amen.title': 'Lo que <i>hay</i>',
+
+      'where.eyebrow': 'Alrededores', 'where.title': 'Adónde se llega desde aquí',
+
+      'gallery.eyebrow': 'Galería', 'gallery.title': 'La casa, el jardín, las vistas',
+      'gallery.hint': 'Haz clic en una foto para ampliarla',
+
+      'rev.eyebrow': 'Opiniones',
+      'rev.average': 'media sobre {count} opiniones verificadas, publicadas por Posarelli Villas',
+      'rev.more': 'Ver más',
+      'rev.readFull': 'Leer la opinión completa',
+      'rev.ctaTitle': '¿Te has alojado en Villa Sabrina? Deja tu opinión en Posarelli Villas.',
+      'rev.ctaButton': 'Dejar una opinión',
+      'rev.ctaNote': 'Las opiniones se dejan desde la plataforma de la agencia, después de la estancia: si no has reservado con Posarelli Villas no encontrarás el formulario. En esta web no hay ninguno.',
+      'rev.empty': 'Las opiniones se están actualizando. Mientras tanto puedes leerlas todas en la ficha oficial.',
+
+      'info.eyebrow': 'Información práctica', 'info.title': 'Antes de viajar',
+      'info.checkin': 'Llegada y salida', 'info.checkinText': 'Llegada entre las 17:00 y las 20:00, salida entre las 08:00 y las 10:00.',
+      'info.poolTitle': 'Piscina', 'info.poolText': 'Abierta del 15 de abril al 15 de octubre. Vallada, de uso exclusivo de los huéspedes.',
+      'info.included': 'Incluido',
+      'info.inc1': 'Ropa de cama y de baño, juego inicial', 'info.inc2': 'Toallas de piscina',
+      'info.inc3': 'Wi-Fi y aire acondicionado', 'info.inc4': 'Cuna, bajo petición y sin coste',
+      'info.rules': 'Normas de la casa',
+      'info.rule1': 'Mascotas admitidas bajo petición', 'info.rule2': 'No se fuma dentro',
+      'info.rule3': 'Servicio de limpieza bajo petición',
+      'info.access': 'Cómo se llega', 'info.accessText': 'Se accede por un camino sin asfaltar en buen estado. Aparcamiento dentro de la propiedad.',
+      'info.owners': 'Los propietarios', 'info.ownersText': 'Viven en la parte contigua, con entrada independiente, y están disponibles si hace falta.',
+      'info.prices': '<strong>Precios y disponibilidad.</strong> Las tarifas cambian según la temporada y la duración de la estancia, y algunos conceptos se pagan en destino. Para el presupuesto actualizado y el calendario manda la ficha oficial de Posarelli Villas, que gestiona las reservas.',
+      'info.pricesLink': 'Ver precios y disponibilidad',
+
+      'closing.eyebrow': 'Disponibilidad',
+      'closing.title': 'Las fechas libres están en la ficha <i>oficial</i>',
+      'closing.text': 'Calendario, tarifas y solicitudes pasan por Posarelli Villas, que comercializa la casa.',
+
+      'foot.loc': 'San Gimignano (SI) · Toscana',
+      'foot.book': 'Reservas', 'foot.legal': 'Información',
+      'foot.about': 'Villa Sabrina la comercializa Posarelli Villas. Esta web cuenta la casa y no gestiona reservas ni pagos.',
+      'foot.updated': 'Opiniones actualizadas el',
+
+      'lb.title': 'Galería de fotos', 'lb.close': 'Cerrar',
+      'lb.prev': 'Foto anterior', 'lb.next': 'Foto siguiente',
+      'lb.photo': 'Foto', 'lb.of': 'de',
+
+      'spaces.items': [
+        { img: 'soggiorno-camino', label: 'Zona de estar',
+          title: 'La planta baja, todo seguido',
+          body: 'Amplia zona de estar con smart TV, chimenea (no utilizable), comedor y cocina office en un único ambiente. Hay también un sofá cama individual y, en la misma planta, una habitación doble con aire acondicionado.' },
+        { img: 'camera-letto-baldacchino', label: 'Habitaciones',
+          title: 'Tres habitaciones, todas con aire acondicionado',
+          body: 'En la primera planta, la doble con cama con dosel y una habitación con dos camas individuales, unibles bajo petición. La tercera habitación, doble, está en la planta baja. En total la casa acoge hasta 7 personas.' },
+        { img: 'cucina-credenze-blu', label: 'Cocina',
+          title: 'Una cocina office de verdad',
+          body: 'Horno, placa, lavavajillas, microondas, congelador, tostadora, cafetera de filtro y una vinoteca refrigerada. El comedor está en el mismo ambiente.' },
+        { img: 'piscina-lettini-ombrellone', label: 'Piscina',
+          title: 'Diez metros por cinco, reservada',
+          body: 'Piscina privada de uso exclusivo de los huéspedes, vallada, con profundidad de 0,80 a 1,65 metros. Está abierta del 15 de abril al 15 de octubre, con tumbonas y sombrillas sobre el césped.' },
+        { img: 'giardino-porticato-prato', label: 'Jardín y porche',
+          title: 'Un porche equipado sobre el jardín',
+          body: 'El jardín es grande, cuidado y está completamente vallado, reservado a los huéspedes. El porche da al césped y es ideal para comer al aire libre. Hay barbacoa, iluminación exterior y aparcamiento dentro de la propiedad.' }
+      ],
+
+      'amenities': ['Piscina privada','Piscina vallada','Jardín vallado','Terraza','Patio','Balcón','Porche','Barbacoa','Comidas al aire libre','Muebles de jardín','Vistas panorámicas','Iluminación exterior','Aparcamiento interior','Wi-Fi gratuito','Aire acondicionado','Calefacción','Cocina equipada','Horno','Placa de cocción','Nevera','Congelador','Microondas','Lavavajillas','Cafetera','Tostadora','Lavadora','Ducha','TV por satélite','Mosquiteras','Cuna','Mascotas bajo petición','No fumadores','Extintor'],
+
+      'around': [
+        { name: 'San Gimignano', desc: 'Tiendas de todo tipo', km: '5' },
+        { name: 'Poggibonsi', desc: '', km: '8' },
+        { name: 'Volterra', desc: 'A menos de una hora en coche', km: '35' },
+        { name: 'Siena', desc: 'A menos de una hora en coche', km: '45' },
+        { name: 'Florencia', desc: 'A menos de una hora en coche', km: '50' },
+        { name: 'Pisa', desc: '', km: '85' },
+        { name: 'Lucca', desc: '', km: '90' }
+      ]
     }
   };
 
@@ -993,6 +1228,44 @@ i,em,.it{font-style:italic}
       'camera-finestra-colline': 'The second bedroom with a four-poster bed and the window open onto the hills',
       'scala-ferro-battuto': 'The internal staircase with its wrought-iron railing',
       'cucina-dettaglio-piano-blu': 'Kitchen detail: the blue worktop, the stone wall and the steel extractor hood'
+    },
+    fr: {
+      'hero': 'La maison parmi les cyprès avec la vigne et la piscine, et les tours de San Gimignano à l’horizon',
+      'casa-facciata-porticato': 'La façade en pierre et enduit de la maison, avec la terrasse couverte et la pelouse devant',
+      'soggiorno-camino': 'Le séjour avec la cheminée en maçonnerie, les murs jaunes et les rideaux bleus',
+      'camera-letto-baldacchino': 'La chambre double avec lit à baldaquin et voiles blancs, murs verts et sol en terre cuite',
+      'cucina-credenze-blu': 'Le coin-cuisson aux portes bleues et la table à manger en bois dressée',
+      'piscina-lettini-ombrellone': 'La piscine avec les transats, les fauteuils et le grand parasol, les collines en fond',
+      'giardino-porticato-prato': 'La terrasse couverte équipée qui donne sur la pelouse du jardin',
+      'proprieta-dallalto-piscina': 'La propriété vue d’en haut : la maison, le jardin en terrasses fleuri et la piscine',
+      'piscina-cipressi-divano': 'La piscine vue depuis le canapé à l’ombre, avec la haie et les cyprès',
+      'loggia-tavola-apparecchiata': 'La table dressée sous la loggia en pierre, prête pour un dîner dehors',
+      'vista-colline-torri-san-gimignano': 'La vue depuis la propriété : les rangs de vigne, la vallée et les tours de San Gimignano sur la crête',
+      'scalinata-fiorita': 'L’escalier en pierre qui monte dans le jardin entre les arbustes en fleurs',
+      'piscina-teli-lettino': 'Serviettes de piscine bleues roulées sur les transats au bord du bassin',
+      'bagno-ardesia-lavabo': 'La salle de bains refaite, avec vasque à poser sur tablette en bois et miroir rond rétroéclairé',
+      'camera-finestra-colline': 'La deuxième chambre avec lit à baldaquin et la fenêtre ouverte sur les collines',
+      'scala-ferro-battuto': 'L’escalier intérieur avec sa rampe en fer forgé',
+      'cucina-dettaglio-piano-blu': 'Détail de la cuisine : le plan de travail bleu, le mur en pierre et la hotte en acier'
+    },
+    es: {
+      'hero': 'La casa entre los cipreses con la viña y la piscina, y las torres de San Gimignano en el horizonte',
+      'casa-facciata-porticato': 'La fachada de piedra y revoco de la casa, con el porche y el césped delante',
+      'soggiorno-camino': 'La sala de estar con la chimenea de obra, las paredes amarillas y las cortinas azules',
+      'camera-letto-baldacchino': 'La habitación doble con cama con dosel y velos blancos, paredes verdes y suelo de barro cocido',
+      'cucina-credenze-blu': 'La cocina office con las puertas azules y la mesa de comedor de madera puesta',
+      'piscina-lettini-ombrellone': 'La piscina con las tumbonas, los sillones y la gran sombrilla, con las colinas al fondo',
+      'giardino-porticato-prato': 'El porche equipado que da al césped del jardín',
+      'proprieta-dallalto-piscina': 'La propiedad vista desde arriba: la casa, el jardín aterrazado en flor y la piscina',
+      'piscina-cipressi-divano': 'La piscina vista desde el sofá a la sombra, con el seto y los cipreses',
+      'loggia-tavola-apparecchiata': 'La mesa puesta bajo la logia de piedra, lista para una cena al aire libre',
+      'vista-colline-torri-san-gimignano': 'La vista desde la propiedad: las hileras de viña, el valle y las torres de San Gimignano en la cresta',
+      'scalinata-fiorita': 'La escalinata de piedra que sube por el jardín entre los arbustos en flor',
+      'piscina-teli-lettino': 'Toallas de piscina azules enrolladas sobre las tumbonas al borde del agua',
+      'bagno-ardesia-lavabo': 'El baño reformado, con lavabo sobre encimera de madera y espejo redondo retroiluminado',
+      'camera-finestra-colline': 'La segunda habitación con cama con dosel y la ventana abierta a las colinas',
+      'scala-ferro-battuto': 'La escalera interior con la barandilla de hierro forjado',
+      'cucina-dettaglio-piano-blu': 'Detalle de la cocina: la encimera azul, el muro de piedra y la campana de acero'
     }
   };
 
@@ -1188,7 +1461,8 @@ i,em,.it{font-style:italic}
   function formatScore(rating) {
     var el = $('#score-value');
     if (!el || rating == null) return;
-    el.textContent = Number(rating).toLocaleString(lang === 'it' ? 'it-IT' : 'en-GB',
+    /* il separatore decimale segue la lingua: 5,0 in it/fr/es, 5.0 in en */
+    el.textContent = Number(rating).toLocaleString(LOCALES[lang] || 'it-IT',
       { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   }
 
@@ -1196,7 +1470,7 @@ i,em,.it{font-style:italic}
     if (!iso) return '';
     var d = new Date(iso + 'T00:00:00');
     if (isNaN(d)) return '';
-    return d.toLocaleDateString(lang === 'it' ? 'it-IT' : 'en-GB',
+    return d.toLocaleDateString(LOCALES[lang] || 'it-IT',
       { year: 'numeric', month: 'long' });
   }
 
@@ -1342,6 +1616,15 @@ i,em,.it{font-style:italic}
     if ($('#lightbox').classList.contains('is-open')) renderLB();
     observeReveals();
 
+    /* La lingua finisce nell'indirizzo, così un link condiviso si apre già
+       nella lingua giusta: …/?lang=fr */
+    try {
+      var u = new URL(window.location.href);
+      if (lang === 'it') u.searchParams.delete('lang');
+      else u.searchParams.set('lang', lang);
+      window.history.replaceState(null, '', u.pathname + u.search + u.hash);
+    } catch (e) {}
+
     try { localStorage.setItem('vs-lang', lang); } catch (e) {}
   }
 
@@ -1376,10 +1659,17 @@ i,em,.it{font-style:italic}
     }
     $('#year').textContent = String(new Date().getFullYear());
 
+    /* Priorità: ?lang= nell'indirizzo, poi la scelta ricordata, poi il
+       browser; se il browser parla una lingua che non abbiamo, inglese. */
+    var fromUrl = null;
+    try { fromUrl = new URL(window.location.href).searchParams.get('lang'); } catch (e) {}
     var saved = null;
     try { saved = localStorage.getItem('vs-lang'); } catch (e) {}
     var browser = (navigator.language || 'it').slice(0, 2).toLowerCase();
-    applyLang(saved || (browser === 'it' ? 'it' : 'en'));
+    var pick = [fromUrl, saved, browser].find(function (c) {
+      return c && LANGS.indexOf(c) !== -1;
+    });
+    applyLang(pick || 'en');
 
     var nav = $('#nav');
     var burger = $('#burger');
