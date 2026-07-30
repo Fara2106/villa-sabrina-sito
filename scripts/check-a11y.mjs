@@ -50,7 +50,7 @@ const contrast = await page.evaluate(() => {
     ['dintorni · km oro', '.dintorno .km'],
     ['dintorni · descrizione', '.dintorno .desc'],
     ['nota CTA recensioni', '.rev-cta .note'],
-    ['servizi · voce', '.servizi-list span'],
+    ['servizi · voce', '.servizi-gruppo li'],
     ['informazioni · testo', '.info p'],
     ['avviso prezzi', '.notice'],
     ['footer · testo', '.site-footer p'],
@@ -59,6 +59,7 @@ const contrast = await page.evaluate(() => {
     ['pulsante bordato', '.btn'],
     ['caption fascia', '.band figcaption'],
     ['stat · etichetta', '.stats span'],
+    ['barra bassa · recensioni', '.dock .score'],
     ['hero · sottotitolo', '.hero-tag'],
     ['hero · meta', '.hero-meta'],
     ['galleria · nota', '.gal-hint'],
@@ -106,8 +107,8 @@ console.log(`  elementi raggiungibili con Tab: ${focusables}`);
 // lightbox: apertura da tastiera, frecce, Esc, ritorno del fuoco
 await page.evaluate(() => document.querySelector('#galleria').scrollIntoView());
 await new Promise((r) => setTimeout(r, 500));
-await page.evaluate(() => document.querySelector('.tile').focus());
-const tileFocused = await page.evaluate(() => document.activeElement.className.includes('tile'));
+await page.evaluate(() => document.querySelector('.tile-media').focus());
+const tileFocused = await page.evaluate(() => document.activeElement.classList.contains('tile-media'));
 await page.keyboard.press('Enter');
 await new Promise((r) => setTimeout(r, 400));
 const lbOpen = await page.evaluate(() => document.querySelector('#lightbox').classList.contains('is-open'));
@@ -118,7 +119,7 @@ const afterArrow = await page.evaluate(() => document.querySelector('#lb-count')
 await page.keyboard.press('Escape');
 await new Promise((r) => setTimeout(r, 350));
 const lbClosed = await page.evaluate(() => !document.querySelector('#lightbox').classList.contains('is-open'));
-const focusBack = await page.evaluate(() => document.activeElement.className.includes('tile'));
+const focusBack = await page.evaluate(() => document.activeElement.classList.contains('tile-media'));
 
 console.log(`  tessera galleria riceve il fuoco     ${tileFocused ? 'sì' : 'NO'}`);
 console.log(`  Invio apre la lightbox               ${lbOpen ? 'sì' : 'NO'}`);
@@ -170,6 +171,60 @@ const menuClosed = await page.evaluate(() => !document.querySelector('#nav').cla
 console.log(`  menu mobile apre da tastiera         ${menuOpen.open ? 'sì' : 'NO'}  (aria-expanded="${menuOpen.expanded}")`);
 console.log(`  il fuoco entra nel menu              ${menuOpen.focusInside ? 'sì' : 'NO'}`);
 console.log(`  Esc chiude il menu                   ${menuClosed ? 'sì' : 'NO'}`);
+
+// col pannello aperto il Tab non deve uscire sul contenuto dietro, e una ✕
+// visibile deve bastare a chiudere: su un telefono Esc non esiste
+await page.evaluate(() => document.querySelector('#burger').click());
+await new Promise((r) => setTimeout(r, 500));
+let escaped = 0;
+for (let i = 0; i < 12; i++) {
+  await page.keyboard.press('Tab');
+  if (!(await page.evaluate(() => document.querySelector('#nav').contains(document.activeElement)))) escaped++;
+}
+const closeVisible = await page.evaluate(() => {
+  const b = document.querySelector('#nav-close');
+  const r = b.getBoundingClientRect();
+  const top = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+  return { visibile: r.width > 0 && b.contains(top), area: `${Math.round(r.width)}×${Math.round(r.height)}` };
+});
+const scrollBlocked = await page.evaluate(async () => {
+  const y = window.scrollY;
+  window.scrollBy(0, 600);
+  await new Promise((r) => setTimeout(r, 120));
+  return window.scrollY === y;
+});
+await page.evaluate(() => document.querySelector('#nav-close').click());
+await new Promise((r) => setTimeout(r, 450));
+const closedByTap = await page.evaluate(() => !document.querySelector('#nav').classList.contains('is-open'));
+console.log(`  il Tab resta dentro al pannello      ${escaped === 0 ? 'sì' : `NO (${escaped}/12 fuori)`}`);
+console.log(`  la ✕ è visibile e in cima            ${closeVisible.visibile ? 'sì' : 'NO'}  (${closeVisible.area})`);
+console.log(`  si chiude col tocco                  ${closedByTap ? 'sì' : 'NO'}`);
+console.log(`  la pagina non scorre dietro          ${scrollBlocked ? 'sì' : 'NO'}`);
+
+// le cinque foto de "Gli spazi" aprono la lightbox anche senza mouse
+const spazi = await page.evaluate(() => {
+  const b = document.querySelectorAll('.spazio-media');
+  return {
+    n: b.length,
+    bottoni: [...b].every((e) => e.tagName === 'BUTTON'),
+    etichette: [...b].every((e) => (e.getAttribute('aria-label') || '').length > 3),
+  };
+});
+await page.evaluate(() => document.querySelector('.spazio-media').focus());
+await page.keyboard.press('Enter');
+await new Promise((r) => setTimeout(r, 400));
+const spazioApre = await page.evaluate(() => document.querySelector('#lightbox').classList.contains('is-open'));
+await page.keyboard.press('Escape');
+await new Promise((r) => setTimeout(r, 300));
+console.log(`  "Gli spazi": foto raggiungibili      ${spazi.bottoni && spazi.etichette ? 'sì' : 'NO'}  (${spazi.n} bottoni con etichetta)`);
+console.log(`  Invio apre la lightbox               ${spazioApre ? 'sì' : 'NO'}`);
+
+// il nome del comando dev'essere una frase, non tutta la didascalia
+const nomeTessera = await page.evaluate(() => {
+  const b = document.querySelector('.tile-media');
+  return (b.getAttribute('aria-label') || b.textContent).replace(/\s+/g, ' ').trim();
+});
+console.log(`  nome della tessera galleria          ${nomeTessera.length} caratteri${nomeTessera.length > 160 ? '  ⚠ troppo lungo' : ''}`);
 
 /* ------------------------------------------------- prefers-reduced-motion */
 const page2 = await browser.newPage();

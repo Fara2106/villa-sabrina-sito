@@ -86,6 +86,13 @@ i,em,.it{font-style:italic}
 ::selection{background:var(--gold);color:var(--bg)}
 :focus-visible{outline:2px solid var(--gold);outline-offset:4px}
 
+/* col menu o la lightbox aperti lo scorrimento è bloccato: la larghezza che
+   lasciava la barra di scorrimento viene restituita, altrimenti la pagina
+   dietro si sposta di una quindicina di pixel e si vede */
+body.is-locked{padding-right:var(--sbw,0px)}
+body.is-locked .site-header,
+body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
+
 .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gut)}
 .skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--gold);color:var(--bg);padding:14px 22px;font-weight:500}
 .skip:focus{left:8px;top:8px}
@@ -118,14 +125,20 @@ i,em,.it{font-style:italic}
 .bar{display:flex;align-items:center;justify-content:space-between;width:100%;gap:24px}
 .brand{font-family:var(--serif);font-size:1.5rem;color:var(--text);white-space:nowrap;padding:8px 0;display:inline-block}
 .nav{display:flex;gap:clamp(18px,2.4vw,34px)}
-.nav a{
+.nav > a{
   font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text);
   transition:color .2s;white-space:nowrap;
   /* WCAG 2.2 chiede almeno 24px per un comando che non sia un link dentro un
      testo: erano 20. Cresce l'area, non il disegno. */
   padding-block:14px;
 }
-.nav a:hover{color:var(--gold)}
+/* Il :hover vale solo dove c'è davvero un puntatore. Su touch il browser lo
+   lascia "appiccicato" dopo il tocco e l'elemento resta acceso finché non se
+   ne tocca un altro: sembra un difetto, ed è la stessa regola per i bottoni,
+   le foto della galleria e i link del footer. */
+@media(hover:hover){.nav > a:hover{color:var(--gold)}}
+/* la sezione in cui ci si trova, mentre si scorre */
+.nav > a[aria-current]{color:var(--gold)}
 .bar-end{display:flex;align-items:center;gap:24px}
 .lang{display:flex;align-items:center;gap:2px;font-size:.7rem;letter-spacing:.14em}
 .lang button{
@@ -138,6 +151,8 @@ i,em,.it{font-style:italic}
 .lang button[aria-pressed="true"]{color:var(--gold)}
 .lang i{color:var(--faint);font-style:normal}
 .burger{display:none;background:none;border:0;cursor:pointer;padding:11px;color:var(--text)}
+/* Esistono solo dentro il pannello del menu, cioè sotto i 1300px. */
+.nav-close,.nav-cta,.scrim{display:none}
 
 /* ------------------------------------------------------------ bottoni */
 .btn{
@@ -147,10 +162,12 @@ i,em,.it{font-style:italic}
   font-family:var(--sans);cursor:pointer;
   transition:background .25s,color .25s,border-color .25s;
 }
-.btn:hover{background:var(--gold);border-color:var(--gold);color:var(--bg)}
 .btn--gold{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:500}
-.btn--gold:hover{background:var(--text);border-color:var(--text);color:var(--bg)}
-.btn--ghost:hover{background:none;border-color:var(--text);color:var(--text)}
+@media(hover:hover){
+  .btn:hover{background:var(--gold);border-color:var(--gold);color:var(--bg)}
+  .btn--gold:hover{background:var(--text);border-color:var(--text);color:var(--bg)}
+  .btn--ghost:hover{background:none;border-color:var(--text);color:var(--text)}
+}
 .btn--sm{padding:13px 20px;font-size:.68rem}
 .btn .arw{font-size:.85rem;line-height:1}
 
@@ -244,8 +261,16 @@ i,em,.it{font-style:italic}
   .spazio:nth-child(even) .spazio-media{order:2}
   .spazio:nth-child(even) .spazio-text{order:1}
 }
-.spazio-media{margin:0;position:relative}
-.spazio-media img{border:1px solid var(--line-2);width:100%}
+/* Anche queste cinque foto aprono la lightbox: sono <button>, non <figure>
+   con un click sopra, altrimenti col tasto Tab non ci si arriva e chi non usa
+   il mouse ha cinque immagini che non può ingrandire. */
+.spazio-media{
+  margin:0;position:relative;display:block;width:100%;
+  padding:0;border:0;background:none;cursor:zoom-in;
+}
+.spazio-media img{border:1px solid var(--line-2);width:100%;transition:border-color .3s ease}
+.spazio-media:focus-visible img{border-color:var(--gold)}
+@media(hover:hover){.spazio-media:hover img{border-color:var(--gold)}}
 .spazio-text h3{font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.08;margin-bottom:22px}
 .spazio-text .eyebrow{margin-bottom:22px}
 
@@ -298,18 +323,27 @@ i,em,.it{font-style:italic}
    si alternano. Ogni riga compare scorrendo, così la pagina si legge come una
    sequenza invece che come un catalogo. */
 .grid{display:flex;flex-direction:column;gap:clamp(56px,9vw,120px)}
+/* La riga è una <figure>; il bottone che apre la lightbox è solo la foto.
+   Prima era il contrario — un <button> che conteneva anche la didascalia — e
+   chi naviga con lo schermo letto si sentiva leggere 379 caratteri di testo
+   come nome del comando, prima di sapere che cosa facesse. */
 .tile{
   display:grid;grid-template-columns:1fr;gap:18px;width:100%;
-  margin:0;padding:0;border:0;background:none;cursor:zoom-in;text-align:left;
+  margin:0;padding:0;border:0;background:none;text-align:left;
   font-family:var(--sans);
 }
 .tile-media{
   position:relative;overflow:hidden;border:1px solid var(--line-2);
   transition:border-color .3s ease;
+  display:block;width:100%;margin:0;padding:0;background:none;cursor:zoom-in;
 }
 .tile img{width:100%;height:auto;display:block;transition:transform .9s cubic-bezier(.2,.7,.3,1)}
-.tile:hover .tile-media,.tile:focus-visible .tile-media{border-color:var(--gold)}
-.tile:hover img,.tile:focus-visible img{transform:scale(1.03)}
+.tile-media:focus-visible{border-color:var(--gold);outline-offset:2px}
+@media(hover:hover){
+  .tile-media:hover{border-color:var(--gold)}
+  .tile-media:hover img{transform:scale(1.03)}
+}
+.tile-media:focus-visible img{transform:scale(1.03)}
 
 .tile figcaption{display:block;position:relative}
 .tile .num{
@@ -329,7 +363,8 @@ i,em,.it{font-style:italic}
   transition:width .8s cubic-bezier(.2,.7,.3,1);
 }
 .tile.in .rule{width:64px}
-.tile:hover .rule,.tile:focus-visible .rule{width:110px}
+.tile:focus-within .rule{width:110px}
+@media(hover:hover){.tile:hover .rule{width:110px}}
 
 /* A tutta larghezza: esce dal contenitore fino ai bordi dello schermo e la
    didascalia passa sotto, rientrando nel margine del testo. */
@@ -383,7 +418,7 @@ i,em,.it{font-style:italic}
   text-transform:uppercase;border-bottom:1px solid rgba(214,180,92,.5);
   padding:15px 0 12px;margin-bottom:8px;transition:color .2s,border-color .2s;
 }
-.review-more:hover{color:var(--text);border-bottom-color:var(--text)}
+@media(hover:hover){.review-more:hover{color:var(--text);border-bottom-color:var(--text)}}
 .review-foot{
   display:flex;flex-wrap:wrap;align-items:center;gap:10px;
   font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);
@@ -438,7 +473,7 @@ i,em,.it{font-style:italic}
 .site-footer p{color:var(--sage);font-size:.9rem;line-height:1.65}
 .foot-link{display:inline-flex;align-items:center;gap:8px;color:var(--text);font-size:.9rem;transition:color .2s;padding:10px 0}
 .foot-link+.foot-link{margin-top:2px}
-.foot-link:hover{color:var(--gold)}
+@media(hover:hover){.foot-link:hover{color:var(--gold)}}
 .foot-bottom{
   margin-top:clamp(40px,7vw,90px);border-top:1px solid var(--line);padding-top:24px;
   display:flex;flex-wrap:wrap;gap:10px 28px;
@@ -461,15 +496,39 @@ i,em,.it{font-style:italic}
   cursor:pointer;display:grid;place-items:center;font-size:1rem;
   transition:border-color .2s,color .2s;
 }
-.lb-nav:hover{border-color:var(--gold);color:var(--gold)}
+@media(hover:hover){.lb-nav:hover{border-color:var(--gold);color:var(--gold)}}
 .lb-prev{left:clamp(8px,2.4vw,32px)}
 .lb-next{right:clamp(8px,2.4vw,32px)}
 .lb-stage{
   position:absolute;inset:clamp(72px,9vw,92px) clamp(64px,8vw,110px);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
 }
-.lb-stage img{flex:1;min-height:0;width:100%;max-width:1000px;object-fit:contain;border:1px solid var(--line-2)}
+/* Il bordo sta intorno alla fotografia, non intorno al riquadro che la
+   contiene: con object-fit:contain su un riquadro fisso si vedeva una cornice
+   vuota molto più alta della foto — su telefono la foto occupava il 15% dello
+   schermo dentro un rettangolo nero bordato d'oro. */
+/* Foto e didascalia sono un gruppo unico centrato: prima il riquadro della
+   foto si prendeva tutta l'altezza e la didascalia finiva pinzata in fondo,
+   lontana dall'immagine che descriveva. */
+.lb-frame{display:flex;justify-content:center;min-height:0;width:100%}
+.lb-stage img{
+  max-width:min(100%,1000px);
+  max-height:calc(100svh - var(--lb-chrome,240px));
+  width:auto;height:auto;
+  border:1px solid var(--line-2);
+}
 .lb-cap{color:var(--sage);font-size:clamp(.8rem,1.4vw,.9rem);text-align:center;min-height:1.4em}
+/* Su telefono i margini laterali di 64px lasciavano alla foto 262px su 390.
+   Qui si scende a 8px e le frecce scendono sotto, dove arriva il pollice e
+   dove non coprono l'immagine. */
+@media(max-width:820px){
+  .lb-stage{inset:58px 8px 104px;gap:16px;--lb-chrome:300px}
+  .lb-nav{top:auto;bottom:24px;transform:none;width:64px;height:48px}
+  .lb-prev{left:calc(50% - 72px)}
+  .lb-next{right:calc(50% - 72px)}
+  .lb-count{top:22px;left:16px}
+  .lb-close{top:16px;right:14px;padding:10px}
+}
 
 /* ------------------------------------------------------------ reveal */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.3,1)}
@@ -482,17 +541,71 @@ i,em,.it{font-style:italic}
     position:fixed;inset:0 0 0 auto;width:min(88vw,390px);
     background:var(--bg);border-left:1px solid var(--line);
     flex-direction:column;justify-content:flex-start;
-    gap:0;padding:104px var(--gut) 40px;
+    gap:0;padding:96px var(--gut) calc(40px + env(safe-area-inset-bottom));
     transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.7,.3,1);
     z-index:70;overflow-y:auto;
   }
   .nav.is-open{transform:none}
-  .nav a{
+  .nav > a{
     font-family:var(--serif);font-size:clamp(1.5rem,5.5vw,2rem);letter-spacing:-.02em;
     text-transform:none;padding:18px 0;border-bottom:1px solid var(--line);
   }
   .bar-end .btn{display:none}
+
+  /* Il pannello copre il tasto hamburger — è largo l'88% dello schermo e sta
+     sopra la barra. Senza una ✕ dentro, e senza il velo che chiude al tocco,
+     da telefono il menu non si poteva chiudere: restavano solo il tasto Esc,
+     che su un telefono non c'è, e la scelta di una voce. */
+  .nav-close{
+    display:flex;align-items:center;gap:10px;
+    position:absolute;top:14px;right:calc(var(--gut) - 10px);
+    background:none;border:0;cursor:pointer;color:var(--text);
+    font-family:var(--sans);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
+    padding:12px 10px;
+  }
+  .nav-close .x{font-size:1.1rem;line-height:1}
+  /* La scheda Posarelli è l'unica azione del sito, e sotto i 1300px spariva
+     dalla barra: qui il menu la rimette in fondo alle voci. */
+  .nav-cta{
+    display:inline-flex;justify-content:center;
+    margin-top:auto;padding-top:32px;
+  }
+  .nav-cta .btn{width:100%;justify-content:center}
+  .scrim{
+    display:block;position:fixed;inset:0;z-index:65;
+    background:rgba(10,16,14,.6);backdrop-filter:blur(2px);
+    opacity:0;pointer-events:none;transition:opacity .4s ease;
+  }
+  .scrim.is-open{opacity:1;pointer-events:auto}
 }
+
+/* ---------------------------------------------------- barra in basso */
+/* Da telefono la pagina è alta 24 schermate e, tolto l'hero, il primo link
+   verso la scheda ricompariva solo dopo 15.000 pixel di scorrimento: quasi
+   diciotto schermate senza il modo di prenotare. Questa barra compare quando
+   l'hero è passato e si toglie di mezzo sulla chiusura, dove il pulsante
+   grande c'è già. */
+.dock{
+  position:fixed;left:0;right:0;bottom:0;z-index:55;
+  display:none;align-items:center;justify-content:space-between;gap:14px;
+  padding:10px var(--gut) calc(10px + env(safe-area-inset-bottom));
+  background:rgba(20,31,28,.92);backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);
+  transform:translateY(110%);transition:transform .35s cubic-bezier(.2,.7,.3,1);
+}
+.dock.is-on{transform:none}
+.dock .score{
+  font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sage);
+  line-height:1.4;
+}
+.dock .score b{
+  font-family:var(--serif);font-size:1.15rem;font-weight:400;color:var(--gold);
+  letter-spacing:0;
+}
+.dock .score i{color:var(--faint);font-style:normal;margin:0 7px}
+.dock .btn{flex:0 0 auto;padding:15px 20px}
+@media(max-width:899px){.dock{display:flex}}
+@media(max-width:360px){.dock .score{display:none}.dock .btn{flex:1;justify-content:center}}
 @media(max-width:520px){
   .site-header{height:64px}
   .brand{font-size:1.15rem}
@@ -521,13 +634,23 @@ i,em,.it{font-style:italic}
   <div class="bar">
     <a class="brand" href="#top">Villa <i>Sabrina</i></a>
 
+    <div class="scrim" id="scrim"></div>
+
     <nav class="nav" id="nav" aria-label="Principale">
+      <button class="nav-close" id="nav-close" type="button">
+        <span data-i18n="lb.close">Chiudi</span><span class="x" aria-hidden="true">✕</span>
+      </button>
       <a href="#casa" data-i18n="nav.house">La casa</a>
       <a href="#spazi" data-i18n="nav.spaces">Gli spazi</a>
       <a href="#servizi" data-i18n="nav.amenities">Servizi</a>
       <a href="#dintorni" data-i18n="nav.around">Dintorni</a>
       <a href="#galleria" data-i18n="nav.gallery">Galleria</a>
       <a href="#recensioni" data-i18n="nav.reviews">Recensioni</a>
+      <span class="nav-cta">
+        <a class="btn btn--gold" id="cta-menu" href="https://www.posarellivillas.it/italia/toscana/san-gimignano/95494" target="_blank" rel="noreferrer noopener">
+          <span data-i18n="cta.availability">Prezzi e disponibilità</span><span class="arw" aria-hidden="true">↗</span>
+        </a>
+      </span>
     </nav>
 
     <div class="bar-end">
@@ -824,16 +947,24 @@ i,em,.it{font-style:italic}
 
 <!-- ========================================================== LIGHTBOX -->
 <div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Galleria fotografica" data-i18n-aria-label="lb.title">
-  <p class="lb-count" id="lb-count"></p>
+  <p class="lb-count" id="lb-count" aria-live="polite"></p>
   <button class="lb-close" id="lb-close">
     <span data-i18n="lb.close">Chiudi</span><span class="x" aria-hidden="true">✕</span>
   </button>
   <button class="lb-nav lb-prev" id="lb-prev" aria-label="Foto precedente" data-i18n-aria="lb.prev"><span aria-hidden="true">←</span></button>
   <button class="lb-nav lb-next" id="lb-next" aria-label="Foto successiva" data-i18n-aria="lb.next"><span aria-hidden="true">→</span></button>
   <figure class="lb-stage" style="margin:0">
-    <img id="lb-img" src="" alt="">
+    <span class="lb-frame"><img id="lb-img" src="" alt=""></span>
     <figcaption class="lb-cap" id="lb-caption"></figcaption>
   </figure>
+</div>
+
+<!-- ===================================================== BARRA IN BASSO -->
+<div class="dock" id="dock">
+  <p class="score"><b id="dock-score">5,0</b><i aria-hidden="true">·</i><span id="dock-count">61 recensioni</span></p>
+  <a class="btn btn--gold" id="cta-dock" href="https://www.posarellivillas.it/italia/toscana/san-gimignano/95494" target="_blank" rel="noreferrer noopener">
+    <span data-i18n="cta.short">Prezzi e date</span><span class="arw" aria-hidden="true">↗</span>
+  </a>
 </div>
 
 <!-- Dati delle recensioni: scritti da scripts/build-site.mjs, non a mano. -->
@@ -889,6 +1020,7 @@ i,em,.it{font-style:italic}
       'hero.scroll': 'Scorri',
       'cta.availability': 'Prezzi e disponibilità',
       'cta.seeHouse': 'Guarda la casa',
+      'cta.short': 'Prezzi e date',
 
       'facts.guests': 'Ospiti', 'facts.bedrooms': 'Camere', 'facts.sqm': 'Metri quadri',
 
@@ -912,6 +1044,8 @@ i,em,.it{font-style:italic}
 
       'gallery.eyebrow': 'Galleria', 'gallery.title': 'La casa, il giardino, la vista',
       'gallery.hint': 'Clicca una foto per ingrandirla',
+      'gallery.hintTouch': 'Tocca una foto per ingrandirla',
+      'gallery.zoom': 'Ingrandisci',
       'gallery.captions': {
         'casa-vigna-torri-dallalto': ['Da quassù si vedono le torri di San Gimignano, cinque chilometri più in là.',
           'La casa sta su un poggio fra i cipressi e i filari, e sotto di lei la piscina prende il sole per tutto il giorno. In un’ora di auto si arriva a Firenze, a Siena, a Volterra e in tutto il Chianti Classico: la sera però si torna quassù, e la differenza fra visitare la Toscana e starci sta tutta lì.'],
@@ -940,6 +1074,7 @@ i,em,.it{font-style:italic}
       'rev.eyebrow': 'Recensioni',
       'rev.average': 'media su {count} recensioni verificate, pubblicate da Posarelli Villas',
       'rev.more': 'Mostra altre',
+      'rev.countShort': '{count} recensioni',
       'rev.readFull': 'Leggi tutta la recensione',
       'rev.ctaTitle': 'Hai soggiornato a Villa Sabrina? Lascia una recensione su Posarelli Villas.',
       'rev.ctaButton': 'Lascia una recensione',
@@ -1023,6 +1158,7 @@ i,em,.it{font-style:italic}
       'hero.scroll': 'Scroll',
       'cta.availability': 'Rates & availability',
       'cta.seeHouse': 'See the house',
+      'cta.short': 'Prices & dates',
 
       'facts.guests': 'Guests', 'facts.bedrooms': 'Bedrooms', 'facts.sqm': 'Square metres',
 
@@ -1046,6 +1182,8 @@ i,em,.it{font-style:italic}
 
       'gallery.eyebrow': 'Gallery', 'gallery.title': 'The house, the garden, the view',
       'gallery.hint': 'Click a photo to enlarge it',
+      'gallery.hintTouch': 'Tap a photo to enlarge it',
+      'gallery.zoom': 'Enlarge',
       'gallery.captions': {
         'casa-vigna-torri-dallalto': ['From up here you can see the towers of San Gimignano, five kilometres away.',
           'The house sits on a rise among the cypresses and the vine rows, with the pool below it in the sun all day. Florence, Siena, Volterra and the whole Chianti Classico are within an hour’s drive — but in the evening you come back up here, and that is the whole difference between visiting Tuscany and staying in it.'],
@@ -1074,6 +1212,7 @@ i,em,.it{font-style:italic}
       'rev.eyebrow': 'Reviews',
       'rev.average': 'average across {count} verified reviews published by Posarelli Villas',
       'rev.more': 'Show more',
+      'rev.countShort': '{count} reviews',
       'rev.readFull': 'Read the full review',
       'rev.ctaTitle': 'Stayed at Villa Sabrina? Leave a review on Posarelli Villas.',
       'rev.ctaButton': 'Leave a review',
@@ -1156,6 +1295,7 @@ i,em,.it{font-style:italic}
       'hero.scroll': 'Défiler',
       'cta.availability': 'Prix et disponibilité',
       'cta.seeHouse': 'Voir la maison',
+      'cta.short': 'Prix et dates',
 
       'facts.guests': 'Personnes', 'facts.bedrooms': 'Chambres', 'facts.sqm': 'Mètres carrés',
 
@@ -1179,6 +1319,8 @@ i,em,.it{font-style:italic}
 
       'gallery.eyebrow': 'Galerie', 'gallery.title': 'La maison, le jardin, la vue',
       'gallery.hint': 'Cliquez une photo pour l’agrandir',
+      'gallery.hintTouch': 'Touchez une photo pour l’agrandir',
+      'gallery.zoom': 'Agrandir',
       'gallery.captions': {
         'casa-vigna-torri-dallalto': ['D’ici on aperçoit les tours de San Gimignano, à cinq kilomètres.',
           'La maison est posée sur une hauteur, entre les cyprès et les rangs de vigne, et la piscine en contrebas reste au soleil toute la journée. Florence, Sienne, Volterra et tout le Chianti Classico sont à moins d’une heure de route — mais le soir on remonte ici, et c’est toute la différence entre visiter la Toscane et y séjourner.'],
@@ -1207,6 +1349,7 @@ i,em,.it{font-style:italic}
       'rev.eyebrow': 'Avis',
       'rev.average': 'moyenne sur {count} avis vérifiés, publiés par Posarelli Villas',
       'rev.more': 'Voir plus',
+      'rev.countShort': '{count} avis',
       'rev.readFull': 'Lire l’avis en entier',
       'rev.ctaTitle': 'Vous avez séjourné à Villa Sabrina ? Laissez un avis sur Posarelli Villas.',
       'rev.ctaButton': 'Laisser un avis',
@@ -1291,6 +1434,7 @@ i,em,.it{font-style:italic}
       'hero.scroll': 'Desliza',
       'cta.availability': 'Precios y disponibilidad',
       'cta.seeHouse': 'Ver la casa',
+      'cta.short': 'Precios y fechas',
 
       'facts.guests': 'Huéspedes', 'facts.bedrooms': 'Habitaciones', 'facts.sqm': 'Metros cuadrados',
 
@@ -1314,6 +1458,8 @@ i,em,.it{font-style:italic}
 
       'gallery.eyebrow': 'Galería', 'gallery.title': 'La casa, el jardín, las vistas',
       'gallery.hint': 'Haz clic en una foto para ampliarla',
+      'gallery.hintTouch': 'Toca una foto para ampliarla',
+      'gallery.zoom': 'Ampliar',
       'gallery.captions': {
         'casa-vigna-torri-dallalto': ['Desde aquí arriba se ven las torres de San Gimignano, a cinco kilómetros.',
           'La casa está en un alto entre los cipreses y las hileras de viña, y la piscina, más abajo, tiene sol todo el día. Florencia, Siena, Volterra y todo el Chianti Classico quedan a menos de una hora en coche — pero por la tarde se vuelve aquí, y en eso consiste la diferencia entre visitar la Toscana y estar en ella.'],
@@ -1342,6 +1488,7 @@ i,em,.it{font-style:italic}
       'rev.eyebrow': 'Opiniones',
       'rev.average': 'media sobre {count} opiniones verificadas, publicadas por Posarelli Villas',
       'rev.more': 'Ver más',
+      'rev.countShort': '{count} reseñas',
       'rev.readFull': 'Leer la opinión completa',
       'rev.ctaTitle': '¿Te has alojado en Villa Sabrina? Deja tu opinión en Posarelli Villas.',
       'rev.ctaButton': 'Dejar una opinión',
@@ -1424,6 +1571,7 @@ i,em,.it{font-style:italic}
       'hero.scroll': 'Scrollen',
       'cta.availability': 'Preise & Verfügbarkeit',
       'cta.seeHouse': 'Das Haus ansehen',
+      'cta.short': 'Preise & Termine',
 
       'facts.guests': 'Gäste', 'facts.bedrooms': 'Schlafzimmer', 'facts.sqm': 'Quadratmeter',
 
@@ -1447,6 +1595,8 @@ i,em,.it{font-style:italic}
 
       'gallery.eyebrow': 'Galerie', 'gallery.title': 'Das Haus, der Garten, der Blick',
       'gallery.hint': 'Für die Großansicht auf ein Foto klicken',
+      'gallery.hintTouch': 'Für die Großansicht ein Foto antippen',
+      'gallery.zoom': 'Vergrößern',
       'gallery.captions': {
         'casa-vigna-torri-dallalto': ['Von hier oben sieht man die Türme von San Gimignano, fünf Kilometer entfernt.',
           'Das Haus liegt auf einer Anhöhe zwischen Zypressen und Rebzeilen, der Pool darunter hat den ganzen Tag Sonne. Florenz, Siena, Volterra und der ganze Chianti Classico sind in einer Autostunde erreichbar — abends aber kommt man hierher zurück, und genau darin liegt der Unterschied zwischen die Toskana besuchen und in ihr wohnen.'],
@@ -1475,6 +1625,7 @@ i,em,.it{font-style:italic}
       'rev.eyebrow': 'Bewertungen',
       'rev.average': 'Durchschnitt aus {count} geprüften Bewertungen, veröffentlicht von Posarelli Villas',
       'rev.more': 'Mehr anzeigen',
+      'rev.countShort': '{count} Bewertungen',
       'rev.readFull': 'Ganze Bewertung lesen',
       'rev.ctaTitle': 'Sie waren in der Villa Sabrina? Hinterlassen Sie eine Bewertung bei Posarelli Villas.',
       'rev.ctaButton': 'Bewertung schreiben',
@@ -1677,6 +1828,37 @@ i,em,.it{font-style:italic}
   var lang = 'it';
   var t = function (k) { return (I18N[lang] && I18N[lang][k]) || I18N.it[k] || k; };
 
+  /* ------------------------------------------------ blocco dello scroll */
+  /* Con overflow:hidden sul body iOS continua a far scorrere la pagina sotto
+     al menu e sotto alla lightbox. L'unico modo che regge è fissare il body
+     e ricordarsi a che altezza si era, per rimetterlo lì all'uscita. */
+  var lockY = 0, locks = 0;
+  function lockScroll() {
+    if (locks++ > 0) return;
+    lockY = window.scrollY || window.pageYOffset || 0;
+    /* bloccando lo scroll sparisce la barra di scorrimento e su desktop tutta
+       la pagina scivola di lato: le si rimette al posto la larghezza tolta */
+    var sbw = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.setProperty('--sbw', (sbw > 0 ? sbw : 0) + 'px');
+    document.body.classList.add('is-locked');
+    document.body.style.position = 'fixed';
+    document.body.style.top = -lockY + 'px';
+    document.body.style.width = '100%';
+  }
+  function unlockScroll() {
+    if (locks > 0) locks--;
+    if (locks > 0) return;
+    var root = document.documentElement;
+    var prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';   // il ritorno è un salto, non un viaggio
+    document.body.classList.remove('is-locked');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, lockY);
+    root.style.scrollBehavior = prev;
+  }
+
   /* --------------------------------------------------- dati recensioni */
   var DATA = { aggregate: { rating: 5, count: 61 }, reviews: [], fetchedAt: null };
   try {
@@ -1720,10 +1902,13 @@ i,em,.it{font-style:italic}
       var row = document.createElement('div');
       row.className = 'spazio reveal';
 
-      var fig = document.createElement('figure');
+      /* un <button> vero: ci si arriva col Tab e viene annunciato come
+         comando, cosa che a una <figure> con un click sopra non succede */
+      var fig = document.createElement('button');
+      fig.type = 'button';
       fig.className = 'spazio-media';
       fig.appendChild(picture(s.img, [800, 1400, 1920], '(min-width:960px) 55vw, 100vw'));
-      fig.style.cursor = 'zoom-in';
+      fig.setAttribute('aria-label', t('gallery.zoom') + ': ' + s.title);
       fig.setAttribute('data-space-index', String(i));
 
       var txt = document.createElement('div');
@@ -1776,19 +1961,24 @@ i,em,.it{font-style:italic}
     host.innerHTML = '';
     var caps = I18N[lang]['gallery.captions'] || {};
     GALLERY.forEach(function (g, i) {
-      var btn = document.createElement('button');
-      btn.type = 'button';
+      /* La riga è una <figure> e il comando è solo la foto: così il nome del
+         bottone è una frase, non tutta la didascalia, e <figcaption> torna
+         dentro a una <figure> come vuole l'HTML. */
+      var btn = document.createElement('figure');
       btn.className = 'tile reveal';
-      btn.setAttribute('data-index', String(i));
 
       if (g.tall) btn.className += ' is-tall';
       if (g.bleed) btn.className += ' is-bleed';
 
-      var media = document.createElement('span');
+      var media = document.createElement('button');
+      media.type = 'button';
       media.className = 'tile-media';
+      media.setAttribute('data-index', String(i));
       media.appendChild(picture(g.name, g.widths,
         g.bleed ? '100vw' : (g.tall ? '(min-width:900px) 40vw, 100vw' : '(min-width:900px) 56vw, 100vw'),
         g.tall));
+      media.setAttribute('aria-label',
+        t('gallery.zoom') + ': ' + ((ALT[lang] && ALT[lang][g.name]) || ''));
       btn.appendChild(media);
 
       var fc = document.createElement('figcaption');
@@ -1822,23 +2012,37 @@ i,em,.it{font-style:italic}
   var lastFocus = null;
 
   function buildLightboxList() {
-    LB_ITEMS = GALLERY.map(function (g) { return { name: g.name, full: g.full }; })
+    LB_ITEMS = GALLERY.map(function (g) { return { name: g.name, widths: g.widths }; })
       .concat((I18N.it['spaces.items'] || []).map(function (s) {
-        return { name: s.img, full: 1920 };
+        return { name: s.img, widths: [800, 1400, 1920] };
       }));
+  }
+
+  /* La lightbox scaricava sempre il file più grande: 428 kB di foto da 2000px
+     per mostrarla larga 262 su un telefono. Qui si prende la misura più
+     piccola che basta allo schermo — 800px, 72 kB, la stessa foto. */
+  function lbSrc(it) {
+    var ws = (it.widths || []).slice().sort(function (a, b) { return a - b; });
+    if (!ws.length) return 'assets/img/' + it.name + '-fallback.jpg';
+    var need = Math.min(window.innerWidth, 1000) * (window.devicePixelRatio || 1);
+    var pick = ws[ws.length - 1];
+    for (var i = 0; i < ws.length; i++) { if (ws[i] >= need) { pick = ws[i]; break; } }
+    return 'assets/img/' + it.name + '-' + pick + '.webp';
   }
 
   function openLB(i) {
     lastFocus = document.activeElement;
     lbIndex = i;
-    renderLB();
     $('#lightbox').classList.add('is-open');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
+    dockUpdate();
+    renderLB();
     $('#lb-close').focus();
   }
   function closeLB() {
     $('#lightbox').classList.remove('is-open');
-    document.body.style.overflow = '';
+    unlockScroll();
+    dockUpdate();
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
   function stepLB(d) {
@@ -1848,7 +2052,7 @@ i,em,.it{font-style:italic}
   function renderLB() {
     var it = LB_ITEMS[lbIndex];
     var img = $('#lb-img');
-    img.src = 'assets/img/' + it.name + '-' + it.full + '.webp';
+    img.src = lbSrc(it);
     // l'alt resta la descrizione neutra per chi non vede l'immagine;
     // sotto si legge la didascalia, che è un'altra cosa e serve a un altro scopo
     img.alt = (ALT[lang] && ALT[lang][it.name]) || '';
@@ -1856,6 +2060,14 @@ i,em,.it{font-style:italic}
     var cap = caps[it.name];
     $('#lb-caption').textContent = (cap && cap[0]) || img.alt;
     $('#lb-count').textContent = t('lb.photo') + ' ' + (lbIndex + 1) + ' ' + t('lb.of') + ' ' + LB_ITEMS.length;
+    /* le due foto accanto arrivano in anticipo: chi sfoglia non aspetta */
+    clearTimeout(renderLB.pre);
+    renderLB.pre = setTimeout(function () {
+      [1, -1].forEach(function (d) {
+        var n = LB_ITEMS[(lbIndex + d + LB_ITEMS.length) % LB_ITEMS.length];
+        if (n) { var im = new Image(); im.src = lbSrc(n); }
+      });
+    }, 300);
   }
   function lbKeys(e) {
     if (!$('#lightbox').classList.contains('is-open')) return;
@@ -1984,6 +2196,10 @@ i,em,.it{font-style:italic}
       if (k === 'rev.average') {
         v = v.replace('{count}', DATA.aggregate && DATA.aggregate.count ? DATA.aggregate.count : '');
       }
+      /* «Clicca una foto» a un dito non dice niente */
+      if (k === 'gallery.hint' && window.matchMedia('(hover: none)').matches) {
+        v = t('gallery.hintTouch');
+      }
       if (/<[a-z]/i.test(v)) el.innerHTML = v; else el.textContent = v;
     });
     $$('[data-i18n-aria]').forEach(function (el) {
@@ -2027,10 +2243,22 @@ i,em,.it{font-style:italic}
       el.alt = (ALT[lang] && ALT[lang][el.getAttribute('data-alt-key')]) || '';
     });
 
-    ['#cta-nav', '#cta-hero', '#cta-closing', '#cta-prices', '#foot-it'].forEach(function (sel) {
-      var el = $(sel);
-      if (el) el.href = LISTING[lang];
-    });
+    ['#cta-nav', '#cta-hero', '#cta-closing', '#cta-prices', '#cta-menu', '#cta-dock', '#foot-it']
+      .forEach(function (sel) {
+        var el = $(sel);
+        if (el) el.href = LISTING[lang];
+      });
+
+    /* la barra in basso ripete il voto: sono gli stessi numeri della sezione
+       recensioni, presi dallo stesso blocco dati */
+    var dScore = $('#dock-score'), dCount = $('#dock-count');
+    if (dScore && DATA.aggregate) {
+      dScore.textContent = Number(DATA.aggregate.rating).toLocaleString(LOCALES[lang] || 'it-IT',
+        { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    }
+    if (dCount && DATA.aggregate) {
+      dCount.textContent = t('rev.countShort').replace('{count}', DATA.aggregate.count);
+    }
     var cr = $('#cta-review');
     if (cr) cr.href = LISTING[lang] + REVIEWS_ANCHOR;
 
@@ -2058,6 +2286,20 @@ i,em,.it{font-style:italic}
     } catch (e) {}
 
     try { localStorage.setItem('vs-lang', lang); } catch (e) {}
+  }
+
+  /* ------------------------------------------------- barra in basso */
+  /* Si mostra solo nel mezzo della pagina: sull'hero e sulla chiusura il
+     pulsante grande c'è già, e col menu o la lightbox aperti darebbe fastidio. */
+  function dockUpdate() {
+    var dock = $('#dock'), hero = $('.hero'), closing = $('.closing');
+    if (!dock || !hero || !closing) return;
+    var busy = $('#nav').classList.contains('is-open') ||
+               $('#lightbox').classList.contains('is-open');
+    dock.classList.toggle('is-on',
+      !busy &&
+      hero.getBoundingClientRect().bottom < 60 &&
+      closing.getBoundingClientRect().top > window.innerHeight * 0.9);
   }
 
   /* ------------------------------------------------------------ reveal */
@@ -2150,10 +2392,28 @@ i,em,.it{font-style:italic}
 
     var nav = $('#nav');
     var burger = $('#burger');
+    var scrim = $('#scrim');
+    var isOpen = function () { return nav.classList.contains('is-open'); };
+
+    function openMenu() {
+      if (isOpen()) return;
+      nav.classList.add('is-open');
+      scrim.classList.add('is-open');
+      burger.setAttribute('aria-expanded', 'true');
+      burger.setAttribute('aria-label', t('nav.close'));
+      lockScroll();
+      dockUpdate();
+      var f = nav.querySelector('a');
+      if (f) f.focus();
+    }
     function closeMenu() {
+      if (!isOpen()) return;
       nav.classList.remove('is-open');
+      scrim.classList.remove('is-open');
       burger.setAttribute('aria-expanded', 'false');
       burger.setAttribute('aria-label', t('nav.open'));
+      unlockScroll();
+      dockUpdate();
     }
 
     $$('.lang button').forEach(function (b) {
@@ -2163,24 +2423,65 @@ i,em,.it{font-style:italic}
       });
     });
 
-    burger.addEventListener('click', function () {
-      var open = nav.classList.toggle('is-open');
-      burger.setAttribute('aria-expanded', String(open));
-      burger.setAttribute('aria-label', t(open ? 'nav.close' : 'nav.open'));
-      if (open) { var f = nav.querySelector('a'); if (f) f.focus(); }
-    });
+    burger.addEventListener('click', function () { isOpen() ? closeMenu() : openMenu(); });
+    $('#nav-close').addEventListener('click', function () { closeMenu(); burger.focus(); });
+    scrim.addEventListener('click', closeMenu);
     $$('#nav a').forEach(function (a) { a.addEventListener('click', closeMenu); });
+
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && nav.classList.contains('is-open')) { closeMenu(); burger.focus(); }
+      if (!isOpen()) return;
+      if (e.key === 'Escape') { closeMenu(); burger.focus(); return; }
+      /* col pannello aperto il Tab usciva sul contenuto dietro — 33 elementi
+         raggiungibili che però non si vedevano */
+      if (e.key !== 'Tab') return;
+      var f = $$('a[href],button', nav).filter(function (el) { return el.offsetParent !== null; });
+      if (!f.length) return;
+      e.preventDefault();
+      var i = f.indexOf(document.activeElement);
+      f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
     });
 
+    /* ------------------------------------------------------ scroll-spy */
+    /* La pagina è alta ventiquattro schermate: la voce di menu accesa dice
+       dove si è finiti. */
     var header = $('#header');
-    var onScroll = function () { header.classList.toggle('is-stuck', window.scrollY > 40); };
+    var spyIds = ['casa', 'spazi', 'servizi', 'dintorni', 'galleria', 'recensioni'];
+    var spyLinks = {};
+    spyIds.forEach(function (id) {
+      var a = nav.querySelector('a[href="#' + id + '"]');
+      if (a) spyLinks[id] = a;
+    });
+    var spyNow = null;
+    function updateSpy() {
+      var line = header.getBoundingClientRect().height + window.innerHeight * 0.28;
+      var found = null;
+      spyIds.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= line) found = id;
+      });
+      if (found === spyNow) return;
+      if (spyNow && spyLinks[spyNow]) spyLinks[spyNow].removeAttribute('aria-current');
+      spyNow = found;
+      if (spyNow && spyLinks[spyNow]) spyLinks[spyNow].setAttribute('aria-current', 'true');
+    }
+
+    var ticking = false;
+    function onScroll() {
+      header.classList.toggle('is-stuck', window.scrollY > 40);
+      updateSpy();
+      dockUpdate();
+    }
+    function queueScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; onScroll(); });
+    }
     onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', queueScroll, { passive: true });
+    window.addEventListener('resize', queueScroll, { passive: true });
 
     $('#gallery').addEventListener('click', function (e) {
-      var tile = e.target.closest('.tile');
+      var tile = e.target.closest('.tile-media');
       if (tile) openLB(Number(tile.getAttribute('data-index')));
     });
     $('#spazi-list').addEventListener('click', function (e) {
@@ -2195,6 +2496,20 @@ i,em,.it{font-style:italic}
       if (e.target === e.currentTarget) closeLB();
     });
     document.addEventListener('keydown', lbKeys);
+
+    /* sfogliare con il dito: su un telefono è il gesto che si prova per primo */
+    var swX = 0, swY = 0;
+    var lbEl = $('#lightbox');
+    lbEl.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) return;
+      swX = e.touches[0].clientX; swY = e.touches[0].clientY;
+    }, { passive: true });
+    lbEl.addEventListener('touchend', function (e) {
+      var p = e.changedTouches && e.changedTouches[0];
+      if (!p) return;
+      var dx = p.clientX - swX, dy = p.clientY - swY;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.6) stepLB(dx < 0 ? 1 : -1);
+    }, { passive: true });
 
     // dopo il load, così non compete con il poster per la banda
     if (document.readyState === 'complete') setTimeout(startHeroVideo, 400);

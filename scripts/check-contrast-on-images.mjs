@@ -82,7 +82,14 @@ for (const width of [390, 1440]) {
     const info = await page.evaluate((s) => {
       const el = document.querySelector(s);
       if (!el) return null;
+      // Senza spegnere lo scorrimento morbido, scrollIntoView è ancora a metà
+      // strada quando si scatta: il ritaglio è in coordinate di PAGINA, quindi
+      // fotografa il punto giusto della pagina ma con la barra fissa in basso
+      // composita sopra — e si misura il pulsante oro invece del testo.
+      const prev = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'auto';
       el.scrollIntoView({ block: 'center' });
+      document.documentElement.style.scrollBehavior = prev;
       return null;
     }, sel).then(() => new Promise((r) => setTimeout(r, 700)))
       .then(() => page.evaluate((s) => {
