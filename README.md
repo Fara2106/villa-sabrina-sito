@@ -188,9 +188,32 @@ da pubblicare è la radice del progetto.
 ```bash
 npm run serve            # in un terminale
 npm run check:render     # 360/768/1280/1920: overflow, 404, screenshot
-npm run check:a11y       # contrasti reali, tastiera, reduced-motion
+npm run check:a11y       # contrasti su fondo pieno, tastiera, reduced-motion
+npm run check:contrast   # contrasto del testo che sta SOPRA le foto
 npm run check:lighthouse # apre il report
 ```
+
+I due controlli sui contrasti servono a cose diverse, e il secondo è quello
+che conta di più qui.
+
+`check:a11y` risale il DOM finché trova un `background-color`, quindi funziona
+solo dove dietro c'è un colore pieno. **Dove dietro c'è una fotografia non
+vede niente e non dice niente**: hero, fasce panorama e chiusura passavano
+senza essere mai misurate davvero.
+
+`check:contrast` misura sul serio: nasconde il testo, fotografa l'area che
+occupava e confronta il colore del testo con **ogni singolo pixel** dello
+sfondo, tenendo il caso peggiore. Se cambi una foto, un ritaglio o un
+gradiente, è questo il comando da rilanciare.
+
+Due trappole che ha già preso, se un giorno lo modifichi:
+
+- il `clip` di `page.screenshot()` è in coordinate **di pagina**, non di
+  viewport: senza sommare `scrollX/scrollY` si fotografa un'altra zona;
+- i rettangoli di `Range.getClientRects()` sono gonfiati da ascendente e
+  discendente del font e sbordano sul testo vicino. Con il Bodoni a 158px il
+  titolo sconfinava nel sottotitolo, che è dello stesso crema: il risultato
+  era un finto 1:1 inamovibile. Vanno ritagliati sulla scatola dell'elemento.
 
 Gli screenshot finiscono nella cartella temporanea indicata in cima a
 `scripts/check-render.mjs`.
@@ -210,9 +233,16 @@ singola corsa su una macchina occupata può scendere anche a 77, ed è rumore
 della simulazione, non della pagina. Se misuri e ti esce un numero strano,
 rimisura a macchina scarica prima di andare a cercare la causa.
 
-Contrasti: tutti i testi passano AA, la maggior parte AAA. Il più stretto è
+Contrasti su fondo pieno: tutti AA, la maggior parte AAA. Il più stretto è
 5,41:1 (il salvia `#93A18C` sul fondo alternato `#1D2B27`), contro un minimo
 richiesto di 4,5:1.
+
+Contrasti del testo sopra le foto, misurati pixel per pixel a 390 e 1440px:
+tutti passano, il più stretto è 4,72:1. I veli sull'hero, sulle fasce e sulla
+chiusura sono tarati su questo, non a occhio: il caso più difficile è
+l'occhiello oro `#D6B45C`, piccolo e spaziato, sopra un campo in pieno sole.
+**Se cambi la foto dell'hero rilancia `npm run check:contrast`**, perché il
+velo è tarato su quella immagine.
 
 ## Dati e vincoli
 

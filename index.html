@@ -148,13 +148,23 @@ i,em,.it{font-style:italic}
 .hero{position:relative;min-height:min(900px,100svh);display:flex;align-items:flex-end;isolation:isolate}
 .hero picture,.hero>picture img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
 /* Il gradiente del mockup presupponeva una foto già scura. La nostra ha un
-   campo chiaro proprio dietro al titolo, quindi la metà bassa va velata di
-   più: senza questo, testo bianco e oro non reggono il contrasto. */
+   campo dorato in pieno sole proprio dietro al titolo. Il velo è tarato sul
+   colore più difficile che ci sta sopra — l'oro dell'occhiello, piccolo e
+   spaziato — misurato pixel per pixel da scripts/check-contrast-on-images.mjs.
+   Resta chiaro in alto a destra, dove ci sono le torri e la vigna. */
 .hero::after{
   content:"";position:absolute;inset:0;z-index:-1;
   background:
-    linear-gradient(to bottom,rgba(20,31,28,.55) 0%,rgba(20,31,28,.18) 28%,rgba(20,31,28,.62) 58%,rgba(20,31,28,.95) 100%),
-    linear-gradient(to right,rgba(20,31,28,.55) 0%,rgba(20,31,28,.1) 52%,rgba(20,31,28,0) 72%);
+    linear-gradient(to bottom,rgba(20,31,28,.5) 0%,rgba(20,31,28,.1) 24%,rgba(20,31,28,.74) 46%,rgba(20,31,28,.9) 68%,rgba(20,31,28,.96) 100%),
+    linear-gradient(to right,rgba(10,16,14,.78) 0%,rgba(10,16,14,.45) 55%,rgba(10,16,14,0) 80%);
+}
+/* Su schermo stretto il testo occupa quasi tutta la larghezza, quindi il
+   velo laterale non basta più e deve fare tutto quello dal basso. */
+@media(max-width:700px){
+  .hero::after{
+    background:
+      linear-gradient(to bottom,rgba(20,31,28,.5) 0%,rgba(20,31,28,.12) 20%,rgba(20,31,28,.74) 40%,rgba(20,31,28,.92) 64%,rgba(20,31,28,.97) 100%);
+  }
 }
 .hero-inner{width:100%;padding-block:120px 84px}
 .hero h1{font-size:clamp(3.7rem,11vw,11rem);line-height:.94;letter-spacing:-.035em;margin-bottom:28px}
@@ -191,9 +201,14 @@ i,em,.it{font-style:italic}
 /* ------------------------------------------------------------- fascia */
 .band{position:relative;height:clamp(100px,12vw,170px);overflow:hidden;border-block:1px solid var(--line)}
 .band img{width:100%;height:100%;object-fit:cover}
+/* Al gradiente laterale del mockup serve un velo anche in basso: la
+   didascalia ci sta sopra e sulla foto vera era illeggibile per due terzi
+   della sua lunghezza. */
 .band::after{
   content:"";position:absolute;inset:0;
-  background:linear-gradient(to right,var(--bg) 0%,rgba(20,31,28,0) 22%,rgba(20,31,28,0) 78%,var(--bg) 100%);
+  background:
+    linear-gradient(to right,var(--bg) 0%,rgba(20,31,28,0) 22%,rgba(20,31,28,0) 78%,var(--bg) 100%),
+    linear-gradient(to top,rgba(10,16,14,.96) 0%,rgba(10,16,14,.78) 30%,rgba(10,16,14,.3) 52%,rgba(10,16,14,0) 74%);
 }
 .band figcaption{
   position:absolute;left:var(--gut);bottom:14px;z-index:2;
@@ -326,7 +341,9 @@ i,em,.it{font-style:italic}
 /* --------------------------------------------------------- chiusura */
 .closing{position:relative;isolation:isolate;display:grid;place-items:center;min-height:clamp(420px,55vw,620px);text-align:center}
 .closing picture,.closing>picture img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
-.closing::after{content:"";position:absolute;inset:0;background:rgba(20,31,28,.85);z-index:-1}
+/* .90 e non .85: con .85 le zone più chiare della foto (i tulipani sulla
+   tavola) restavano sopra soglia sotto l'occhiello oro e il testo salvia. */
+.closing::after{content:"";position:absolute;inset:0;background:rgba(20,31,28,.9);z-index:-1}
 .closing h2{font-size:clamp(2.3rem,5.4vw,4.2rem);line-height:1.02;letter-spacing:-.025em;max-width:22ch;margin:0 auto 28px}
 .closing p{color:var(--sage);font-size:clamp(.92rem,1.5vw,1.05rem);line-height:1.6;max-width:52ch;margin:0 auto 44px}
 
