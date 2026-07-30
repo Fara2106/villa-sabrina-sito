@@ -25,7 +25,13 @@ jobs:
   aggiorna:
     runs-on: ubuntu-latest
     steps:
+      # Se esiste il segreto PAT_RECENSIONI i commit risultano fatti da te e
+      # l'attivita sul repo conta di sicuro per il timer dei 60 giorni. Se non
+      # esiste, si usa il token predefinito e funziona comunque: il segreto e
+      # un rinforzo, non un requisito.
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_RECENSIONI || github.token }}
 
       - uses: actions/setup-node@v4
         with:
@@ -82,6 +88,38 @@ jobs:
           Aggiornamento automatico. Le nuove recensioni sono entrate con
           approved:false e non sono ancora visibili sul sito."
           git push
+
+      # GitHub spegne le azioni pianificate dopo 60 giorni senza attività sul
+      # repo. D'inverno le recensioni possono non arrivare per mesi, e senza
+      # commit l'automazione si spegnerebbe proprio quando serve meno badarci.
+      # Se sono passati più di 40 giorni dall'ultimo commit, ne facciamo uno di
+      # servizio: costa nulla e tiene sveglia la pianificazione.
+      - name: Battito, se il repo è fermo da troppo
+        if: steps.diff.outputs.cambiato == 'no'
+        run: |
+          ULTIMO=$(git log -1 --format=%ct)
+          ADESSO=$(date +%s)
+          GIORNI=$(( (ADESSO - ULTIMO) / 86400 ))
+          echo "ultimo commit: $GIORNI giorni fa"
+          if [ "$GIORNI" -ge 40 ]; then
+            mkdir -p data
+            {
+              echo "Ultimo controllo delle recensioni senza novità."
+              echo "Serve solo a tenere attiva la pianificazione: GitHub spegne"
+              echo "le azioni programmate dopo 60 giorni di inattività del repo."
+              echo
+              echo "$(date -u '+%Y-%m-%d %H:%M UTC')"
+            } > data/ULTIMO-CONTROLLO.txt
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/ULTIMO-CONTROLLO.txt
+            git commit -m "Battito: nessuna novità nelle recensioni
+
+            Commit di servizio per non far spegnere la pianificazione."
+            git push
+          else
+            echo "Niente battito: il repo si è mosso da poco."
+          fi
 
       - name: Avvisa con una issue
         if: steps.diff.outputs.cambiato == 'si'
