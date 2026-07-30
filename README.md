@@ -193,6 +193,15 @@ Se un giorno Posarelli cambia il markup della pagina, lo script esce con
 errore, l'azione fallisce e arriva comunque una notifica: meglio un'azione
 rossa che un JSON svuotato in silenzio.
 
+**Perché `fetchedAt` non cambia a ogni controllo.** Se non è cambiato niente di
+sostanziale, `fetch-reviews.mjs` non riscrive affatto il file. Senza questa
+regola il timestamp si aggiornerebbe ogni volta, il file risulterebbe sempre
+modificato, e l'azione farebbe un commit e aprirebbe un avviso ogni lunedì
+anche a fronte di zero novità — dopo un mese quegli avvisi non li leggerebbe
+più nessuno. Conseguenza voluta: la data in fondo alla pagina è quella
+dell'ultimo **cambiamento**, non dell'ultimo controllo, che è poi l'unica che
+interessi a chi legge.
+
 ### Approvare le recensioni
 
 **Le nuove recensioni entrano nel JSON con `approved: false` e non compaiono

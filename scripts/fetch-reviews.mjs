@@ -298,6 +298,32 @@ if (DRY_RUN) {
   process.exit(0);
 }
 
+/*
+ * Se non e cambiato niente di sostanziale il file NON si riscrive.
+ * Senza questo controllo `fetchedAt` cambierebbe a ogni esecuzione e il file
+ * risulterebbe sempre modificato: l'automazione settimanale farebbe un commit
+ * e aprirebbe un avviso ogni lunedi anche senza novita, e dopo un mese quegli
+ * avvisi non li leggerebbe piu nessuno.
+ *
+ * Conseguenza voluta: `fetchedAt` e la data dell'ultimo CAMBIAMENTO, non
+ * dell'ultimo controllo. In fondo alla pagina e quella che interessa.
+ */
+const semantico = (d) =>
+  JSON.stringify({
+    aggregate: d?.aggregate ?? null,
+    reviews: (d?.reviews ?? []).map((r) => [
+      r.id, r.rating, r.author, r.from, r.lang, r.date, r.text, r.approved === true,
+    ]),
+  });
+
+if (previous && semantico(previous) === semantico(output)) {
+  console.log(
+    `\n= nessuna modifica: data/reviews.json lasciato com'e ` +
+      `(ultimo cambiamento ${previous.fetchedAt}).\n`
+  );
+  process.exit(0);
+}
+
 await mkdir(dirname(OUT_FILE), { recursive: true });
 await writeFile(OUT_FILE, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
 console.log(`\n[32m✓ scritto data/reviews.json[0m (${merged.length} recensioni, ${approvedCount} approvate)\n`);
