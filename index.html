@@ -121,6 +121,9 @@ i,em,.it{font-style:italic}
 .nav a{
   font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text);
   transition:color .2s;white-space:nowrap;
+  /* WCAG 2.2 chiede almeno 24px per un comando che non sia un link dentro un
+     testo: erano 20. Cresce l'area, non il disegno. */
+  padding-block:14px;
 }
 .nav a:hover{color:var(--gold)}
 .bar-end{display:flex;align-items:center;gap:24px}
