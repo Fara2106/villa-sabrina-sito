@@ -237,40 +237,48 @@ i,em,.it{font-style:italic}
 }
 .spazio-media{margin:0;position:relative}
 .spazio-media img{border:1px solid var(--line-2);width:100%}
-.spazio-text h3{font-size:clamp(1.6rem,2.9vw,2.4rem);line-height:1.05;margin-bottom:24px}
+.spazio-text h3{font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.08;margin-bottom:22px}
 .spazio-text .eyebrow{margin-bottom:22px}
 
 /* ------------------------------------------------------------ servizi */
-.servizi{display:grid;grid-template-columns:1fr;gap:clamp(32px,5vw,56px)}
-@media(min-width:960px){
-  .servizi{grid-template-columns:repeat(12,1fr)}
-  .servizi-head{grid-column:span 4}
-  .servizi-list{grid-column:6 / span 7}
+/* Le 33 voci divise in quattro famiglie. Prima erano un elenco piatto in cui
+   "Piscina privata" ed "Estintore" pesavano uguale, e la griglia si leggeva
+   per righe mentre l'occhio scende per colonne: scorrendo la prima colonna si
+   leggeva una sequenza senza senso. */
+.servizi-head{margin-bottom:clamp(40px,6vw,72px)}
+.servizi-gruppi{
+  display:grid;grid-template-columns:1fr;gap:clamp(36px,4vw,56px);
+  border-top:1px solid var(--line-2);padding-top:clamp(32px,4vw,48px);
 }
-.servizi-list{display:grid;grid-template-columns:1fr;gap:0 56px;margin:0;padding:0;list-style:none}
-@media(min-width:640px){.servizi-list{grid-template-columns:1fr 1fr}}
-.servizi-list li{
-  display:flex;align-items:baseline;gap:16px;
-  padding:16px 0;border-bottom:1px solid var(--line);
+@media(min-width:680px){.servizi-gruppi{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1100px){.servizi-gruppi{grid-template-columns:repeat(4,1fr)}}
+.servizi-gruppo h3{
+  font-family:var(--sans);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);font-weight:400;margin-bottom:20px;
 }
-.servizi-list li::before{
-  content:"";width:14px;height:1px;background:var(--gold);flex:none;transform:translateY(-4px);
+.servizi-gruppo ul{margin:0;padding:0;list-style:none}
+.servizi-gruppo li{
+  color:var(--text);font-size:.95rem;line-height:1.5;
+  padding:9px 0;border-bottom:1px solid rgba(237,231,214,.08);
 }
-.servizi-list span{font-size:.95rem;color:var(--text)}
+.servizi-gruppo li:last-child{border-bottom:0}
 
 /* ----------------------------------------------------------- dintorni */
 .dintorni{border-top:1px solid var(--line-2)}
 .dintorno{
-  display:grid;grid-template-columns:1fr auto;gap:8px 40px;align-items:baseline;
-  padding:24px 0;border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:1fr auto;gap:6px 32px;align-items:baseline;
+  padding:22px 0;border-bottom:1px solid var(--line);
 }
-@media(min-width:820px){.dintorno{grid-template-columns:4fr 6fr 2fr;padding:34px 0}}
+@media(min-width:820px){.dintorno{padding:30px 0}}
 .dintorno .name{font-family:var(--serif);font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.1}
-.dintorno .desc{color:var(--sage);font-size:.95rem;line-height:1.6;grid-column:1 / -1}
-@media(min-width:820px){.dintorno .desc{grid-column:auto}}
+/* la descrizione sotto al nome: solo 3 righe su 7 ce l'hanno, e in colonna
+   separata le altre quattro lasciavano un buco in mezzo alla riga */
+.dintorno .desc{color:var(--sage);font-size:.9rem;line-height:1.6;grid-column:1;grid-row:2}
+.dintorno .desc:empty{display:none}
 .dintorno .km{
+  grid-column:2;grid-row:1 / span 2;align-self:center;
   text-align:right;color:var(--gold);font-family:var(--serif);
-  font-size:clamp(1.3rem,2.4vw,2rem);line-height:1.1;white-space:nowrap;
+  font-size:clamp(1.5rem,3vw,2.4rem);line-height:1;white-space:nowrap;
 }
 .dintorno .km small{font-family:var(--sans);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;margin-left:8px}
 
@@ -336,9 +344,9 @@ i,em,.it{font-style:italic}
   line-height:.92;letter-spacing:-.04em;color:var(--gold);
 }
 .score-row .meta{color:var(--sage);font-size:clamp(.95rem,1.6vw,1.05rem);line-height:1.6;max-width:34ch}
-.reviews{display:grid;grid-template-columns:1fr;gap:34px}
+.reviews{display:grid;grid-template-columns:1fr;gap:34px;max-width:1100px}
 @media(min-width:700px){.reviews{grid-template-columns:repeat(2,1fr);gap:56px 48px}}
-@media(min-width:1100px){.reviews{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1100px){.reviews{grid-template-columns:repeat(2,1fr);gap:64px 72px}}
 .review{border-top:1px solid var(--line-2);padding-top:26px}
 .review-text{
   font-family:var(--serif);font-style:italic;font-size:clamp(1.2rem,1.9vw,1.45rem);
@@ -368,7 +376,11 @@ i,em,.it{font-style:italic}
 .rev-cta .note{color:var(--sage);font-size:.85rem;line-height:1.6;margin-top:20px;max-width:60ch}
 
 /* --------------------------------------------------------- pratiche */
-.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:clamp(28px,4vw,56px)}
+/* sei blocchi: tre e tre. Con auto-fit ne entravano cinque sulla prima riga
+   e uno restava spaiato sulla seconda. */
+.info{display:grid;grid-template-columns:1fr;gap:clamp(28px,4vw,48px)}
+@media(min-width:680px){.info{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1040px){.info{grid-template-columns:repeat(3,1fr)}}
 .info h3{font-family:var(--sans);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;font-weight:400}
 .info p,.info li{color:var(--sage);font-size:.95rem;line-height:1.7}
 .info ul{margin:0;padding:0;list-style:none}
@@ -388,6 +400,7 @@ i,em,.it{font-style:italic}
 .closing::after{content:"";position:absolute;inset:0;background:rgba(20,31,28,.9);z-index:-1}
 .closing h2{font-size:clamp(2.3rem,5.4vw,4.2rem);line-height:1.02;letter-spacing:-.025em;max-width:22ch;margin:0 auto 28px}
 .closing p{color:var(--sage);font-size:clamp(.92rem,1.5vw,1.05rem);line-height:1.6;max-width:52ch;margin:0 auto 44px}
+.closing .btn{padding:22px 44px;font-size:.78rem;letter-spacing:.2em}
 
 /* ----------------------------------------------------------- footer */
 .site-footer{background:var(--bg-alt);border-top:1px solid var(--line);padding-block:clamp(56px,8vw,110px) 28px}
@@ -620,12 +633,12 @@ i,em,.it{font-style:italic}
 
 <!-- ========================================================== SERVIZI -->
 <section class="section" id="servizi">
-  <div class="wrap servizi">
+  <div class="wrap">
     <div class="servizi-head reveal">
       <p class="eyebrow" data-i18n="amen.eyebrow">Servizi</p>
       <h2 class="h-sec" data-i18n="amen.title">Quello che <i>c’è</i></h2>
     </div>
-    <ul class="servizi-list reveal" id="amenities"></ul>
+    <div class="servizi-gruppi" id="amenities"></div>
   </div>
 </section>
 
@@ -778,7 +791,7 @@ i,em,.it{font-style:italic}
     <div class="foot-bottom">
       <span>© <span id="year">2026</span> Villa Sabrina</span>
       <span>CIN IT052028B4JQ4QGLI6</span>
-      <span data-i18n="foot.updated">Recensioni aggiornate il <span id="reviews-updated">—</span></span>
+      <span><span data-i18n="foot.updated">Recensioni aggiornate il</span> <span id="reviews-updated">—</span></span>
     </div>
   </div>
 </footer>
@@ -953,7 +966,12 @@ i,em,.it{font-style:italic}
           body: 'Il giardino è grande, curato e completamente recintato, riservato agli ospiti. Il porticato si affaccia sul prato ed è l’ideale per pranzi e cene all’aperto. C’è il barbecue, l’illuminazione esterna e il parcheggio dentro la proprietà.' }
       ],
 
-      'amenities': ['Piscina privata','Piscina recintata','Giardino recintato','Terrazza','Patio','Balcone','Porticato','Barbecue','Pranzi e cene all’aperto','Mobili da giardino','Vista panoramica','Illuminazione esterna','Parcheggio interno','Wi-Fi gratuito','Aria condizionata','Riscaldamento','Cucina attrezzata','Forno','Piano cottura','Frigorifero','Freezer','Microonde','Lavastoviglie','Macchina da caffè','Tostapane','Lavatrice','Doccia','TV satellitare','Zanzariere','Lettino per bebè','Animali su richiesta','Non fumatori','Estintore'],
+      'amenities': [
+        ['Fuori', ['Piscina privata', 'Piscina recintata', 'Giardino recintato', 'Porticato', 'Terrazza', 'Patio', 'Balcone', 'Barbecue', 'Pranzi e cene all’aperto', 'Mobili da giardino', 'Vista panoramica', 'Illuminazione esterna', 'Parcheggio interno']],
+        ['In cucina', ['Cucina attrezzata', 'Forno', 'Piano cottura', 'Frigorifero', 'Freezer', 'Microonde', 'Lavastoviglie', 'Macchina da caffè', 'Tostapane']],
+        ['Comfort', ['Aria condizionata', 'Riscaldamento', 'Wi-Fi gratuito', 'TV satellitare', 'Lavatrice', 'Doccia', 'Zanzariere']],
+        ['Buono a sapersi', ['Lettino per bebè', 'Animali su richiesta', 'Non fumatori', 'Estintore']]
+      ],
 
       /* Distanze e note: solo ciò che la scheda dichiara */
       'around': [
@@ -1081,7 +1099,12 @@ i,em,.it{font-style:italic}
           body: 'The garden is large, well kept and entirely fenced, reserved for guests. The portico looks onto the lawn and is ideal for eating outdoors. There is a barbecue, outdoor lighting and parking within the grounds.' }
       ],
 
-      'amenities': ['Private swimming pool','Fenced pool','Enclosed garden','Terrace','Patio','Balcony','Portico','Barbecue','Al fresco dining','Garden furniture','Panoramic view','Outdoor lighting','Parking on site','Free Wi-Fi','Air conditioning','Heating','Equipped kitchen','Oven','Stove','Fridge','Freezer','Microwave','Dishwasher','Coffee machine','Toaster','Washing machine','Shower','Satellite TV','Mosquito nets','Baby bed','Pets on request','Non-smoking','Fire extinguisher'],
+      'amenities': [
+        ['Outside', ['Private swimming pool', 'Fenced pool', 'Enclosed garden', 'Portico', 'Terrace', 'Patio', 'Balcony', 'Barbecue', 'Al fresco dining', 'Garden furniture', 'Panoramic view', 'Outdoor lighting', 'Parking on site']],
+        ['In the kitchen', ['Equipped kitchen', 'Oven', 'Hob', 'Fridge', 'Freezer', 'Microwave', 'Dishwasher', 'Coffee machine', 'Toaster']],
+        ['Comfort', ['Air conditioning', 'Heating', 'Free Wi-Fi', 'Satellite TV', 'Washing machine', 'Shower', 'Mosquito nets']],
+        ['Good to know', ['Baby bed', 'Pets on request', 'Non-smoking', 'Fire extinguisher']]
+      ],
 
       'around': [
         { name: 'San Gimignano', desc: 'Shops of all kinds', km: '5' },
@@ -1209,7 +1232,12 @@ i,em,.it{font-style:italic}
           body: 'Le jardin est grand, bien entretenu et entièrement clôturé, réservé aux hôtes. La terrasse couverte donne sur la pelouse et se prête aux repas en plein air. Il y a le barbecue, l’éclairage extérieur et le parking dans la propriété.' }
       ],
 
-      'amenities': ['Piscine privée','Piscine clôturée','Jardin clôturé','Terrasse','Patio','Balcon','Terrasse couverte','Barbecue','Repas en plein air','Meubles de jardin','Vue panoramique','Éclairage extérieur','Parking dans la propriété','Wi-Fi gratuit','Climatisation','Chauffage','Cuisine équipée','Four','Plaque de cuisson','Réfrigérateur','Congélateur','Micro-ondes','Lave-vaisselle','Machine à café','Grille-pain','Lave-linge','Douche','TV satellite','Moustiquaires','Lit pour bébé','Animaux sur demande','Non-fumeur','Extincteur'],
+      'amenities': [
+        ['Dehors', ['Piscine privée', 'Piscine clôturée', 'Jardin clôturé', 'Terrasse couverte', 'Terrasse', 'Patio', 'Balcon', 'Barbecue', 'Repas en plein air', 'Meubles de jardin', 'Vue panoramique', 'Éclairage extérieur', 'Parking dans la propriété']],
+        ['En cuisine', ['Cuisine équipée', 'Four', 'Plaque de cuisson', 'Réfrigérateur', 'Congélateur', 'Micro-ondes', 'Lave-vaisselle', 'Machine à café', 'Grille-pain']],
+        ['Confort', ['Climatisation', 'Chauffage', 'Wi-Fi gratuit', 'TV satellite', 'Lave-linge', 'Douche', 'Moustiquaires']],
+        ['Bon à savoir', ['Lit pour bébé', 'Animaux sur demande', 'Non-fumeur', 'Extincteur']]
+      ],
 
       'around': [
         { name: 'San Gimignano', desc: 'Magasins variés', km: '5' },
@@ -1339,7 +1367,12 @@ i,em,.it{font-style:italic}
           body: 'El jardín es grande, cuidado y está completamente vallado, reservado a los huéspedes. El porche da al césped y es ideal para comer al aire libre. Hay barbacoa, iluminación exterior y aparcamiento dentro de la propiedad.' }
       ],
 
-      'amenities': ['Piscina privada','Piscina vallada','Jardín vallado','Terraza','Patio','Balcón','Porche','Barbacoa','Comidas al aire libre','Muebles de jardín','Vistas panorámicas','Iluminación exterior','Aparcamiento interior','Wi-Fi gratuito','Aire acondicionado','Calefacción','Cocina equipada','Horno','Placa de cocción','Nevera','Congelador','Microondas','Lavavajillas','Cafetera','Tostadora','Lavadora','Ducha','TV por satélite','Mosquiteras','Cuna','Mascotas bajo petición','No fumadores','Extintor'],
+      'amenities': [
+        ['Fuera', ['Piscina privada', 'Piscina vallada', 'Jardín vallado', 'Porche', 'Terraza', 'Patio', 'Balcón', 'Barbacoa', 'Comidas al aire libre', 'Muebles de jardín', 'Vistas panorámicas', 'Iluminación exterior', 'Aparcamiento interior']],
+        ['En la cocina', ['Cocina equipada', 'Horno', 'Placa de cocción', 'Nevera', 'Congelador', 'Microondas', 'Lavavajillas', 'Cafetera', 'Tostadora']],
+        ['Confort', ['Aire acondicionado', 'Calefacción', 'Wi-Fi gratuito', 'TV por satélite', 'Lavadora', 'Ducha', 'Mosquiteras']],
+        ['Conviene saberlo', ['Cuna', 'Mascotas bajo petición', 'No fumadores', 'Extintor']]
+      ],
 
       'around': [
         { name: 'San Gimignano', desc: 'Tiendas de todo tipo', km: '5' },
@@ -1467,7 +1500,12 @@ i,em,.it{font-style:italic}
           body: 'Der Garten ist groß, gepflegt und komplett eingezäunt, den Gästen vorbehalten. Die Loggia geht auf die Wiese hinaus und eignet sich für Mahlzeiten im Freien. Es gibt einen Grill, Außenbeleuchtung und einen Parkplatz auf dem Grundstück.' }
       ],
 
-      'amenities': ['Privates Schwimmbad','Umzäunter Pool','Eingezäunter Garten','Terrasse','Patio','Balkon','Loggia','Grill','Speisen im Freien','Gartenmöbel','Panoramablick','Außenbeleuchtung','Parkplatz auf dem Grundstück','Kostenloses WLAN','Klimaanlage','Heizung','Ausgestattete Küche','Ofen','Herd','Kühlschrank','Tiefkühler','Mikrowelle','Spülmaschine','Kaffeemaschine','Brottoaster','Waschmaschine','Dusche','Satelliten-TV','Mückennetze','Kinderbett','Haustiere auf Anfrage','Nichtraucher','Feuerlöscher'],
+      'amenities': [
+        ['Draußen', ['Privates Schwimmbad', 'Umzäunter Pool', 'Eingezäunter Garten', 'Loggia', 'Terrasse', 'Patio', 'Balkon', 'Grill', 'Speisen im Freien', 'Gartenmöbel', 'Panoramablick', 'Außenbeleuchtung', 'Parkplatz auf dem Grundstück']],
+        ['In der Küche', ['Ausgestattete Küche', 'Ofen', 'Herd', 'Kühlschrank', 'Tiefkühler', 'Mikrowelle', 'Spülmaschine', 'Kaffeemaschine', 'Brottoaster']],
+        ['Komfort', ['Klimaanlage', 'Heizung', 'Kostenloses WLAN', 'Satelliten-TV', 'Waschmaschine', 'Dusche', 'Mückennetze']],
+        ['Gut zu wissen', ['Kinderbett', 'Haustiere auf Anfrage', 'Nichtraucher', 'Feuerlöscher']]
+      ],
 
       'around': [
         { name: 'San Gimignano', desc: 'Geschäfte jeder Art', km: '5' },
@@ -1932,12 +1970,20 @@ i,em,.it{font-style:italic}
     var amen = $('#amenities');
     if (amen) {
       amen.innerHTML = '';
-      (I18N[lang].amenities || []).forEach(function (a) {
-        var li = document.createElement('li');
-        var s = document.createElement('span');
-        s.textContent = a;
-        li.appendChild(s);
-        amen.appendChild(li);
+      (I18N[lang].amenities || []).forEach(function (gruppo) {
+        var box = document.createElement('div');
+        box.className = 'servizi-gruppo reveal';
+        var h = document.createElement('h3');
+        h.textContent = gruppo[0];
+        box.appendChild(h);
+        var ul = document.createElement('ul');
+        gruppo[1].forEach(function (voce) {
+          var li = document.createElement('li');
+          li.textContent = voce;
+          ul.appendChild(li);
+        });
+        box.appendChild(ul);
+        amen.appendChild(box);
       });
     }
 
