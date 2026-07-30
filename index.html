@@ -76,7 +76,11 @@ body{
 }
 img{max-width:100%;height:auto;display:block}
 a{color:var(--gold);text-decoration:none}
-h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.02em;line-height:1.02}
+h1,h2,h3{
+  font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.02em;line-height:1.02;
+  text-wrap:balance;hyphens:none;
+}
+p,li,figcaption{text-wrap:pretty}
 p{margin:0}
 i,em,.it{font-style:italic}
 ::selection{background:var(--gold);color:var(--bg)}
@@ -112,7 +116,7 @@ i,em,.it{font-style:italic}
 .site-header.is-stuck::before{opacity:1}
 .site-header.is-stuck{border-bottom-color:var(--line)}
 .bar{display:flex;align-items:center;justify-content:space-between;width:100%;gap:24px}
-.brand{font-family:var(--serif);font-size:1.5rem;color:var(--text);white-space:nowrap}
+.brand{font-family:var(--serif);font-size:1.5rem;color:var(--text);white-space:nowrap;padding:8px 0;display:inline-block}
 .nav{display:flex;gap:clamp(18px,2.4vw,34px)}
 .nav a{
   font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text);
@@ -120,15 +124,17 @@ i,em,.it{font-style:italic}
 }
 .nav a:hover{color:var(--gold)}
 .bar-end{display:flex;align-items:center;gap:24px}
-.lang{display:flex;align-items:center;gap:8px;font-size:.7rem;letter-spacing:.14em}
+.lang{display:flex;align-items:center;gap:2px;font-size:.7rem;letter-spacing:.14em}
 .lang button{
-  background:none;border:0;padding:0;cursor:pointer;
+  background:none;border:0;cursor:pointer;
   font-family:var(--sans);font-size:.7rem;letter-spacing:.14em;color:var(--sage);
   transition:color .2s;
+  /* l'area sensibile arriva a 44px senza cambiare l'aspetto */
+  padding:17px 7px;margin:-17px -3px;line-height:1;
 }
 .lang button[aria-pressed="true"]{color:var(--gold)}
 .lang i{color:var(--faint);font-style:normal}
-.burger{display:none;background:none;border:0;cursor:pointer;padding:8px;color:var(--text)}
+.burger{display:none;background:none;border:0;cursor:pointer;padding:11px;color:var(--text)}
 
 /* ------------------------------------------------------------ bottoni */
 .btn{
@@ -309,7 +315,7 @@ i,em,.it{font-style:italic}
 }
 .tile .say{
   display:block;color:var(--text);font-size:clamp(1.05rem,1.7vw,1.35rem);
-  line-height:1.55;font-family:var(--serif);font-style:italic;
+  line-height:1.55;font-family:var(--serif);font-style:italic;text-wrap:balance;
 }
 .tile .tell{
   display:block;margin-top:18px;color:var(--sage);
@@ -322,13 +328,30 @@ i,em,.it{font-style:italic}
 .tile.in .rule{width:64px}
 .tile:hover .rule,.tile:focus-visible .rule{width:110px}
 
+/* A tutta larghezza: esce dal contenitore fino ai bordi dello schermo e la
+   didascalia passa sotto, rientrando nel margine del testo. */
+.tile.is-bleed{width:100vw;margin-left:calc(50% - 50vw);grid-template-columns:1fr;gap:0}
+.tile.is-bleed .tile-media{border-inline:0}
+.tile.is-bleed figcaption{
+  margin:26px auto 0;padding-inline:var(--gut);
+  max-width:var(--maxw);width:100%;
+}
 @media(min-width:900px){
-  .tile{grid-template-columns:repeat(12,1fr);gap:clamp(32px,4vw,64px);align-items:center}
-  .tile-media{grid-column:1 / span 7;grid-row:1}
-  .tile figcaption{grid-column:9 / span 4;grid-row:1}
+  .tile.is-bleed figcaption{
+    display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(32px,4vw,64px);
+  }
+  .tile.is-bleed .num{grid-column:1 / span 2;margin:0}
+  .tile.is-bleed .say{grid-column:3 / span 5}
+  .tile.is-bleed .tell{grid-column:8 / span 4;margin-top:0}
+  .tile.is-bleed .rule{display:none}
+}
+@media(min-width:900px){
+  .tile:not(.is-bleed){grid-template-columns:repeat(12,1fr);gap:clamp(32px,4vw,64px);align-items:center}
+  .tile:not(.is-bleed) .tile-media{grid-column:1 / span 7;grid-row:1}
+  .tile:not(.is-bleed) figcaption{grid-column:9 / span 4;grid-row:1}
   /* a righe alterne la foto passa a destra */
-  .tile:nth-child(even) .tile-media{grid-column:6 / span 7}
-  .tile:nth-child(even) figcaption{grid-column:1 / span 4}
+  .tile:nth-child(even):not(.is-bleed) .tile-media{grid-column:6 / span 7}
+  .tile:nth-child(even):not(.is-bleed) figcaption{grid-column:1 / span 4}
   /* i ritratti 4:5 sono già alti: se restassero larghi schiaccerebbero tutto */
   .tile.is-tall .tile-media{grid-column:2 / span 5}
   .tile.is-tall:nth-child(even) .tile-media{grid-column:6 / span 5}
@@ -350,12 +373,12 @@ i,em,.it{font-style:italic}
 .review{border-top:1px solid var(--line-2);padding-top:26px}
 .review-text{
   font-family:var(--serif);font-style:italic;font-size:clamp(1.2rem,1.9vw,1.45rem);
-  line-height:1.45;color:var(--text);margin-bottom:24px;
+  line-height:1.45;color:var(--text);margin-bottom:24px;text-wrap:pretty;
 }
 .review-more{
   display:inline-block;color:var(--gold);font-size:.66rem;letter-spacing:.18em;
-  text-transform:uppercase;border-bottom:1px solid rgba(214,180,92,.5);padding-bottom:2px;
-  margin-bottom:26px;transition:color .2s,border-color .2s;
+  text-transform:uppercase;border-bottom:1px solid rgba(214,180,92,.5);
+  padding:15px 0 12px;margin-bottom:8px;transition:color .2s,border-color .2s;
 }
 .review-more:hover{color:var(--text);border-bottom-color:var(--text)}
 .review-foot{
@@ -410,8 +433,8 @@ i,em,.it{font-style:italic}
 .foot-loc{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sage);margin-top:14px}
 .site-footer h3{font-family:var(--sans);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;font-weight:400}
 .site-footer p{color:var(--sage);font-size:.9rem;line-height:1.65}
-.foot-link{display:inline-flex;align-items:center;gap:8px;color:var(--text);font-size:.9rem;transition:color .2s}
-.foot-link+.foot-link{margin-top:10px}
+.foot-link{display:inline-flex;align-items:center;gap:8px;color:var(--text);font-size:.9rem;transition:color .2s;padding:10px 0}
+.foot-link+.foot-link{margin-top:2px}
 .foot-link:hover{color:var(--gold)}
 .foot-bottom{
   margin-top:clamp(40px,7vw,90px);border-top:1px solid var(--line);padding-top:24px;
@@ -1624,13 +1647,20 @@ i,em,.it{font-style:italic}
   };
 
   /* Galleria: 6 esterni, 4 interni. `tall` = ritaglio 4:5. */
+  /*
+   * `bleed` = foto a tutta larghezza, didascalia sotto. Sono due sole, in
+   * apertura e a meta percorso: undici righe con la stessa forma diventano un
+   * metronomo, e due momenti larghi bastano a far respirare senza togliere
+   * niente. Solo le riprese da drone arrivano a 2000px, quindi solo loro
+   * reggono la larghezza intera.
+   */
   var GALLERY = [
-    { name: 'casa-vigna-torri-dallalto', widths: [800, 1400, 2000], full: 2000 },
-    { name: 'proprieta-dallalto-piscina', widths: [800, 1400, 2000], full: 2000 },
+    { name: 'casa-vigna-torri-dallalto', widths: [800, 1400, 2000], full: 2000, bleed: true },
     { name: 'piscina-cipressi-divano', widths: [800, 1400, 1920], full: 1920 },
     { name: 'scalinata-fiorita', widths: [800, 1021], full: 1021, tall: true },
     { name: 'loggia-tavola-apparecchiata', widths: [800, 1400, 1920], full: 1920 },
     { name: 'bagno-ardesia-lavabo', widths: [800, 1400, 1920], full: 1920 },
+    { name: 'proprieta-dallalto-piscina', widths: [800, 1400, 2000], full: 2000, bleed: true },
     { name: 'piscina-teli-lettino', widths: [800, 1021], full: 1021, tall: true },
     { name: 'vista-colline-torri-san-gimignano', widths: [800, 1400, 1920], full: 1920 },
     { name: 'camera-finestra-colline', widths: [800, 1400, 1920], full: 1920 },
@@ -1749,11 +1779,13 @@ i,em,.it{font-style:italic}
       btn.setAttribute('data-index', String(i));
 
       if (g.tall) btn.className += ' is-tall';
+      if (g.bleed) btn.className += ' is-bleed';
 
       var media = document.createElement('span');
       media.className = 'tile-media';
       media.appendChild(picture(g.name, g.widths,
-        g.tall ? '(min-width:900px) 40vw, 100vw' : '(min-width:900px) 56vw, 100vw', g.tall));
+        g.bleed ? '100vw' : (g.tall ? '(min-width:900px) 40vw, 100vw' : '(min-width:900px) 56vw, 100vw'),
+        g.tall));
       btn.appendChild(media);
 
       var fc = document.createElement('figcaption');

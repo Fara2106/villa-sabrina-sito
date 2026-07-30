@@ -335,6 +335,10 @@ singola corsa su una macchina occupata può scendere anche a 77, ed è rumore
 della simulazione, non della pagina. Se misuri e ti esce un numero strano,
 rimisura a macchina scarica prima di andare a cercare la causa.
 
+Bersagli da toccare: tutti almeno 44×44px a 390px di larghezza. Il selettore
+delle lingue partiva da 11px di altezza — l'area sensibile e stata allargata
+col padding senza cambiare il disegno.
+
 Contrasti su fondo pieno: tutti AA, la maggior parte AAA. Il più stretto è
 5,41:1 (il salvia `#93A18C` sul fondo alternato `#1D2B27`), contro un minimo
 richiesto di 4,5:1.
