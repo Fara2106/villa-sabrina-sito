@@ -322,6 +322,27 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
 }
 .dintorno .km small{font-family:var(--sans);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;margin-left:8px}
 
+/* ------------------------------------------------------------- arrivo */
+/* Tre modi di arrivare, sotto all'elenco delle distanze: stessa griglia e
+   stessa voce delle informazioni pratiche, perché è la stessa natura di
+   contenuto — cose da sapere prima di partire. */
+.arrivo{
+  margin-top:clamp(56px,8vw,110px);
+  border-top:1px solid var(--line-2);padding-top:clamp(34px,4.5vw,52px);
+}
+.arrivo-grid{display:grid;grid-template-columns:1fr;gap:clamp(28px,4vw,48px)}
+@media(min-width:680px){.arrivo-grid{grid-template-columns:repeat(3,1fr)}}
+.arrivo-grid h3{
+  font-family:var(--sans);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);font-weight:400;margin-bottom:18px;
+}
+.arrivo-grid p{color:var(--sage);font-size:.95rem;line-height:1.7}
+.arrivo-nota{
+  margin-top:clamp(32px,4.5vw,52px);color:var(--sage);
+  font-size:.9rem;line-height:1.7;max-width:66ch;
+}
+.arrivo-nota strong{color:var(--text);font-weight:500}
+
 /* ----------------------------------------------------------- galleria */
 .gal-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:24px;margin-bottom:clamp(40px,6vw,72px)}
 .gal-hint{color:var(--sage);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase}
@@ -856,6 +877,14 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
     <p class="eyebrow reveal" data-i18n="where.eyebrow">Dintorni</p>
     <h2 class="h-sec reveal" style="margin-bottom:clamp(40px,6vw,80px)" data-i18n="where.title">Dove si arriva da qui</h2>
     <div class="dintorni reveal" id="dintorni-list"></div>
+
+    <!-- "Dintorni" dice dove si va da qui; questo dice come ci si arriva.
+         Le distanze sono quelle della scheda Posarelli, non stime. -->
+    <div class="arrivo reveal">
+      <p class="eyebrow" data-i18n="come.eyebrow">Come ci si arriva</p>
+      <div class="arrivo-grid" id="arrivo"></div>
+      <p class="arrivo-nota" data-i18n="come.note"><strong>L’indirizzo esatto arriva con la conferma della prenotazione</strong>, da Posarelli Villas, insieme alle indicazioni per l’ultimo tratto.</p>
+    </div>
   </div>
 </section>
 
@@ -1102,6 +1131,13 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
       'amen.title': 'Quello che <i>c’è</i>',
 
       'where.eyebrow': 'Dintorni', 'where.title': 'Dove si arriva da qui',
+      'come.eyebrow': 'Come ci si arriva',
+      'come.note': '<strong>L’indirizzo esatto arriva con la conferma della prenotazione</strong>, da Posarelli Villas, insieme alle indicazioni per l’ultimo tratto.',
+      'arrive': [
+        { label: 'In aereo', text: 'Pisa è a 85 chilometri, Firenze a circa un’ora e mezza di auto. Da entrambi conviene proseguire in macchina: qui l’auto serve per tutto il soggiorno.' },
+        { label: 'In treno', text: 'La stazione di Poggibonsi, a 8 chilometri, ha collegamenti regolari con Firenze e con Pisa. L’ultimo tratto si fa comunque su strada.' },
+        { label: 'L’ultimo tratto', text: 'Si lascia l’asfalto per una strada bianca in buone condizioni. Il parcheggio è dentro la proprietà; il supermercato più vicino a quattro o cinque minuti.' }
+      ],
 
       'gallery.eyebrow': 'Galleria', 'gallery.title': 'La casa, il giardino, la vista',
       'gallery.hint': 'Clicca una foto per ingrandirla',
@@ -1240,6 +1276,13 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
       'amen.title': 'What’s <i>there</i>',
 
       'where.eyebrow': 'Surroundings', 'where.title': 'What you can reach from here',
+      'come.eyebrow': 'Getting here',
+      'come.note': '<strong>The exact address comes with your booking confirmation</strong>, from Posarelli Villas, together with directions for the last stretch.',
+      'arrive': [
+        { label: 'By air', text: 'Pisa is 85 kilometres away, Florence about an hour and a half by car. From either one, carry on by road: here a car is needed for the whole stay.' },
+        { label: 'By train', text: 'Poggibonsi station, 8 kilometres away, has regular connections to Florence and Pisa. The last stretch is by road in any case.' },
+        { label: 'The last stretch', text: 'You leave the tarmac for a well-kept gravel road. Parking is inside the grounds; the nearest supermarket four or five minutes away.' }
+      ],
 
       'gallery.eyebrow': 'Gallery', 'gallery.title': 'The house, the garden, the view',
       'gallery.hint': 'Click a photo to enlarge it',
@@ -1377,6 +1420,13 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
       'amen.title': 'Ce qu’il y <i>a</i>',
 
       'where.eyebrow': 'Alentours', 'where.title': 'Ce qu’on rejoint d’ici',
+      'come.eyebrow': 'Comment on arrive',
+      'come.note': '<strong>L’adresse exacte arrive avec la confirmation de réservation</strong>, de Posarelli Villas, avec les indications pour le dernier tronçon.',
+      'arrive': [
+        { label: 'En avion', text: 'Pise est à 85 kilomètres, Florence à environ une heure et demie de route. Depuis l’un comme l’autre, mieux vaut continuer en voiture : ici elle est indispensable pendant tout le séjour.' },
+        { label: 'En train', text: 'La gare de Poggibonsi, à 8 kilomètres, est reliée régulièrement à Florence et à Pise. Le dernier tronçon se fait de toute façon par la route.' },
+        { label: 'Le dernier tronçon', text: 'On quitte le goudron pour un chemin blanc en bon état. Le parking est dans la propriété ; le supermarché le plus proche à quatre ou cinq minutes.' }
+      ],
 
       'gallery.eyebrow': 'Galerie', 'gallery.title': 'La maison, le jardin, la vue',
       'gallery.hint': 'Cliquez une photo pour l’agrandir',
@@ -1516,6 +1566,13 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
       'amen.title': 'Lo que <i>hay</i>',
 
       'where.eyebrow': 'Alrededores', 'where.title': 'Adónde se llega desde aquí',
+      'come.eyebrow': 'Cómo se llega',
+      'come.note': '<strong>La dirección exacta llega con la confirmación de la reserva</strong>, de Posarelli Villas, junto con las indicaciones para el último tramo.',
+      'arrive': [
+        { label: 'En avión', text: 'Pisa está a 85 kilómetros, Florencia a hora y media de coche. Desde cualquiera de los dos conviene seguir en coche: aquí hace falta durante toda la estancia.' },
+        { label: 'En tren', text: 'La estación de Poggibonsi, a 8 kilómetros, tiene conexiones regulares con Florencia y con Pisa. El último tramo se hace igualmente por carretera.' },
+        { label: 'El último tramo', text: 'Se deja el asfalto por un camino de tierra en buen estado. El aparcamiento está dentro de la propiedad; el supermercado más cercano, a cuatro o cinco minutos.' }
+      ],
 
       'gallery.eyebrow': 'Galería', 'gallery.title': 'La casa, el jardín, las vistas',
       'gallery.hint': 'Haz clic en una foto para ampliarla',
@@ -1653,6 +1710,13 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
       'amen.title': 'Was es <i>gibt</i>',
 
       'where.eyebrow': 'Umgebung', 'where.title': 'Was von hier aus erreichbar ist',
+      'come.eyebrow': 'Anreise',
+      'come.note': '<strong>Die genaue Adresse kommt mit der Buchungsbestätigung</strong> von Posarelli Villas, zusammen mit der Wegbeschreibung für das letzte Stück.',
+      'arrive': [
+        { label: 'Mit dem Flugzeug', text: 'Pisa liegt 85 Kilometer entfernt, Florenz etwa eineinhalb Autostunden. Von beiden aus geht es am besten mit dem Auto weiter: hier braucht man es für den ganzen Aufenthalt.' },
+        { label: 'Mit dem Zug', text: 'Der Bahnhof Poggibonsi, 8 Kilometer entfernt, ist regelmäßig mit Florenz und Pisa verbunden. Das letzte Stück führt ohnehin über die Straße.' },
+        { label: 'Das letzte Stück', text: 'Nach dem Asphalt folgt ein gut gepflegter Schotterweg. Geparkt wird auf dem Grundstück; der nächste Supermarkt ist vier bis fünf Minuten entfernt.' }
+      ],
 
       'gallery.eyebrow': 'Galerie', 'gallery.title': 'Das Haus, der Garten, der Blick',
       'gallery.hint': 'Für die Großansicht auf ein Foto klicken',
@@ -2031,6 +2095,22 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
     });
   }
 
+  /* ----------------------------------------------------------- arrivo */
+  function buildArrival() {
+    var host = $('#arrivo');
+    if (!host) return;
+    host.innerHTML = '';
+    (I18N[lang].arrive || []).forEach(function (a) {
+      var box = document.createElement('div');
+      var h = document.createElement('h3');
+      h.textContent = a.label;
+      var p = document.createElement('p');
+      p.textContent = a.text;
+      box.appendChild(h); box.appendChild(p);
+      host.appendChild(box);
+    });
+  }
+
   /* --------------------------------------------------------- galleria */
   function buildGallery() {
     var host = $('#gallery');
@@ -2293,6 +2373,7 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
 
     buildSpaces();
     buildAround();
+    buildArrival();
     buildGallery();   // le didascalie cambiano con la lingua
 
     var amen = $('#amenities');
