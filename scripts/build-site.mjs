@@ -34,8 +34,8 @@ const LISTING_IT = 'https://www.posarellivillas.it/italia/toscana/san-gimignano/
  *  2. la scheda Posarelli: San Gimignano 3,5 km in linea d'aria contro 5 su
  *     strada, Poggibonsi 5,9 contro 8, Firenze 38,2 contro 50 — ogni rapporto
  *     è quello giusto per strade di collina;
- *  3. OpenStreetMap, che a 144 metri da lì ha una località chiamata
- *     "I Melagrani" — lo stesso nome che Google dà all'indirizzo.
+ *  3. OpenStreetMap, che a 144 metri da lì ha una località il cui nome
+ *     coincide con quello che Google dà all'indirizzo di questa casa.
  *
  * Restano il punto in cui volava il drone, non il cancello: sono buone a una
  * sessantina di metri. Chi le cambia le cambi anche in index.html, dove sono
@@ -109,13 +109,13 @@ const ld = {
     'Casa vacanze con piscina privata sulle colline del Chianti, a 5 km da San Gimignano. ' +
     '160 m² su due piani, 3 camere da letto, fino a 7 ospiti, giardino recintato di uso esclusivo.',
   url: LISTING_IT,
+  /* Comune, regione, paese e basta. L'indirizzo della casa non sta qui per
+     scelta: non è sulla scheda Posarelli, arriva con la conferma della
+     prenotazione, ed è quello che la pagina dice a chi legge. Le coordinate
+     qui sotto bastano a farsi trovare senza scriverlo. */
   address: {
     '@type': 'PostalAddress',
-    /* La località, non il civico: è il livello a cui Google pubblica già
-       questo posto, e più di così la scheda Posarelli non dice. */
-    streetAddress: 'Località Melagrani',
     addressLocality: 'San Gimignano',
-    postalCode: '53037',
     addressRegion: 'Toscana',
     addressCountry: 'IT',
   },
