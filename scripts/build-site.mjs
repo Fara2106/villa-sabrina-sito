@@ -26,6 +26,23 @@ const REVIEWS_FULL_TEXT = false;
 
 const LISTING_IT = 'https://www.posarellivillas.it/italia/toscana/san-gimignano/95494';
 
+/* Coordinate della proprietà, misurate e controllate contro tre fonti che non
+ * si parlano fra loro:
+ *
+ *  1. la media del GPS EXIF di 15 scatti del drone, tutti dentro un riquadro
+ *     di 104 × 125 metri → 43.45066, 11.07921;
+ *  2. la scheda Posarelli: San Gimignano 3,5 km in linea d'aria contro 5 su
+ *     strada, Poggibonsi 5,9 contro 8, Firenze 38,2 contro 50 — ogni rapporto
+ *     è quello giusto per strade di collina;
+ *  3. OpenStreetMap, che a 144 metri da lì ha una località chiamata
+ *     "I Melagrani" — lo stesso nome che Google dà all'indirizzo.
+ *
+ * Restano il punto in cui volava il drone, non il cancello: sono buone a una
+ * sessantina di metri. Chi le cambia le cambi anche in index.html, dove sono
+ * scritte accanto al pulsante "Apri in Maps".
+ */
+const GEO = { lat: 43.45066, lon: 11.07921 };
+
 const fail = (m) => {
   console.error(`\n✗ ${m}\n`);
   process.exit(1);
@@ -94,9 +111,18 @@ const ld = {
   url: LISTING_IT,
   address: {
     '@type': 'PostalAddress',
+    /* La località, non il civico: è il livello a cui Google pubblica già
+       questo posto, e più di così la scheda Posarelli non dice. */
+    streetAddress: 'Località Melagrani',
     addressLocality: 'San Gimignano',
+    postalCode: '53037',
     addressRegion: 'Toscana',
     addressCountry: 'IT',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: GEO.lat,
+    longitude: GEO.lon,
   },
   numberOfRooms: 3,
   maximumAttendeeCapacity: 7,
