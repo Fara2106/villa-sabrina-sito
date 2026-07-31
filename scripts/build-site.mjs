@@ -9,8 +9,9 @@
  * non devono eseguire JavaScript per vederli) e la pagina non fa richieste
  * di rete per mostrare le recensioni.
  *
- * Vengono scritte SOLO le recensioni con approved:true — la stessa lista che
- * finisce nel markup visibile e nel JSON-LD, come richiede Google.
+ * Vengono scritte SOLO le recensioni con approved:true, ed è la stessa lista
+ * che finisce nel markup visibile. Nel JSON-LD invece non finiscono affatto:
+ * il perché sta nel commento accanto alla costruzione di `ld`.
  */
 
 import { readFile, writeFile } from 'node:fs/promises';
@@ -21,10 +22,16 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const INDEX = resolve(ROOT, 'index.html');
 const REVIEWS = resolve(ROOT, 'data/reviews.json');
 
-const EXCERPT_LENGTH = 180; // deve restare allineato a index.html
-const REVIEWS_FULL_TEXT = false;
+/* Il taglio a 180 caratteri e l'interruttore REVIEWS_FULL_TEXT vivevano anche
+   qui, perché servivano a costruire i reviewBody del JSON-LD. Ora che le
+   recensioni dal JSON-LD sono uscite, l'unica copia che conta è quella in
+   index.html: quando arriva il permesso di Posarelli si cambia lì, in un
+   posto solo, e non più in due da tenere allineati. */
 
 const LISTING_IT = 'https://www.posarellivillas.it/italia/toscana/san-gimignano/95494';
+/* Deve restare uguale al canonical in index.html. Il giorno del dominio
+   proprio si cambiano tutti e due. */
+const SITE_URL = 'https://fara2106.github.io/villa-sabrina-sito/';
 
 /* Le coordinate della casa non stanno in questo file, e non stanno in
  * pagina. Nella porzione accanto i proprietari ci abitano tutto l'anno: la
@@ -38,15 +45,6 @@ const fail = (m) => {
   console.error(`\n✗ ${m}\n`);
   process.exit(1);
 };
-
-/** Stesso taglio a fine parola usato dalla pagina, così testo e JSON-LD coincidono. */
-function excerpt(text) {
-  if (REVIEWS_FULL_TEXT || text.length <= EXCERPT_LENGTH) return text;
-  let slice = text.slice(0, EXCERPT_LENGTH);
-  const sp = slice.lastIndexOf(' ');
-  if (sp > EXCERPT_LENGTH * 0.6) slice = slice.slice(0, sp);
-  return `${slice.replace(/[\s,;:.–-]+$/, '')}…`;
-}
 
 function replaceBlock(html, name, content) {
   const re = new RegExp(`(<!-- ${name}:START -->)([\\s\\S]*?)(<!-- ${name}:END -->)`);
@@ -99,7 +97,12 @@ const ld = {
   description:
     'Casa vacanze con piscina privata sulle colline del Chianti, a 5 km da San Gimignano. ' +
     '160 m² su due piani, 3 camere da letto, fino a 7 ospiti, giardino recintato di uso esclusivo.',
-  url: LISTING_IT,
+  /* url è la pagina ufficiale di questa casa, cioè questa. Prima puntava alla
+     scheda Posarelli, che era la stessa contraddizione del vecchio canonical
+     detta in un altro linguaggio. Posarelli resta, ma al posto giusto: sameAs
+     è «lo stesso soggetto, altrove», ed è esattamente quello che è. */
+  url: SITE_URL,
+  sameAs: [LISTING_IT],
   /* Comune, regione, paese e basta: nessuna via, nessun civico, nessun geo.
      Per farsi trovare da chi cerca "casa vacanze San Gimignano" il comune
      basta; il resto lo dà Posarelli a chi ha prenotato. */
@@ -132,35 +135,20 @@ const ld = {
   ],
 };
 
-// aggregateRating e review vengono da data/reviews.json, non sono scritti a mano
-if (data.aggregate?.rating && data.aggregate?.count) {
-  ld.aggregateRating = {
-    '@type': 'AggregateRating',
-    ratingValue: data.aggregate.rating,
-    reviewCount: data.aggregate.count,
-    bestRating: 5,
-    worstRating: 1,
-  };
-}
-
-if (approved.length > 0) {
-  ld.review = approved.map((r) => {
-    const review = {
-      '@type': 'Review',
-      author: { '@type': 'Person', name: r.author },
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: r.rating ?? 5,
-        bestRating: 5,
-        worstRating: 1,
-      },
-      reviewBody: excerpt(r.text),
-    };
-    if (r.date) review.datePublished = r.date;
-    if (r.lang) review.inLanguage = r.lang;
-    return review;
-  });
-}
+/* Qui c'erano aggregateRating e le 12 Review. Sono stati tolti apposta.
+ *
+ * Google: «se l'entità recensita controlla le recensioni su sé stessa, le sue
+ * pagine che usano LocalBusiness o qualunque altro tipo di Organization non
+ * sono eleggibili per le stelle». LodgingBusiness è una sottoclasse di
+ * LocalBusiness, e questo è il sito della casa recensita: le stelle non
+ * sarebbero mai arrivate, e la marcatura resta auto-referenziale — cioè un
+ * rischio senza contropartita.
+ *
+ * Le recensioni continuano a stare in pagina, dove servono a chi legge: sono
+ * nel blocco REVIEWS:DATA qui sopra. Non tornano qui dentro nemmeno quando
+ * Posarelli darà il permesso ai testi integrali: quello riguarda il diritto di
+ * ripubblicarli, non il tipo di marcatura, che resta ineleggibile.
+ */
 
 html = replaceBlock(
   html,
@@ -175,8 +163,7 @@ await writeFile(INDEX, html, 'utf8');
 console.log('');
 console.log(`  recensioni nel JSON     ${all.length}`);
 console.log(`  approvate → in pagina   ${approved.length}`);
-console.log(`  aggregateRating         ${ld.aggregateRating ? `${ld.aggregateRating.ratingValue}/5 su ${ld.aggregateRating.reviewCount}` : '— assente'}`);
-console.log(`  review nel JSON-LD      ${ld.review?.length ?? 0}`);
+console.log(`  review nel JSON-LD      nessuna, per scelta (vedi il commento sul JSON-LD)`);
 if (approved.length === 0) {
   console.log('');
   console.log('  ⚠ nessuna recensione approvata: la sezione mostrerà il messaggio di cortesia.');
