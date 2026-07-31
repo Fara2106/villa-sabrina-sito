@@ -26,22 +26,13 @@ const REVIEWS_FULL_TEXT = false;
 
 const LISTING_IT = 'https://www.posarellivillas.it/italia/toscana/san-gimignano/95494';
 
-/* Coordinate della proprietà, misurate e controllate contro tre fonti che non
- * si parlano fra loro:
- *
- *  1. la media del GPS EXIF di 15 scatti del drone, tutti dentro un riquadro
- *     di 104 × 125 metri → 43.45066, 11.07921;
- *  2. la scheda Posarelli: San Gimignano 3,5 km in linea d'aria contro 5 su
- *     strada, Poggibonsi 5,9 contro 8, Firenze 38,2 contro 50 — ogni rapporto
- *     è quello giusto per strade di collina;
- *  3. OpenStreetMap, che a 144 metri da lì ha una località il cui nome
- *     coincide con quello che Google dà all'indirizzo di questa casa.
- *
- * Restano il punto in cui volava il drone, non il cancello: sono buone a una
- * sessantina di metri. Chi le cambia le cambi anche in index.html, dove sono
- * scritte accanto al pulsante "Apri in Maps".
+/* Le coordinate della casa non stanno in questo file, e non stanno in
+ * pagina. Nella porzione accanto i proprietari ci abitano tutto l'anno: la
+ * posizione esatta la dà Posarelli a chi ha prenotato, non un sito pubblico.
+ * Se un giorno dovessero servire davvero, si ricavano dal GPS nell'EXIF degli
+ * scatti del drone in "Foto fatte da me" — ma la scelta di pubblicarle non è
+ * tecnica, e va rifatta ogni volta.
  */
-const GEO = { lat: 43.45066, lon: 11.07921 };
 
 const fail = (m) => {
   console.error(`\n✗ ${m}\n`);
@@ -109,20 +100,14 @@ const ld = {
     'Casa vacanze con piscina privata sulle colline del Chianti, a 5 km da San Gimignano. ' +
     '160 m² su due piani, 3 camere da letto, fino a 7 ospiti, giardino recintato di uso esclusivo.',
   url: LISTING_IT,
-  /* Comune, regione, paese e basta. L'indirizzo della casa non sta qui per
-     scelta: non è sulla scheda Posarelli, arriva con la conferma della
-     prenotazione, ed è quello che la pagina dice a chi legge. Le coordinate
-     qui sotto bastano a farsi trovare senza scriverlo. */
+  /* Comune, regione, paese e basta: nessuna via, nessun civico, nessun geo.
+     Per farsi trovare da chi cerca "casa vacanze San Gimignano" il comune
+     basta; il resto lo dà Posarelli a chi ha prenotato. */
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'San Gimignano',
     addressRegion: 'Toscana',
     addressCountry: 'IT',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: GEO.lat,
-    longitude: GEO.lon,
   },
   numberOfRooms: 3,
   maximumAttendeeCapacity: 7,

@@ -61,7 +61,6 @@ const contrast = await page.evaluate(() => {
     ['stat · etichetta', '.stats span'],
     ['barra bassa · recensioni', '.dock .score'],
     ['arrivo · testo', '.arrivo-grid p'],
-    ['arrivo · coordinate', '.coord'],
     ['hero · sottotitolo', '.hero-tag'],
     ['hero · meta', '.hero-meta'],
     ['galleria · nota', '.gal-hint'],
