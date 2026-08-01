@@ -14,6 +14,16 @@
  *
  * Esce con codice 1 se una soglia salta: serve a fermare una regressione, non
  * a fare classifiche.
+ *
+ * Perché non basta Lighthouse. Lanciato sul sito online, sulla stessa URL e a
+ * parità di byte scaricati (538 KiB), tre esecuzioni di fila hanno dato 76, 81
+ * e 100 di Performance, con l'FCP fra 1,3 e 3,9 secondi: Lighthouse simula la
+ * rete lenta sopra a quella vera, e la rete vera cambia. Questo script invece
+ * impone la banda con il Chrome DevTools Protocol, quindi ripete lo stesso
+ * numero. Per decidere se una modifica ha peggiorato qualcosa si guarda qui;
+ * Lighthouse resta utile per l'occhio d'insieme e per SEO e accessibilità.
+ * Il segnale che distingue i due casi è il peso: se i byte non cambiano e il
+ * tempo sì, è la misura, non la pagina.
  */
 
 import puppeteer from 'puppeteer-core';
