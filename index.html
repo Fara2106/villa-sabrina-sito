@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Villa Sabrina — casa vacanze con piscina a San Gimignano, Toscana</title>
-<meta name="description" content="Villa Sabrina è una casa vacanze con piscina privata sulle colline del Chianti, a 5 km da San Gimignano. 7 ospiti, 3 camere, giardino recintato e vista panoramica. Disponibilità e prenotazioni su Posarelli Villas.">
+<!-- Titolo e descrizione seguono la lingua: li riscrive applyLang(). Quelli
+     qui sotto sono l'italiano, cioè quello che vede chi arriva senza
+     JavaScript e chi legge il sorgente. -->
+<meta name="description" content="Una casa di campagna con piscina privata sulle colline del Chianti, a 5 km da San Gimignano: tre camere, sette posti letto e un giardino recintato tutto per sé.">
 <meta name="robots" content="index, follow">
 <!-- Il canonical punta a sé stesso. Prima puntava alla scheda Posarelli, il
      che diceva a Google «la pagina buona è la loro, non questa» — e insieme
@@ -25,9 +28,14 @@
 <meta name="theme-color" content="#141F1C">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23141F1C'/%3E%3Cpath d='M16 4c2.6 3.4 3.9 7.4 3.9 11.6 0 4-1.2 7.9-3.9 11.4-2.7-3.5-3.9-7.4-3.9-11.4C12.1 11.4 13.4 7.4 16 4z' fill='%23D6B45C'/%3E%3Crect x='15.1' y='24' width='1.8' height='5' fill='%23A98C40'/%3E%3C/svg%3E">
 
+<!-- Gli og: restano in italiano e non li tocca applyLang(): chi costruisce
+     l'anteprima di un link incollato — WhatsApp, Facebook, iMessage — legge
+     l'HTML e non esegue JavaScript, quindi tradurli da lì cambierebbe solo
+     ciò che nessuno guarda. Il giorno in cui servissero anche nelle altre
+     lingue serve una pagina per lingua, non una riga di script. -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Villa Sabrina — San Gimignano, Toscana">
-<meta property="og:description" content="Casa vacanze con piscina privata sulle colline del Chianti, a 5 km da San Gimignano.">
+<meta property="og:description" content="Una casa di campagna con piscina privata sulle colline del Chianti, a 5 km da San Gimignano.">
 <meta property="og:url" content="https://fara2106.github.io/villa-sabrina-sito/">
 <!-- Indirizzo assoluto: chi genera l'anteprima quando il link viene incollato
      in WhatsApp o su Facebook non risolve gli indirizzi relativi, e con
@@ -854,9 +862,9 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
       <p class="eyebrow" data-i18n="house.eyebrow">La casa</p>
       <h2 class="h-sec" data-i18n="house.title">Cotto, mattone e legno, a cinque chilometri dalle torri</h2>
       <div class="body">
-        <p data-i18n="house.p1">Villa Sabrina è una porzione di una villa di campagna, ristrutturata di recente e circondata dalle colline del Chianti. Si sviluppa su due piani, per 160 metri quadri.</p>
-        <p data-i18n="house.p2">Gli interni sono luminosi e arredati nello stile rustico toscano, con il cotto, il mattone e il legno lasciati a vista. Le tre camere hanno tutte l’aria condizionata.</p>
-        <p data-i18n="house.p3">I proprietari abitano nella porzione accanto, con ingresso separato, e sono a disposizione in caso di necessità. Si accede da una strada sterrata in buone condizioni.</p>
+        <p data-i18n="house.p1">Villa Sabrina è una porzione di villa di campagna, ristrutturata da poco: centosessanta metri quadri su due piani, con le colline del Chianti tutto intorno.</p>
+        <p data-i18n="house.p2">Dentro è luminosa, in stile rustico toscano, con il cotto, il mattone e il legno lasciati a vista.</p>
+        <p data-i18n="house.p3">I proprietari abitano nella porzione accanto, con ingresso separato. Nelle recensioni la cosa più nominata non è la piscina, e nemmeno il panorama: sono loro.</p>
       </div>
 
       <div class="stats">
@@ -901,7 +909,7 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
     <div class="servizi-head reveal">
       <p class="eyebrow" data-i18n="amen.eyebrow">Servizi</p>
       <h2 class="h-sec" data-i18n="amen.title">Quello che <i>c’è</i></h2>
-      <p class="body servizi-lede" data-i18n="amen.lede">Trentatré voci dichiarate sulla scheda, divise per dove si usano. Dalla piscina privata all’estintore: ci sono tutte, comprese quelle che si notano solo se mancano.</p>
+      <p class="body servizi-lede" data-i18n="amen.lede">Trentatré voci dichiarate sulla scheda, divise per dove si usano: dalla piscina privata all’estintore.</p>
     </div>
     <div class="servizi-gruppi" id="amenities"></div>
   </div>
@@ -1012,7 +1020,7 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
       </div>
       <div class="reveal">
         <h3 data-i18n="info.owners">I proprietari</h3>
-        <p data-i18n="info.ownersText">Abitano nella porzione accanto, con ingresso indipendente, e sono a disposizione in caso di necessità.</p>
+        <p data-i18n="info.ownersText">Nella porzione accanto, ingresso indipendente. Ci sono se serve qualcosa.</p>
       </div>
     </div>
 
@@ -1149,6 +1157,11 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
   /* ------------------------------------------------------------ i18n */
   var I18N = {
     it: {
+      /* Titolo della finestra e descrizione per i motori di ricerca: cambiano
+         con la lingua, come tutto il resto. Vedi applyLang(). */
+      'meta.title': 'Villa Sabrina — casa vacanze con piscina a San Gimignano, Toscana',
+      'meta.desc': 'Una casa di campagna con piscina privata sulle colline del Chianti, a 5 km da San Gimignano: tre camere, sette posti letto e un giardino recintato tutto per sé.',
+
       'skip': 'Salta al contenuto',
       'nav.house': 'La casa', 'nav.spaces': 'Gli spazi', 'nav.amenities': 'Servizi',
       'nav.around': 'Dintorni', 'nav.gallery': 'Galleria', 'nav.reviews': 'Recensioni',
@@ -1167,8 +1180,8 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
       'house.eyebrow': 'La casa',
       'house.title': 'Cotto, mattone e legno, a cinque chilometri dalle torri',
       'house.p1': 'Villa Sabrina è una porzione di villa di campagna, ristrutturata da poco: centosessanta metri quadri su due piani, con le colline del Chianti tutto intorno.',
-      'house.p2': 'Dentro è luminosa, in stile rustico toscano, con il cotto, il mattone e il legno lasciati a vista. Le tre camere hanno tutte l’aria condizionata.',
-      'house.p3': 'I proprietari abitano nella porzione accanto, con ingresso separato, e ci sono se serve qualcosa. Nelle recensioni la cosa più nominata non è la piscina, e nemmeno il panorama: sono loro.',
+      'house.p2': 'Dentro è luminosa, in stile rustico toscano, con il cotto, il mattone e il legno lasciati a vista.',
+      'house.p3': 'I proprietari abitano nella porzione accanto, con ingresso separato. Nelle recensioni la cosa più nominata non è la piscina, e nemmeno il panorama: sono loro.',
 
       'band.one': 'Vista sulle colline del Chianti',
       'band.two': 'I filari di vigna intorno alla casa',
@@ -1179,7 +1192,7 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
 
       'amen.eyebrow': 'Servizi',
       'amen.title': 'Quello che <i>c’è</i>',
-      'amen.lede': 'Trentatré voci dichiarate sulla scheda, divise per dove si usano. Dalla piscina privata all’estintore: ci sono tutte, comprese quelle che si notano solo se mancano.',
+      'amen.lede': 'Trentatré voci dichiarate sulla scheda, divise per dove si usano: dalla piscina privata all’estintore.',
 
       'where.eyebrow': 'Dintorni', 'where.title': 'Dove si arriva da qui',
       'come.eyebrow': 'Come ci si arriva',
@@ -1198,13 +1211,13 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
         'casa-vigna-torri-dallalto': ['Da quassù si vedono le torri di San Gimignano, cinque chilometri più in là.',
           'La casa sta su un poggio fra i cipressi e i filari, e sotto di lei la piscina prende il sole per tutto il giorno. In un’ora di auto si arriva a Firenze, a Siena, a Volterra e in tutto il Chianti Classico: la sera però si torna quassù, e la differenza fra visitare la Toscana e starci sta tutta lì.'],
         'proprieta-dallalto-piscina': ['Il giardino scende a terrazze fino alla piscina.',
-          'È grande, curato e completamente recintato: per tutta la durata del soggiorno è riservato a voi. Ci sono il barbecue, l’illuminazione esterna e il parcheggio dentro la proprietà. Un giardino recintato, con dei bambini, vuol dire poter smettere di contarli.'],
+          'È grande, curato e completamente recintato: per tutta la durata del soggiorno è riservato a voi. Un giardino recintato, con dei bambini, vuol dire poter smettere di contarli.'],
         'piscina-cipressi-divano': ['Un divano all’ombra, la siepe alle spalle e dieci metri d’acqua davanti.',
           'La piscina misura 10 × 5 metri e va da 80 centimetri a un metro e 65: si sta in piedi quasi ovunque, il che con i bambini piccoli cambia le giornate. È recintata, di uso esclusivo, e resta aperta dal 15 aprile al 15 ottobre. I teli sono compresi, quindi in valigia ci sta dell’altro.'],
         'scalinata-fiorita': ['La scala di pietra che sale nel giardino, fra gli arbusti in fiore.',
           'Il giardino è disegnato su più livelli e si gira tutto a piedi, da una quota all’altra. Sono i dettagli che si notano il terzo giorno, quando si smette di fare i turisti e si comincia semplicemente ad abitare la casa.'],
         'loggia-tavola-apparecchiata': ['La tavola sotto la loggia: qui si cena finché la luce regge.',
-          'Il porticato è attrezzato e guarda il prato: d’estate diventa la stanza più usata della casa. Si pranza, si cena, si sta seduti a non fare niente. Il barbecue è a due passi e San Gimignano, con i negozi per la spesa, a cinque chilometri.'],
+          'D’estate la loggia diventa la stanza più usata della casa. Si pranza, si cena, si sta seduti a non fare niente. Il barbecue è a due passi e San Gimignano, con i negozi per la spesa, a cinque chilometri.'],
         'bagno-ardesia-lavabo': ['Uno dei due bagni, rifatto da poco.',
           'La casa è stata ristrutturata di recente e qui si vede più che altrove: lavabo d’appoggio su mensola di legno, specchio tondo retroilluminato, doccia. Il secondo bagno, anch’esso con doccia, è al piano terra insieme alla lavatrice.'],
         'piscina-teli-lettino': ['I teli per la piscina sono già lì che aspettano: sono compresi.',
@@ -1272,7 +1285,7 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
           body: 'Recintata, di uso esclusivo di chi soggiorna. Va da ottanta centimetri a un metro e sessantacinque: non c’è un punto in cui un adulto non tocchi. Aperta dal 15 aprile al 15 ottobre, con lettini e ombrelloni sul prato.' },
         { img: 'giardino-porticato-prato', label: 'Giardino e porticato',
           title: 'Un porticato attrezzato sul giardino',
-          body: 'Grande, curato, tutto recintato: per la durata del soggiorno è vostro. Il porticato guarda il prato ed è apparecchiato per mangiarci. Barbecue, illuminazione esterna e parcheggio dentro la proprietà.' }
+          body: 'Il porticato guarda il prato ed è apparecchiato per mangiarci. Il giardino intorno è recintato e riservato a chi soggiorna. Barbecue, illuminazione esterna e parcheggio dentro la proprietà.' }
       ],
 
       'amenities': [
@@ -1295,6 +1308,9 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
     },
 
     en: {
+      'meta.title': 'Villa Sabrina — holiday house with a pool near San Gimignano, Tuscany',
+      'meta.desc': 'A country house with a private pool in the Chianti hills, 5 km from San Gimignano: three bedrooms, seven beds and a fenced garden all to yourselves.',
+
       'skip': 'Skip to content',
       'nav.house': 'The house', 'nav.spaces': 'The spaces', 'nav.amenities': 'Amenities',
       'nav.around': 'Surroundings', 'nav.gallery': 'Gallery', 'nav.reviews': 'Reviews',
@@ -1313,8 +1329,8 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
       'house.eyebrow': 'The house',
       'house.title': 'Terracotta, brick and wood, five kilometres from the towers',
       'house.p1': 'Villa Sabrina is part of a country villa, restored not long ago: a hundred and sixty square metres over two floors, with the Chianti hills all around.',
-      'house.p2': 'Inside it is bright, in the Tuscan rustic style, with terracotta, brick and wood left exposed. All three bedrooms are air conditioned.',
-      'house.p3': 'The owners live in the adjoining part of the house, with a separate entrance, and are there if you need anything. In the reviews, the thing guests mention most is not the pool, and not the view: it is them.',
+      'house.p2': 'Inside it is bright, in the Tuscan rustic style, with terracotta, brick and wood left exposed.',
+      'house.p3': 'The owners live in the adjoining part of the house, with a separate entrance. In the reviews, the thing guests mention most is not the pool, and not the view: it is them.',
 
       'band.one': 'The view over the Chianti hills',
       'band.two': 'The rows of vines around the house',
@@ -1325,7 +1341,7 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
 
       'amen.eyebrow': 'Amenities',
       'amen.title': 'What’s <i>there</i>',
-      'amen.lede': 'Thirty-three items as declared on the official listing, grouped by where you use them. From the private pool to the fire extinguisher: all of them, including the ones you only notice when they are missing.',
+      'amen.lede': 'Thirty-three items as declared on the official listing, grouped by where you use them: from the private pool to the fire extinguisher.',
 
       'where.eyebrow': 'Surroundings', 'where.title': 'What you can reach from here',
       'come.eyebrow': 'Getting here',
@@ -1344,13 +1360,13 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
         'casa-vigna-torri-dallalto': ['From up here you can see the towers of San Gimignano, five kilometres away.',
           'The house sits on a rise among the cypresses and the vine rows, with the pool below it in the sun all day. Florence, Siena, Volterra and the whole Chianti Classico are within an hour’s drive — but in the evening you come back up here, and that is the whole difference between visiting Tuscany and staying in it.'],
         'proprieta-dallalto-piscina': ['The garden drops in terraces down to the pool.',
-          'It is large, well kept and entirely fenced: for the length of your stay it is yours. There is the barbecue, outdoor lighting and parking within the grounds. A fenced garden, with children about, means you can stop counting them.'],
+          'It is large, well kept and entirely fenced: for the length of your stay it is yours. A fenced garden, with children about, means you can stop counting them.'],
         'piscina-cipressi-divano': ['A sofa in the shade, the hedge behind you and ten metres of water in front.',
           'The pool is 10 × 5 metres and runs from 80 centimetres to 1.65: you can stand up almost anywhere, which with small children changes the whole day. It is fenced, for guests only, and open from 15 April to 15 October. Towels are included, so your case can hold something else.'],
         'scalinata-fiorita': ['The stone staircase climbing through the garden, between flowering shrubs.',
           'The garden is laid out on several levels and you walk all of it, from one height to the next. These are the details you notice on the third day, when you stop being a tourist and simply start living in the house.'],
         'loggia-tavola-apparecchiata': ['The table under the loggia: dinner here lasts as long as the light does.',
-          'The portico is furnished and looks onto the lawn: in summer it becomes the most used room in the house. You have lunch, you have dinner, you sit and do nothing. The barbecue is a few steps away and San Gimignano, with shops for the groceries, is five kilometres off.'],
+          'In summer the loggia becomes the most used room in the house. You have lunch, you have dinner, you sit and do nothing. The barbecue is a few steps away and San Gimignano, with shops for the groceries, is five kilometres off.'],
         'bagno-ardesia-lavabo': ['One of the two bathrooms, recently redone.',
           'The house was restored not long ago and it shows here more than anywhere: a countertop basin on a wooden shelf, a round backlit mirror, a shower. The second bathroom, also with a shower, is on the ground floor together with the washing machine.'],
         'piscina-teli-lettino': ['The pool towels are already waiting for you: they are included.',
@@ -1385,7 +1401,7 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
       'info.rule1': 'Pets allowed on request', 'info.rule2': 'No smoking indoors',
       'info.rule3': 'Maid service by arrangement',
       'info.access': 'Getting there', 'info.accessText': 'Access is via an unpaved but well-maintained road. Parking within the grounds.',
-      'info.owners': 'The owners', 'info.ownersText': 'In the adjoining part of the house, independent entrance. There if you need anything.',
+      'info.owners': 'The owners', 'info.ownersText': 'Next door, with a separate entrance. There if you need anything.',
       'info.prices': '<strong>Rates and availability.</strong> Prices change with the season and the length of stay, and some items are settled on site. The official Posarelli Villas listing, which handles bookings, is the authority for the current quote and calendar.',
       'info.pricesLink': 'See rates and availability',
 
@@ -1417,7 +1433,7 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
           body: 'Fenced, for the exclusive use of guests. It runs from eighty centimetres to one metre sixty-five: there is nowhere an adult cannot stand. Open from 15 April to 15 October, with loungers and parasols on the lawn.' },
         { img: 'giardino-porticato-prato', label: 'Garden and portico',
           title: 'A furnished portico onto the garden',
-          body: 'Large, well kept, entirely fenced: for the length of your stay it is yours. The portico looks onto the lawn and is laid out for eating there. Barbecue, outdoor lighting and parking inside the grounds.' }
+          body: 'The portico looks onto the lawn and is laid out for eating there. The garden around it is fenced and reserved for guests. Barbecue, outdoor lighting and parking inside the grounds.' }
       ],
 
       'amenities': [
@@ -1440,6 +1456,9 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
 
     /* Francese: i testi vengono dalla scheda ufficiale posarellivillas.fr */
     fr: {
+      'meta.title': 'Villa Sabrina — maison de vacances avec piscine à San Gimignano, Toscane',
+      'meta.desc': 'Une maison de campagne avec piscine privée dans les collines du Chianti, à 5 km de San Gimignano : trois chambres, sept couchages et un jardin clos rien qu’à vous.',
+
       'skip': 'Aller au contenu',
       'nav.house': 'La maison', 'nav.spaces': 'Les espaces', 'nav.amenities': 'Services',
       'nav.around': 'Alentours', 'nav.gallery': 'Galerie', 'nav.reviews': 'Avis',
@@ -1458,8 +1477,8 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
       'house.eyebrow': 'La maison',
       'house.title': 'Terre cuite, brique et bois, à cinq kilomètres des tours',
       'house.p1': 'Villa Sabrina occupe une partie d’une maison de campagne, restaurée il y a peu : cent soixante mètres carrés sur deux niveaux, avec les collines du Chianti tout autour.',
-      'house.p2': 'À l’intérieur c’est lumineux, dans le style rustique toscan, avec la terre cuite, la brique et le bois laissés apparents. Les trois chambres sont toutes climatisées.',
-      'house.p3': 'Les propriétaires habitent la partie voisine, avec un accès indépendant, et sont là s’il faut quelque chose. Dans les avis, ce que les hôtes citent le plus n’est ni la piscine ni la vue : ce sont eux.',
+      'house.p2': 'À l’intérieur c’est lumineux, dans le style rustique toscan, avec la terre cuite, la brique et le bois laissés apparents.',
+      'house.p3': 'Les propriétaires habitent la partie voisine, avec un accès indépendant. Dans les avis, ce que les hôtes citent le plus n’est ni la piscine ni la vue : ce sont eux.',
 
       'band.one': 'Vue sur les collines du Chianti',
       'band.two': 'Les rangs de vigne autour de la maison',
@@ -1470,7 +1489,7 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
 
       'amen.eyebrow': 'Services',
       'amen.title': 'Ce qu’il y <i>a</i>',
-      'amen.lede': 'Trente-trois éléments déclarés sur la fiche officielle, regroupés par usage. De la piscine privée à l’extincteur : tous y sont, y compris ceux qu’on ne remarque que s’ils manquent.',
+      'amen.lede': 'Trente-trois éléments déclarés sur la fiche officielle, regroupés par usage : de la piscine privée à l’extincteur.',
 
       'where.eyebrow': 'Alentours', 'where.title': 'Ce qu’on rejoint d’ici',
       'come.eyebrow': 'Comment on arrive',
@@ -1489,13 +1508,13 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
         'casa-vigna-torri-dallalto': ['D’ici on aperçoit les tours de San Gimignano, à cinq kilomètres.',
           'La maison est posée sur une hauteur, entre les cyprès et les rangs de vigne, et la piscine en contrebas reste au soleil toute la journée. Florence, Sienne, Volterra et tout le Chianti Classico sont à moins d’une heure de route — mais le soir on remonte ici, et c’est toute la différence entre visiter la Toscane et y séjourner.'],
         'proprieta-dallalto-piscina': ['Le jardin descend en terrasses jusqu’à la piscine.',
-          'Il est grand, bien entretenu et entièrement clôturé : le temps du séjour, il est à vous. Il y a le barbecue, l’éclairage extérieur et le parking dans la propriété. Un jardin clôturé, avec des enfants, veut dire pouvoir arrêter de les compter.'],
+          'Il est grand, bien entretenu et entièrement clôturé : le temps du séjour, il est à vous. Un jardin clôturé, avec des enfants, veut dire pouvoir arrêter de les compter.'],
         'piscina-cipressi-divano': ['Un canapé à l’ombre, la haie derrière et dix mètres d’eau devant.',
           'La piscine fait 10 × 5 mètres et va de 80 centimètres à 1,65 : on a pied presque partout, ce qui avec de jeunes enfants change les journées. Elle est clôturée, réservée aux hôtes, et ouverte du 15 avril au 15 octobre. Les serviettes sont comprises, la valise peut donc contenir autre chose.'],
         'scalinata-fiorita': ['L’escalier de pierre qui monte dans le jardin, entre les arbustes en fleurs.',
           'Le jardin est dessiné sur plusieurs niveaux et se parcourt entièrement à pied, d’une hauteur à l’autre. Ce sont les détails qu’on remarque le troisième jour, quand on cesse d’être touriste et qu’on commence simplement à habiter la maison.'],
         'loggia-tavola-apparecchiata': ['La table sous la loggia : ici on dîne tant que la lumière tient.',
-          'La terrasse couverte est équipée et donne sur la pelouse : l’été, elle devient la pièce la plus utilisée de la maison. On y déjeune, on y dîne, on y reste sans rien faire. Le barbecue est à deux pas et San Gimignano, avec ses magasins, à cinq kilomètres.'],
+          'L’été, la loggia devient la pièce la plus utilisée de la maison. On y déjeune, on y dîne, on y reste sans rien faire. Le barbecue est à deux pas et San Gimignano, avec ses magasins, à cinq kilomètres.'],
         'bagno-ardesia-lavabo': ['L’une des deux salles de bains, refaite récemment.',
           'La maison a été restructurée il y a peu et cela se voit ici plus qu’ailleurs : vasque à poser sur tablette en bois, miroir rond rétroéclairé, douche. La seconde salle de bains, également avec douche, est au rez-de-chaussée avec le lave-linge.'],
         'piscina-teli-lettino': ['Les serviettes de piscine vous attendent déjà : elles sont comprises.',
@@ -1562,7 +1581,7 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
           body: 'Clôturée, à l’usage exclusif des hôtes. De quatre-vingts centimètres à un mètre soixante-cinq : nulle part un adulte ne perd pied. Ouverte du 15 avril au 15 octobre, avec transats et parasols sur la pelouse.' },
         { img: 'giardino-porticato-prato', label: 'Jardin et terrasse couverte',
           title: 'Une terrasse couverte sur le jardin',
-          body: 'Grand, soigné, entièrement clôturé : le temps du séjour, il est à vous. La terrasse couverte donne sur la pelouse et elle est dressée pour y manger. Barbecue, éclairage extérieur et parking dans la propriété.' }
+          body: 'La terrasse couverte donne sur la pelouse et elle est dressée pour y manger. Le jardin autour est clôturé et réservé aux hôtes. Barbecue, éclairage extérieur et parking dans la propriété.' }
       ],
 
       'amenities': [
@@ -1587,6 +1606,9 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
        testi sono la traduzione di quelli italiani — stessi dati, nessun dato
        nuovo — e i link portano alla scheda in inglese. */
     es: {
+      'meta.title': 'Villa Sabrina — casa de vacaciones con piscina en San Gimignano, Toscana',
+      'meta.desc': 'Una casa de campo con piscina privada en las colinas del Chianti, a 5 km de San Gimignano: tres habitaciones, siete plazas y un jardín vallado para ustedes solos.',
+
       'skip': 'Saltar al contenido',
       'nav.house': 'La casa', 'nav.spaces': 'Los espacios', 'nav.amenities': 'Servicios',
       'nav.around': 'Alrededores', 'nav.gallery': 'Galería', 'nav.reviews': 'Opiniones',
@@ -1605,8 +1627,8 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
       'house.eyebrow': 'La casa',
       'house.title': 'Barro cocido, ladrillo y madera, a cinco kilómetros de las torres',
       'house.p1': 'Villa Sabrina es una parte de una casa de campo, reformada hace poco: ciento sesenta metros cuadrados en dos plantas, con las colinas del Chianti alrededor.',
-      'house.p2': 'Por dentro es luminosa, de estilo rústico toscano, con el barro cocido, el ladrillo y la madera a la vista. Las tres habitaciones tienen aire acondicionado.',
-      'house.p3': 'Los propietarios viven en la parte contigua, con entrada independiente, y están ahí si hace falta algo. En las reseñas, lo que más mencionan los huéspedes no es la piscina, ni las vistas: son ellos.',
+      'house.p2': 'Por dentro es luminosa, de estilo rústico toscano, con el barro cocido, el ladrillo y la madera a la vista.',
+      'house.p3': 'Los propietarios viven en la parte contigua, con entrada independiente. En las reseñas, lo que más mencionan los huéspedes no es la piscina, ni las vistas: son ellos.',
 
       'band.one': 'Vista de las colinas del Chianti',
       'band.two': 'Las hileras de viña alrededor de la casa',
@@ -1617,7 +1639,7 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
 
       'amen.eyebrow': 'Servicios',
       'amen.title': 'Lo que <i>hay</i>',
-      'amen.lede': 'Treinta y tres elementos declarados en la ficha oficial, agrupados por dónde se usan. De la piscina privada al extintor: están todos, incluidos los que solo se notan si faltan.',
+      'amen.lede': 'Treinta y tres elementos declarados en la ficha oficial, agrupados por dónde se usan: de la piscina privada al extintor.',
 
       'where.eyebrow': 'Alrededores', 'where.title': 'Adónde se llega desde aquí',
       'come.eyebrow': 'Cómo se llega',
@@ -1636,13 +1658,13 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
         'casa-vigna-torri-dallalto': ['Desde aquí arriba se ven las torres de San Gimignano, a cinco kilómetros.',
           'La casa está en un alto entre los cipreses y las hileras de viña, y la piscina, más abajo, tiene sol todo el día. Florencia, Siena, Volterra y todo el Chianti Classico quedan a menos de una hora en coche — pero por la tarde se vuelve aquí, y en eso consiste la diferencia entre visitar la Toscana y estar en ella.'],
         'proprieta-dallalto-piscina': ['El jardín baja en terrazas hasta la piscina.',
-          'Es grande, cuidado y está completamente vallado: durante la estancia es vuestro. Hay barbacoa, iluminación exterior y aparcamiento dentro de la propiedad. Un jardín vallado, con niños, significa poder dejar de contarlos.'],
+          'Es grande, cuidado y está completamente vallado: durante la estancia es vuestro. Un jardín vallado, con niños, significa poder dejar de contarlos.'],
         'piscina-cipressi-divano': ['Un sofá a la sombra, el seto detrás y diez metros de agua delante.',
           'La piscina mide 10 × 5 metros y va de 80 centímetros a 1,65: se hace pie casi en todas partes, lo que con niños pequeños cambia el día entero. Está vallada, es de uso exclusivo y abre del 15 de abril al 15 de octubre. Las toallas van incluidas, así que en la maleta cabe otra cosa.'],
         'scalinata-fiorita': ['La escalinata de piedra que sube por el jardín, entre los arbustos en flor.',
           'El jardín está trazado en varios niveles y se recorre entero a pie, de una cota a otra. Son los detalles que se notan al tercer día, cuando uno deja de hacer de turista y simplemente empieza a habitar la casa.'],
         'loggia-tavola-apparecchiata': ['La mesa bajo la logia: aquí se cena mientras aguante la luz.',
-          'El porche está equipado y da al césped: en verano se convierte en la estancia más usada de la casa. Se come, se cena, se está sentado sin hacer nada. La barbacoa está a dos pasos y San Gimignano, con tiendas para la compra, a cinco kilómetros.'],
+          'En verano la logia se convierte en la estancia más usada de la casa. Se come, se cena, se está sentado sin hacer nada. La barbacoa está a dos pasos y San Gimignano, con tiendas para la compra, a cinco kilómetros.'],
         'bagno-ardesia-lavabo': ['Uno de los dos baños, reformado hace poco.',
           'La casa se reformó hace poco y aquí se nota más que en ningún otro sitio: lavabo sobre encimera de madera, espejo redondo retroiluminado, ducha. El segundo baño, también con ducha, está en la planta baja junto con la lavadora.'],
         'piscina-teli-lettino': ['Las toallas de piscina ya están esperando: van incluidas.',
@@ -1709,7 +1731,7 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
           body: 'Vallada, de uso exclusivo de los huéspedes. Va de ochenta centímetros a un metro sesenta y cinco: no hay un punto donde un adulto no haga pie. Abierta del 15 de abril al 15 de octubre, con tumbonas y sombrillas en el césped.' },
         { img: 'giardino-porticato-prato', label: 'Jardín y porche',
           title: 'Un porche equipado sobre el jardín',
-          body: 'Grande, cuidado, todo vallado: mientras dura la estancia es vuestro. El porche da al césped y está puesto para comer allí. Barbacoa, iluminación exterior y aparcamiento dentro de la propiedad.' }
+          body: 'El porche da al césped y está puesto para comer allí. El jardín alrededor está vallado y reservado a quien se aloja. Barbacoa, iluminación exterior y aparcamiento dentro de la propiedad.' }
       ],
 
       'amenities': [
@@ -1732,6 +1754,9 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
 
     /* Tedesco: i testi vengono dalla scheda ufficiale posarellivillas.de */
     de: {
+      'meta.title': 'Villa Sabrina — Ferienhaus mit Pool bei San Gimignano, Toskana',
+      'meta.desc': 'Ein Landhaus mit privatem Pool in den Chianti-Hügeln, 5 km von San Gimignano: drei Schlafzimmer, sieben Betten und ein eingezäunter Garten für Sie allein.',
+
       'skip': 'Zum Inhalt springen',
       'nav.house': 'Das Haus', 'nav.spaces': 'Die Räume', 'nav.amenities': 'Leistungen',
       'nav.around': 'Umgebung', 'nav.gallery': 'Galerie', 'nav.reviews': 'Bewertungen',
@@ -1750,8 +1775,8 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
       'house.eyebrow': 'Das Haus',
       'house.title': 'Terrakotta, Ziegel und Holz, fünf Kilometer von den Türmen',
       'house.p1': 'Villa Sabrina ist Teil eines Landhauses, vor Kurzem renoviert: hundertsechzig Quadratmeter auf zwei Etagen, ringsum die Hügel des Chianti.',
-      'house.p2': 'Innen ist es hell, im toskanischen Landstil, mit sichtbarem Terrakotta, Ziegel und Holz. Alle drei Schlafzimmer haben eine Klimaanlage.',
-      'house.p3': 'Die Besitzer wohnen im Teil nebenan, mit eigenem Eingang, und sind da, wenn etwas gebraucht wird. In den Bewertungen wird am häufigsten weder der Pool noch die Aussicht genannt, sondern sie.',
+      'house.p2': 'Innen ist es hell, im toskanischen Landstil, mit sichtbarem Terrakotta, Ziegel und Holz.',
+      'house.p3': 'Die Besitzer wohnen im Teil nebenan, mit eigenem Eingang. In den Bewertungen wird am häufigsten weder der Pool noch die Aussicht genannt, sondern sie.',
 
       'band.one': 'Blick auf die Hügel des Chianti',
       'band.two': 'Die Rebzeilen rund um das Haus',
@@ -1762,7 +1787,7 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
 
       'amen.eyebrow': 'Leistungen',
       'amen.title': 'Was es <i>gibt</i>',
-      'amen.lede': 'Dreiunddreißig Angaben aus dem offiziellen Exposé, danach geordnet, wo man sie braucht. Vom privaten Pool bis zum Feuerlöscher: alle dabei, auch die, die man nur bemerkt, wenn sie fehlen.',
+      'amen.lede': 'Dreiunddreißig Angaben aus dem offiziellen Exposé, danach geordnet, wo man sie braucht: vom privaten Pool bis zum Feuerlöscher.',
 
       'where.eyebrow': 'Umgebung', 'where.title': 'Was von hier aus erreichbar ist',
       'come.eyebrow': 'Anreise',
@@ -1781,13 +1806,13 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
         'casa-vigna-torri-dallalto': ['Von hier oben sieht man die Türme von San Gimignano, fünf Kilometer entfernt.',
           'Das Haus liegt auf einer Anhöhe zwischen Zypressen und Rebzeilen, der Pool darunter hat den ganzen Tag Sonne. Florenz, Siena, Volterra und der ganze Chianti Classico sind in einer Autostunde erreichbar — abends aber kommt man hierher zurück, und genau darin liegt der Unterschied zwischen die Toskana besuchen und in ihr wohnen.'],
         'proprieta-dallalto-piscina': ['Der Garten fällt in Terrassen zum Pool hin ab.',
-          'Er ist groß, gepflegt und komplett eingezäunt: für die Dauer des Aufenthalts gehört er Ihnen. Es gibt den Grill, die Außenbeleuchtung und den Parkplatz auf dem Grundstück. Ein eingezäunter Garten heißt, mit Kindern, dass man aufhören kann sie zu zählen.'],
+          'Er ist groß, gepflegt und komplett eingezäunt: für die Dauer des Aufenthalts gehört er Ihnen. Ein eingezäunter Garten heißt, mit Kindern, dass man aufhören kann sie zu zählen.'],
         'piscina-cipressi-divano': ['Ein Sofa im Schatten, die Hecke im Rücken und zehn Meter Wasser davor.',
           'Der Pool misst 10 × 5 Meter und reicht von 80 Zentimetern bis 1,65: fast überall steht man, was mit kleinen Kindern den ganzen Tag verändert. Er ist eingezäunt, nur für die Gäste, und vom 15. April bis 15. Oktober geöffnet. Die Tücher sind inbegriffen, im Koffer bleibt also Platz für anderes.'],
         'scalinata-fiorita': ['Die Steintreppe, die zwischen blühenden Sträuchern durch den Garten führt.',
           'Der Garten ist auf mehreren Ebenen angelegt und wird ganz zu Fuß erschlossen, von einer Höhe zur nächsten. Es sind die Details, die einem am dritten Tag auffallen, wenn man aufhört, Tourist zu sein, und einfach anfängt, das Haus zu bewohnen.'],
         'loggia-tavola-apparecchiata': ['Der Tisch unter der Loggia: hier isst man, solange das Licht reicht.',
-          'Die Loggia ist ausgestattet und geht auf die Wiese hinaus: im Sommer wird sie zum meistgenutzten Raum des Hauses. Man isst zu Mittag, man isst zu Abend, man sitzt und tut nichts. Der Grill ist zwei Schritte entfernt und San Gimignano, mit Geschäften für den Einkauf, fünf Kilometer.'],
+          'Im Sommer wird die Loggia zum meistgenutzten Raum des Hauses. Man isst zu Mittag, man isst zu Abend, man sitzt und tut nichts. Der Grill ist zwei Schritte entfernt und San Gimignano, mit Geschäften für den Einkauf, fünf Kilometer.'],
         'bagno-ardesia-lavabo': ['Eines der beiden Bäder, vor Kurzem erneuert.',
           'Das Haus wurde vor nicht langer Zeit renoviert, und hier sieht man es deutlicher als anderswo: Aufsatzwaschbecken auf Holzablage, runder hinterleuchteter Spiegel, Dusche. Das zweite Bad, ebenfalls mit Dusche, liegt im Erdgeschoss zusammen mit der Waschmaschine.'],
         'piscina-teli-lettino': ['Die Pooltücher liegen schon bereit: sie sind inbegriffen.',
@@ -1854,7 +1879,7 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
           body: 'Eingezäunt, ausschließlich für die Gäste. Von achtzig Zentimetern bis ein Meter fünfundsechzig: nirgends verliert ein Erwachsener den Boden. Geöffnet vom 15. April bis 15. Oktober, mit Liegen und Sonnenschirmen auf der Wiese.' },
         { img: 'giardino-porticato-prato', label: 'Garten und Loggia',
           title: 'Eine ausgestattete Loggia zum Garten',
-          body: 'Groß, gepflegt, rundum eingezäunt: für die Dauer des Aufenthalts gehört er Ihnen. Die Loggia geht auf die Wiese hinaus und ist zum Essen gedeckt. Grill, Außenbeleuchtung und Parkplatz auf dem Grundstück.' }
+          body: 'Die Loggia geht auf die Wiese hinaus und ist zum Essen gedeckt. Der Garten ringsum ist eingezäunt und den Gästen vorbehalten. Grill, Außenbeleuchtung und Parkplatz auf dem Grundstück.' }
       ],
 
       'amenities': [
@@ -2400,6 +2425,15 @@ body.is-locked .dock{padding-right:calc(var(--gut) + var(--sbw,0px))}
   function applyLang(next) {
     lang = next;
     document.documentElement.lang = next;
+
+    /* Il titolo della scheda del browser e la descrizione per i motori di
+       ricerca erano gli ultimi due testi rimasti in italiano per tutti: chi
+       apriva ?lang=fr leggeva la pagina in francese e la linguetta in
+       italiano. Gli og:, invece, restano fermi — vedi il commento accanto a
+       loro nel <head>. */
+    document.title = t('meta.title');
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', t('meta.desc'));
 
     $$('[data-i18n]').forEach(function (el) {
       var k = el.getAttribute('data-i18n');
