@@ -1,16 +1,26 @@
 {
-  "fetchedAt": "2026-07-30T18:18:47Z",
+  "fetchedAt": "2026-08-31T13:44:41Z",
   "source": "https://www.posarellivillas.it/italia/toscana/san-gimignano/95494",
   "sourceEn": "https://www.posarellivillas.com/italy/tuscany/san-gimignano/95494",
   "aggregate": {
     "rating": 5,
-    "count": 61,
+    "count": 62,
     "label": {
       "it": "Eccellente",
       "en": "Excellent"
     }
   },
   "reviews": [
+    {
+      "id": "db297bcc2592",
+      "rating": 5,
+      "author": "Joe F.",
+      "from": "Natick (US)",
+      "lang": null,
+      "date": "2026-08-19",
+      "text": "Excellent",
+      "approved": true
+    },
     {
       "id": "33fe5a6b2b56",
       "rating": 5,
