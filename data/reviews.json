@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-14T12:42:10Z",
+  "fetchedAt": "2026-09-21T12:44:15Z",
   "source": "https://www.posarellivillas.it/italia/toscana/san-gimignano/95494",
   "sourceEn": "https://www.posarellivillas.com/italy/tuscany/san-gimignano/95494",
   "aggregate": {
@@ -11,6 +11,16 @@
     }
   },
   "reviews": [
+    {
+      "id": "47a529618021",
+      "rating": 5,
+      "author": "Susan B.",
+      "from": "Toronto (CA)",
+      "lang": "en",
+      "date": "2026-09-11",
+      "text": "Beautiful property and pool area located just outside San Gimignano. Sabrina is an excellent hostess. Communication was wonderful. We will be back!",
+      "approved": true
+    },
     {
       "id": "db297bcc2592",
       "rating": 5,
