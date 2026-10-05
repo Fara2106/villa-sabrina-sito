@@ -1,16 +1,26 @@
 {
-  "fetchedAt": "2026-09-28T13:49:45Z",
+  "fetchedAt": "2026-10-05T14:32:20Z",
   "source": "https://www.posarellivillas.it/italia/toscana/san-gimignano/95494",
   "sourceEn": "https://www.posarellivillas.com/italy/tuscany/san-gimignano/95494",
   "aggregate": {
     "rating": 5,
-    "count": 64,
+    "count": 65,
     "label": {
       "it": "Eccellente",
       "en": "Excellent"
     }
   },
   "reviews": [
+    {
+      "id": "89df156f3e99",
+      "rating": 4,
+      "author": "Ann M.",
+      "from": "Brooklyn (US)",
+      "lang": "en",
+      "date": "2026-10-04",
+      "text": "My husband, adult children and I had a lovely four night stay at this beautiful, clean and well provisioned property. We especially liked the location and pool area and the thoughtful gestures by the owner, such as leaving a home baked tart one afternoon and giving us each a bag with refreshments at checkout.",
+      "approved": false
+    },
     {
       "id": "47a529618021",
       "rating": 5,
