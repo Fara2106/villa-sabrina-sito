@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-10-05T14:32:20Z",
+  "fetchedAt": "2026-10-12T15:18:10Z",
   "source": "https://www.posarellivillas.it/italia/toscana/san-gimignano/95494",
   "sourceEn": "https://www.posarellivillas.com/italy/tuscany/san-gimignano/95494",
   "aggregate": {
     "rating": 5,
-    "count": 65,
+    "count": 66,
     "label": {
       "it": "Eccellente",
       "en": "Excellent"
@@ -20,6 +20,16 @@
       "date": "2026-10-04",
       "text": "My husband, adult children and I had a lovely four night stay at this beautiful, clean and well provisioned property. We especially liked the location and pool area and the thoughtful gestures by the owner, such as leaving a home baked tart one afternoon and giving us each a bag with refreshments at checkout.",
       "approved": false
+    },
+    {
+      "id": "8175cd97e468",
+      "rating": 5,
+      "author": "Jessica B.",
+      "from": "Breckenridge (CO)",
+      "lang": "en",
+      "date": "2026-10-07",
+      "text": "Sabrina was the most hospitable host we’ve ever stayed with. She was very responsive to any questions and allowed an early check in for us. She gave us gifts throughout the week, including homemade tart. We were amazed at how beautiful and perfectly landscaped the villa and property were. It is quiet enough to feel peaceful and private, but only 7 minutes from the gorgeous town of San Gimignano, which we fell in love with. Easy to get around, a great hike you can get to right from the villa, and a sparkling clean space… it was a wonderful stay.",
+      "approved": true
     },
     {
       "id": "47a529618021",
