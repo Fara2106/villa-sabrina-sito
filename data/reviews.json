@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-10-12T15:18:10Z",
+  "fetchedAt": "2026-10-19T13:08:02Z",
   "source": "https://www.posarellivillas.it/italia/toscana/san-gimignano/95494",
   "sourceEn": "https://www.posarellivillas.com/italy/tuscany/san-gimignano/95494",
   "aggregate": {
     "rating": 5,
-    "count": 66,
+    "count": 67,
     "label": {
       "it": "Eccellente",
       "en": "Excellent"
@@ -29,6 +29,16 @@
       "lang": "en",
       "date": "2026-10-07",
       "text": "Sabrina was the most hospitable host we’ve ever stayed with. She was very responsive to any questions and allowed an early check in for us. She gave us gifts throughout the week, including homemade tart. We were amazed at how beautiful and perfectly landscaped the villa and property were. It is quiet enough to feel peaceful and private, but only 7 minutes from the gorgeous town of San Gimignano, which we fell in love with. Easy to get around, a great hike you can get to right from the villa, and a sparkling clean space… it was a wonderful stay.",
+      "approved": true
+    },
+    {
+      "id": "49b6b1a0f9b8",
+      "rating": 5,
+      "author": "Rene G.",
+      "from": "Brookline (US)",
+      "lang": "en",
+      "date": "2026-10-14",
+      "text": "Charming host and family. Very supportive and generous of their time during dental emergency. They made appointment with their dental provider and offered to take us to the appointment. The property grounds are stunning and the villa is receiving ongoing upgrades. The second floor bath is very large with walk in shower. The first floor bath has vintage fixtures. Installing air conditioning in the first floor should be considered as the extreme heat conditions are the norm and getting more severe.",
       "approved": true
     },
     {
@@ -122,14 +132,14 @@
       "approved": true
     },
     {
-      "id": "7eb67496affa",
+      "id": "731d743fa4cb",
       "rating": 5,
-      "author": "Dr.til B.",
+      "author": "Til B.",
       "from": "Hamburg (DE)",
       "lang": "en",
       "date": "2025-08-03",
       "text": "We‘ve been here with 6 people three times now and it is every time so great. Sabrina and Stefano are so friendly and helpful when we had any questions. It really feels like home. Thank you for this beautiful vacation.",
-      "approved": false
+      "approved": true
     },
     {
       "id": "5bd4a8125f17",
@@ -192,14 +202,14 @@
       "approved": false
     },
     {
-      "id": "d6be785c878b",
+      "id": "43428b95ca3e",
       "rating": 5,
-      "author": "Dr.til B.",
+      "author": "Til B.",
       "from": "Hamburg (DE)",
       "lang": "en",
       "date": "2024-08-27",
       "text": "It is a beautiful house and Sabrina e Stefano are fantastic. We were here the 2 nd time and we come back..",
-      "approved": false
+      "approved": true
     },
     {
       "id": "32cb8d38c1f1",
@@ -262,14 +272,14 @@
       "approved": true
     },
     {
-      "id": "00afbe6db82c",
+      "id": "39dd934397e4",
       "rating": 5,
-      "author": "Dr.til B.",
+      "author": "Til B.",
       "from": "Hamburg (DE)",
       "lang": "en",
       "date": "2023-08-07",
       "text": "It is a very beautiful house and there was nothing missing. The equipment was very good. The garden and the pool are fantastic. Sabrina e Stefano are so kind and always available for our questions.",
-      "approved": false
+      "approved": true
     },
     {
       "id": "fc970fad7f86",
