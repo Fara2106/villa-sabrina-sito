@@ -1,16 +1,26 @@
 {
-  "fetchedAt": "2026-10-19T13:08:02Z",
+  "fetchedAt": "2026-10-26T12:56:24Z",
   "source": "https://www.posarellivillas.it/italia/toscana/san-gimignano/95494",
   "sourceEn": "https://www.posarellivillas.com/italy/tuscany/san-gimignano/95494",
   "aggregate": {
     "rating": 5,
-    "count": 67,
+    "count": 68,
     "label": {
       "it": "Eccellente",
       "en": "Excellent"
     }
   },
   "reviews": [
+    {
+      "id": "f039093a8851",
+      "rating": 5,
+      "author": "Alberto C.",
+      "from": "San Juan (PR)",
+      "lang": "en",
+      "date": "2026-10-20",
+      "text": "Villa Sabrina was the perfect house for our stay on Tuscany, beautiful, great location and Sabrina is a great host. We forgot some items and she immediately mailed them to us. Everything perfect!",
+      "approved": true
+    },
     {
       "id": "89df156f3e99",
       "rating": 4,
