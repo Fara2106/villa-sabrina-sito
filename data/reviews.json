@@ -1,16 +1,26 @@
 {
-  "fetchedAt": "2026-10-26T12:56:24Z",
+  "fetchedAt": "2026-11-02T15:44:27Z",
   "source": "https://www.posarellivillas.it/italia/toscana/san-gimignano/95494",
   "sourceEn": "https://www.posarellivillas.com/italy/tuscany/san-gimignano/95494",
   "aggregate": {
     "rating": 5,
-    "count": 68,
+    "count": 70,
     "label": {
       "it": "Eccellente",
       "en": "Excellent"
     }
   },
   "reviews": [
+    {
+      "id": "1ddaf68f42af",
+      "rating": 5,
+      "author": "Alan J.",
+      "from": "Angel Fire (US)",
+      "lang": "en",
+      "date": "2026-10-25",
+      "text": "Sabrina was an excellent host! The property was clean and ready when we arrived. Very central location for Tuscany day trips with San Gimignano just a few kilometers away.",
+      "approved": true
+    },
     {
       "id": "f039093a8851",
       "rating": 5,
@@ -19,6 +29,16 @@
       "lang": "en",
       "date": "2026-10-20",
       "text": "Villa Sabrina was the perfect house for our stay on Tuscany, beautiful, great location and Sabrina is a great host. We forgot some items and she immediately mailed them to us. Everything perfect!",
+      "approved": true
+    },
+    {
+      "id": "3b4590510f72",
+      "rating": 5,
+      "author": "Sandra A.",
+      "from": "Toronto (CA)",
+      "lang": "en",
+      "date": "2026-10-27",
+      "text": "Sabrina was an amazing host, who went over and beyond to make our stay fabulous. From greeting us with a basket full of goodies, to surprising us with a homemade tart and bottle of wine, and a send off goodie bag for our way out. The villa is beautiful, and very well kept. The Tuscan charm shines through every part of this villa. Thank you Sabrina for an amazing experience in Tuscany, we all had a great time. Grazie mille.",
       "approved": true
     },
     {
